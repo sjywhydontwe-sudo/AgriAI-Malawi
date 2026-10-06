@@ -1,0 +1,12 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic>=2.6
+# for a trained model (MODEL_PATH):
+# joblib
+# pandas
+# scikit-learn
+# for real raster lookups:
+# rasterio
+# dev
+pytest>=8
+httpx>=0.27
