@@ -1,0 +1,60 @@
+// UI labels. Chichewa is a DRAFT and needs native-speaker review.
+// Advisor answers come from the backend, which receives `lang`.
+export type Lang = "en" | "ny";
+
+const T: Record<string, [string, string]> = {
+  greet: ["Moni, Esther", "Moni, Esther"],
+  tagline: ["Early-season maize harvest estimates for your farm", "Kuyerekeza zokolola za chimanga pa munda wanu"],
+  seasonLabel: ["Maize · 2026/27 season", "Chimanga · nyengo ya 2026/27"],
+  ctaEstimate: ["Estimate my maize harvest", "Yerekezani zokolola zanga"],
+  ctaEstimateSub: ["3 short steps · about 1 minute", "Masitepe atatu"],
+  ctaAsk: ["Ask the farming advisor", "Funsani mlangizi"],
+  ctaAskSub: ["Questions about your farm", "Mafunso okhudza munda wanu"],
+  locTitle: ["Where is your farm?", "Munda wanu uli kuti?"],
+  locHelp: ["We use your location to look up rainfall, soil, land shape and growing zone. You don't need to type anything.", "Tigwiritsa ntchito malo anu kuti tipeze mvula, nthaka ndi dera."],
+  useGps: ["Use my location", "Gwiritsani ntchito malo anga"],
+  orChoose: ["or choose your area", "kapena sankhani dera lanu"],
+  continue: ["Continue", "Pitirizani"],
+  farmTitle: ["Your farm", "Munda wanu"],
+  cropMaize: ["Maize", "Chimanga"],
+  fieldSize: ["Field size", "Kukula kwa munda"],
+  plantDate: ["When do you finish planting?", "Mumamaliza kubzala liti?"],
+  seedType: ["Seed type", "Mtundu wa mbewu"],
+  hybrid: ["Hybrid", "Hybrid"],
+  local: ["Local", "Chimanga cha makolo"],
+  fertilizer: ["Fertilizer on this field", "Feteleza pa munda uno"],
+  fertHelp: ["Number of 50 kg bags, planting and top-dressing together. 0 if none.", "Matumba a 50 kg. 0 ngati palibe."],
+  intercrop: ["Other crops in this field?", "Mbewu zina mu munda uno?"],
+  intercropHelp: ["For example beans, pigeon peas or groundnuts growing between the maize.", "Mwachitsanzo nyemba, nandolo kapena mtedza."],
+  maizeOnly: ["Maize only", "Chimanga chokha"],
+  mixed: ["Mixed", "Zosakaniza"],
+  goalTitle: ["Your goal", "Cholinga chanu"],
+  goalHelp: ["How much maize do you hope to harvest from this field? We'll compare it with the estimate.", "Mukufuna kukolola chimanga chochuluka bwanji?"],
+  bagSize: ["Your bag size", "Kukula kwa thumba"],
+  bagSizeHelp: ["Bags of shelled maize grain", "Matumba a chimanga chopukuchira"],
+  goalBags: ["Harvest goal", "Cholinga cha zokolola"],
+  bags: ["bags", "matumba"],
+  price: ["Expected selling price", "Mtengo wogulitsira"],
+  calculate: ["Calculate", "Werengani"],
+  calculating: ["Fetching data and calculating…", "Tikuwerengera…"],
+  resultTitle: ["Your estimate", "Zotsatira"],
+  whyTitle: ["Why this result?", "Chifukwa chiyani?"],
+  nextStep: ["WHAT TO DO NEXT", "CHOCHITA"],
+  askAdvisor: ["Ask the advisor", "Funsani mlangizi"],
+  advisor: ["Farming advisor", "Mlangizi"],
+  advisorSub: ["Answers based on your estimate", "Mayankho ochokera ku zotsatira zanu"],
+  history: ["History", "Mbiri"],
+  home: ["Home", "Kunyumba"],
+  settings: ["Settings", "Zokonda"],
+  language: ["Language", "Chilankhulo"],
+  langNote: ["Chichewa is a draft translation for testing.", "Chichewa ndi kumasulira koyamba."],
+  areaUnit: ["Field size unit", "Muyeso wa munda"],
+  clearHistory: ["Clear history", "Fufutani mbiri"],
+  ask: ["Ask a question…", "Funsani funso…"],
+  back: ["Back", "Bwererani"],
+};
+
+export function translate(lang: Lang, key: string): string {
+  const v = T[key];
+  return v ? v[lang === "ny" ? 1 : 0] || v[0] : key;
+}
