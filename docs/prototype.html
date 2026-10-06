@@ -1,0 +1,1064 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1B5E20">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>AgriAI Malawi</title>
+<style>
+:root{
+  --green:#1B5E20; --green2:#2E7D32; --accent:#43A047; --orange:#D4501C; --bg:#F5F7F2;
+  --ink:#1f2420; --muted:#525a50; --line:#dfe3da; --soft:#E8F5E9;
+  --amber:#9A4A06; --amber-soft:#FFF3E0; --red:#B3261E; --red-soft:#FDECEA;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-tap-highlight-color:transparent;overscroll-behavior:none;font-size:16px}
+button{font:inherit;color:inherit}
+.i{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;vertical-align:middle}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* app shell */
+.app{width:100%;max-width:440px;height:100vh;height:100dvh;margin:0 auto;background:#fff;position:relative;overflow:hidden;box-shadow:0 0 40px rgba(27,94,32,.08)}
+.view{position:absolute;inset:0;display:none;flex-direction:column;background:#fff}
+.view.active{display:flex;animation:in .22s ease}
+@keyframes in{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:none}}
+.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:calc(env(safe-area-inset-top) + 16px) 20px 24px}
+.scroll::-webkit-scrollbar{display:none}
+
+/* headers */
+.hdr{display:flex;align-items:center;gap:6px;margin:0 -8px 14px}
+.hdr h1{font-size:19px;font-weight:700;flex:1}
+.icb{all:unset;cursor:pointer;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;flex-shrink:0}
+.icb:focus-visible,.btn:focus-visible,.seg button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.stepper-txt{font-size:14px;color:var(--muted);font-weight:600;padding-right:8px}
+.progress{height:5px;background:#eef0ea;border-radius:9px;margin:-6px 0 18px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--accent);border-radius:9px;transition:width .3s}
+
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--green);font-size:19px}
+.logo{width:38px;height:38px;border-radius:11px;background:var(--green);color:#fff;display:grid;place-items:center}
+h2.greet{font-size:25px;font-weight:800;margin:18px 0 4px}
+.sub{color:var(--muted);font-size:15px;line-height:1.45}
+.season{display:inline-flex;gap:6px;align-items:center;background:var(--soft);color:var(--green);font-weight:700;font-size:13px;padding:5px 10px;border-radius:999px;margin-top:10px}
+
+/* cards */
+.card{border:1px solid var(--line);border-radius:20px;padding:16px;margin-top:14px;background:#fff}
+.card.tap{cursor:pointer;display:flex;align-items:center;gap:12px}
+.card h3{font-size:15px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kv div{background:#f6f8f3;border-radius:12px;padding:10px 12px}
+.kv small{display:block;color:var(--muted);font-size:13px;margin-bottom:2px}
+.kv b{font-size:16px}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:700;padding:4px 9px;border-radius:999px}
+.chip.ok{background:var(--soft);color:var(--green)}
+.chip.warn{background:var(--amber-soft);color:var(--amber)}
+.chip.bad{background:var(--red-soft);color:var(--red)}
+.chip.gray{background:#eef0ea;color:var(--muted)}
+
+/* buttons */
+.btn{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:16px;padding:15px 16px;min-height:54px;text-align:center;font-weight:700;font-size:17px;width:100%;transition:transform .1s}
+.btn:active{transform:scale(.98)}
+.btn[disabled]{opacity:.45;pointer-events:none}
+.btn-primary{background:var(--green);color:#fff;box-shadow:0 8px 18px rgba(27,94,32,.22)}
+.btn-outline{border:2px solid var(--green);color:var(--green)}
+.btn-orange{background:var(--orange);color:#fff;box-shadow:0 8px 18px rgba(212,80,28,.25)}
+.btn-big{flex-direction:column;gap:2px;padding:18px}
+.btn-big .s{font-size:14px;font-weight:500;opacity:.9}
+.stack{display:flex;flex-direction:column;gap:12px;margin-top:18px}
+.foot{padding:12px 20px calc(env(safe-area-inset-bottom) + 14px);border-top:1px solid var(--line);background:#fff}
+.foot .hint{font-size:13px;color:var(--muted);text-align:center;margin-bottom:8px}
+
+/* tabbar */
+.tabbar{display:flex;border-top:1px solid var(--line);padding:8px 0 calc(env(safe-area-inset-bottom) + 8px);background:#fff}
+.tabbar button{all:unset;cursor:pointer;flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:13px;color:#6b7268;min-height:48px;justify-content:center}
+.tabbar button.on{color:var(--green);font-weight:700}
+
+/* form */
+.label{font-weight:700;font-size:16px;margin:22px 0 4px;display:flex;align-items:center;gap:8px}
+.help{font-size:14px;color:var(--muted);margin-bottom:10px;line-height:1.4}
+.select,.input{width:100%;padding:14px 16px;border:1.5px solid var(--line);border-radius:14px;font:inherit;font-size:16px;background:#fff;color:var(--ink)}
+.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%23555'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+.select:focus,.input:focus{outline:none;border-color:var(--accent)}
+.num{display:flex;align-items:center;gap:10px}
+.num .icb{width:54px;height:54px;background:var(--soft);color:var(--green);border-radius:14px}
+.num .box{flex:1;display:flex;align-items:baseline;justify-content:center;gap:6px;border:1.5px solid var(--line);border-radius:14px;padding:8px}
+.num input{width:4.5ch;min-width:2ch;field-sizing:content;border:0;font:inherit;font-size:24px;font-weight:800;text-align:center;background:transparent;color:var(--ink)}
+.num input:focus{outline:none}
+.num small{color:var(--muted);font-size:15px}
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;background:#eef0ea;border-radius:14px;padding:4px;gap:4px}
+.seg button{all:unset;cursor:pointer;text-align:center;padding:12px 6px;border-radius:11px;font-weight:700;color:var(--muted);min-height:24px;display:flex;align-items:center;justify-content:center;gap:6px}
+.seg button.on{background:var(--green);color:#fff}
+.quick{all:unset;cursor:pointer;margin-top:8px;display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--green);background:var(--soft);padding:8px 12px;border-radius:999px}
+.divider{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:14px;margin:20px 0 10px}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* location status */
+.status{margin-top:14px}
+.notice{display:flex;gap:10px;align-items:flex-start;border-radius:14px;padding:12px 14px;font-size:14.5px;line-height:1.45}
+.notice.err{background:var(--red-soft);color:var(--red)}
+.notice.info{background:#eef4fb;color:#1a4a7a}
+.fetch{display:flex;flex-direction:column;gap:2px;margin-top:4px}
+.fetch .row{display:flex;align-items:center;gap:10px;padding:9px 0;font-size:15px}
+.fetch .row small{color:var(--muted);margin-left:auto;font-size:13px}
+.spin{width:20px;height:20px;border:2.5px solid #d5dbd0;border-top-color:var(--green);border-radius:50%;animation:sp .8s linear infinite;flex-shrink:0}
+@keyframes sp{to{transform:rotate(360deg)}}
+.done{color:var(--accent)}
+.wait{width:20px;height:20px;border-radius:50%;border:2.5px solid #e6e9e2;flex-shrink:0}
+
+/* home hero */
+.hero-home{margin-top:18px;border-radius:22px;overflow:hidden;position:relative;background:linear-gradient(180deg,#2f4a63 0%,#3d5a4a 60%,#4a5a36 100%);color:#fff;padding:18px;min-height:150px}
+.hero-home svg.scene{position:absolute;inset:0;width:100%;height:100%}
+.hero-home .in{position:relative}
+.hero-home .loc{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--ink);font-weight:700;font-size:14px;padding:7px 12px;border-radius:999px}
+.hero-home .facts{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.hero-home .facts span{background:rgba(0,0,0,.35);border-radius:10px;padding:6px 10px;font-size:13px}
+.hero-home p{text-shadow:0 1px 3px rgba(0,0,0,.6);font-size:14.5px;max-width:240px;line-height:1.45;opacity:.95;margin-top:10px}
+
+/* result */
+.res-hero{background:var(--green);color:#fff;border-radius:24px;padding:22px;text-align:center;position:relative;overflow:hidden}
+.res-hero::before{content:"";position:absolute;width:190px;height:190px;right:-60px;top:-60px;border:1px solid rgba(255,255,255,.14);border-radius:50%}
+.res-hero .k{letter-spacing:.06em;font-size:13px;font-weight:700;opacity:.9}
+.res-hero .big{font-size:60px;font-weight:800;line-height:1.05;margin:6px 0 0;font-variant-numeric:tabular-nums}
+.res-hero .u{font-size:16px;opacity:.92}
+.res-hero .rng{margin-top:10px;font-size:14px;background:rgba(255,255,255,.14);display:inline-block;padding:6px 12px;border-radius:999px}
+.res-hero .bags{margin-top:12px;font-size:15px;opacity:.95}
+.early{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.4}
+.cmp-row{display:grid;grid-template-columns:92px 1fr 74px;align-items:center;gap:10px;margin:10px 0;font-size:14px}
+.cmp-row .t{height:14px;background:#eef0ea;border-radius:9px;overflow:hidden}
+.cmp-row .t i{display:block;height:100%;border-radius:9px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.cmp-row b{text-align:right;font-variant-numeric:tabular-nums}
+.gapbox{border-radius:14px;padding:12px 14px;margin-top:12px;font-size:15px;line-height:1.45}
+.gapbox.ok{background:var(--soft);color:var(--green)}
+.gapbox.bad{background:var(--amber-soft);color:var(--amber)}
+
+/* why */
+.base{font-size:14.5px;color:var(--muted);line-height:1.45;margin:4px 0 6px}
+.sect{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--muted);margin:22px 0 4px;display:flex;align-items:center;gap:8px}
+.factor{padding:14px 0;border-bottom:1px solid #eef0ea}
+.factor .row{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px}
+.factor .row .ic{width:34px;height:34px;border-radius:10px;background:var(--soft);color:var(--green);display:grid;place-items:center}
+.factor .val{margin-left:auto;font-weight:800;font-variant-numeric:tabular-nums;font-size:15px}
+.factor .val.pos{color:var(--green2)} .factor .val.neg{color:var(--red)} .factor .val.zero{color:var(--muted)}
+.div{position:relative;height:10px;background:#f0f2ed;border-radius:9px;margin:10px 0 8px}
+.div::after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:2px;background:#b9c0b4}
+.div i{position:absolute;top:0;bottom:0;border-radius:9px;transition:all .6s}
+.factor p{font-size:14.5px;color:#3d443b;line-height:1.45}
+.fix{display:flex;gap:12px;align-items:center;border:1.5px solid var(--line);border-radius:16px;padding:12px 14px;margin-top:10px}
+.fix .g{margin-left:auto;text-align:right;font-weight:800;color:var(--green2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.fix .g small{display:block;font-weight:500;color:var(--muted);font-size:12.5px}
+.fix p{font-size:15px;font-weight:600;line-height:1.35}
+.summary{background:var(--green);color:#fff;padding:16px 20px calc(env(safe-area-inset-bottom) + 14px)}
+.summary small{font-size:12.5px;letter-spacing:.06em;font-weight:700;opacity:.85}
+.summary p{font-weight:600;font-size:15.5px;line-height:1.4;margin:4px 0 12px}
+.summary .btn{background:#fff;color:var(--green);min-height:48px;padding:12px}
+
+/* chat */
+.chathead{display:flex;align-items:center;gap:8px;padding:calc(env(safe-area-inset-top) + 10px) 12px 10px;border-bottom:1px solid var(--line)}
+.chathead .bot{width:40px;height:40px;border-radius:50%;background:var(--soft);color:var(--green);display:grid;place-items:center}
+.chathead b{display:block;font-size:16px}
+.chathead small{color:var(--muted);font-size:13px}
+.ctx{margin:12px 16px 0;background:var(--soft);border-radius:14px;padding:10px 12px;font-size:13.5px;color:var(--green);line-height:1.45}
+.ctx b{display:flex;align-items:center;gap:6px;margin-bottom:2px}
+.ctx .btn{margin-top:8px;min-height:40px;padding:8px;font-size:15px}
+.msgs{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.msgs::-webkit-scrollbar{display:none}
+.m{max-width:86%;padding:11px 14px;border-radius:18px;font-size:15.5px;line-height:1.5}
+.m.u{align-self:flex-end;background:var(--green);color:#fff;border-bottom-right-radius:6px}
+.m.a{align-self:flex-start;background:#f2f4ef;border-bottom-left-radius:6px}
+.m.a b{color:var(--green)}
+.m.a ul{margin:6px 0 0 18px}
+.m.a li{margin:3px 0}
+.src{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;margin-top:8px;padding:3px 8px;border-radius:999px}
+.src.model{background:#dcefdc;color:var(--green)}
+.src.general{background:#eceae3;color:#5c5444}
+.typing span{display:inline-block;width:7px;height:7px;margin:0 2px;border-radius:50%;background:#999;animation:bo 1s infinite}
+.typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
+@keyframes bo{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 16px 10px}
+.chips::-webkit-scrollbar{display:none}
+.chips button{all:unset;cursor:pointer;white-space:nowrap;border:1.5px solid var(--green);color:var(--green);border-radius:999px;padding:8px 12px;font-size:14px;font-weight:600}
+.composer{display:flex;gap:8px;align-items:center;padding:8px 12px calc(env(safe-area-inset-bottom) + 8px);border-top:1px solid var(--line)}
+.composer input{flex:1;min-width:0;border:1.5px solid var(--line);border-radius:999px;padding:12px 16px;font:inherit;font-size:16px;outline:none}
+.composer input:focus{border-color:var(--accent)}
+.composer .icb{border-radius:50%;width:46px;height:46px}
+.mic{background:var(--orange);color:#fff}
+.mic.off{background:#e3e6df;color:#7b8278}
+.mic.rec{animation:pulse 1s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(212,80,28,.5)}100%{box-shadow:0 0 0 14px rgba(212,80,28,0)}}
+.send{background:var(--green);color:#fff}
+
+/* history / settings */
+.hist{all:unset;box-sizing:border-box;cursor:pointer;width:100%;border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:12px}
+.hist .ic{width:42px;height:42px;border-radius:12px;background:var(--soft);color:var(--green);display:grid;place-items:center}
+.hist b{display:block;font-size:15.5px}
+.hist small{color:var(--muted);font-size:13px}
+.hist .y{margin-left:auto;text-align:right;font-weight:800;color:var(--green);white-space:nowrap}
+.hist .y .chip{margin-top:4px}
+.empty{text-align:center;color:var(--muted);padding:50px 20px;line-height:1.5}
+.empty .i{color:#c5cbc1;margin-bottom:10px}
+.setting{margin-top:22px}
+.setting .label{margin-top:0;margin-bottom:10px}
+
+
+/* result: bags-first */
+.status{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;border-radius:16px;padding:12px 14px;margin-bottom:12px}
+.status.ok{background:var(--soft);color:var(--green)}
+.status.bad{background:var(--amber-soft);color:var(--amber)}
+.res-hero .big span{font-size:30px;font-weight:700}
+.baggrid{display:flex;flex-wrap:wrap;gap:5px;margin:4px 0 10px}
+.bag{stroke-width:1.6}
+.bag.f{fill:var(--green2);stroke:var(--green)}
+.bag.miss{fill:#fff;stroke:var(--orange);stroke-dasharray:3 2}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13.5px;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:5px}
+.ic-soft{width:40px;height:40px;border-radius:12px;background:var(--soft);color:var(--green);display:grid;place-items:center;flex-shrink:0}
+.details{margin-top:18px;font-size:14px;color:var(--muted)}
+.details summary{cursor:pointer;font-weight:700;padding:8px 0}
+
+
+/* result v4 */
+.res-hero .range{margin:16px auto 0;max-width:280px}
+.res-hero .rt{position:relative;height:8px;border-radius:9px;background:linear-gradient(90deg,rgba(255,255,255,.25),rgba(255,255,255,.6))}
+.res-hero .rt i{position:absolute;top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.25)}
+.res-hero .rl{display:flex;justify-content:space-between;margin-top:8px;font-size:13px;opacity:.9}
+.res-hero .rl b{font-size:15px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.tile{border:1px solid var(--line);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:3px;color:var(--green)}
+.tile b{color:var(--ink);font-size:16px}
+.tile small{color:var(--muted);font-size:13px}
+/* why v4 */
+.group{margin-top:14px}
+.gname{display:flex;align-items:center;gap:8px;font-weight:800;font-size:16px;color:var(--ink)}
+.gname .i{color:var(--green)}
+.opt{padding:10px 12px;border-radius:14px;border:1.5px solid var(--line);margin-top:8px}
+.opt.cur{border-color:var(--green);background:#f4faf3}
+.opt .top{display:flex;align-items:center;gap:8px;font-size:15px}
+.opt .top b{margin-left:auto;white-space:nowrap}
+.opt .bar{height:8px;background:#eef0ea;border-radius:9px;margin-top:8px;overflow:hidden}
+.opt .bar i{display:block;height:100%;background:#a5d6a7;border-radius:9px}
+.opt.cur .bar i{background:var(--green)}
+.delta{font-weight:800;font-size:14px;min-width:34px;text-align:right}
+.delta.up{color:var(--green2)} .delta.down{color:var(--red)}
+.best{border:2px solid var(--green);border-radius:16px;padding:14px;margin-top:10px;background:#f4faf3}
+.best .top{display:flex;align-items:center}
+.best .big2{margin-left:auto;font-size:22px;font-weight:800;color:var(--green)}
+.best ul{margin:8px 0 8px 18px;font-size:15px;line-height:1.5}
+.best p{font-size:14px;color:var(--muted);line-height:1.45}
+.cond{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #eef0ea}
+.cond .top{display:flex;align-items:center;gap:8px}
+.cond .top .chip{margin-left:auto}
+.cond small{color:var(--muted);font-size:14px}
+.cond p{font-size:14.5px;margin-top:4px;line-height:1.4}
+.caveat{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;color:var(--muted);background:#f6f8f3;border-radius:12px;padding:9px 12px;margin-top:6px;line-height:1.4}
+#monthSeg{grid-auto-flow:row;grid-template-columns:repeat(4,1fr)}
+.mchart{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin-top:12px;align-items:stretch}
+.mb{all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-width:0}
+.mb .tr{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px;width:100%;height:130px}
+.mb i{display:block;width:100%;border-radius:5px 5px 2px 2px;background:#c8e6c9;transition:height .5s}
+.mb.onset i{background:var(--accent)}
+.mb.cur i{background:var(--green)}
+.mb em{font-style:normal;font-size:11px;font-weight:700;color:var(--muted);visibility:hidden}
+.mb.sel em,.mb.cur em{visibility:visible}
+.mb.sel i{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--orange)}
+.mb span{font-size:12px;color:var(--muted);font-weight:600}
+.mb.sel span{color:var(--ink)}
+.mlegend{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--muted);margin-top:8px}
+.mlegend span{display:flex;align-items:center;gap:5px}
+.mlegend i{display:inline-block;width:10px;height:10px;border-radius:3px}
+.mdetail{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:10px;background:#f4faf3;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;font-size:15px}
+.mdetail .mv{margin-left:auto;font-weight:800;display:flex;gap:8px;align-items:center}
+/* overlay + toast */
+.overlay{position:absolute;inset:0;background:rgba(255,255,255,.92);display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:20;font-weight:700;color:var(--green)}
+.overlay.on{display:flex}
+.overlay .spin{width:40px;height:40px;border-width:4px}
+.toast{position:absolute;left:16px;right:16px;bottom:calc(env(safe-area-inset-bottom) + 90px);background:#263026;color:#fff;border-radius:14px;padding:12px 14px;font-size:14.5px;z-index:30;opacity:0;transform:translateY(10px);transition:all .25s;pointer-events:none}
+.toast.on{opacity:1;transform:none}
+
+@media (max-width:360px){ .res-hero .big{font-size:50px} h2.greet{font-size:22px} .cmp-row{grid-template-columns:80px 1fr 66px} }
+</style>
+</head>
+<body>
+
+<!-- Inline SVG icons: no icon font, works offline -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></symbol>
+  <symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></symbol>
+  <symbol id="i-fwd" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-gps" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></symbol>
+  <symbol id="i-rain" viewBox="0 0 24 24"><path d="M12 3s-6 7-6 11a6 6 0 0 0 12 0c0-4-6-11-6-11z"/></symbol>
+  <symbol id="i-terrain" viewBox="0 0 24 24"><path d="M3 20l6-11 4 6 2-3 6 8z"/></symbol>
+  <symbol id="i-zone" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-seed" viewBox="0 0 24 24"><path d="M12 21v-9"/><path d="M12 12c0-4-3-7-8-7 0 4 3 7 8 7z"/><path d="M12 14c0-3 2.5-6 7-6 0 3.5-2.5 6-7 6z"/></symbol>
+  <symbol id="i-fert" viewBox="0 0 24 24"><path d="M7 4h10l2 4v12H5V8z"/><path d="M5 8h14M10 13h4M12 11v4"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-3-7z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 6-14 15-14 0 9-6 15-14 15"/><path d="M5 19l7-7"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
+  <symbol id="i-ruler" viewBox="0 0 24 24"><path d="M3 17L17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M9 3h6l-1.4 3.2C17 7.6 19 10.6 19 14c0 4.2-3.1 7-7 7s-7-2.8-7-7c0-3.4 2-6.4 5.4-7.8z"/><path d="M9.5 6.5h5"/></symbol>
+  <symbol id="i-coin" viewBox="0 0 24 24"><ellipse cx="12" cy="7" rx="7" ry="3"/><path d="M5 7v5c0 1.7 3.1 3 7 3s7-1.3 7-3V7M5 12v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5"/></symbol>
+</svg>
+
+<div class="app" id="app">
+
+  <!-- HOME -->
+  <section class="view" id="v-home" aria-label="Home">
+    <div class="scroll">
+      <div class="brand"><div class="logo"><svg class="i" width="22" height="22"><use href="#i-leaf"/></svg></div>AgriAI</div>
+      <h2 class="greet" data-t="greet"></h2>
+      <p class="sub" data-t="tagline"></p>
+      <span class="season"><svg class="i" width="16" height="16"><use href="#i-seed"/></svg><span data-t="seasonLabel"></span></span>
+      <div class="hero-home" id="homeHero"></div>
+      <div id="homeLast"></div>
+      <div class="stack">
+        <button class="btn btn-primary btn-big" onclick="startFlow()">
+          <svg class="i" width="24" height="24"><use href="#i-target"/></svg>
+          <span data-t="ctaEstimate"></span><span class="s" data-t="ctaEstimateSub"></span>
+        </button>
+        <button class="btn btn-outline btn-big" onclick="openChat()">
+          <svg class="i" width="24" height="24"><use href="#i-chat"/></svg>
+          <span data-t="ctaAsk"></span><span class="s" data-t="ctaAskSub"></span>
+        </button>
+      </div>
+    </div>
+    <nav class="tabbar" data-tabs="home"></nav>
+  </section>
+
+  <!-- STEP 1: LOCATION -->
+  <section class="view" id="v-loc" aria-label="Farm location">
+    <div class="scroll">
+      <div class="hdr">
+        <button class="icb" onclick="back()" aria-label="Back"><svg class="i" width="24" height="24"><use href="#i-back"/></svg></button>
+        <h1 data-t="locTitle"></h1><span class="stepper-txt">1 / 3</span>
+      </div>
+      <div class="progress"><i style="width:33%"></i></div>
+      <p class="sub" data-t="locHelp"></p>
+      <div class="stack" style="margin-top:14px">
+        <button class="btn btn-primary" id="gpsBtn" onclick="useGPS()"><svg class="i" width="22" height="22"><use href="#i-gps"/></svg><span data-t="useGps"></span></button>
+      </div>
+      <div class="divider" data-t="orChoose"></div>
+      <label class="sr" for="areaSel">Area</label>
+      <select class="select" id="areaSel" onchange="chooseArea(this.value)"></select>
+      <div class="status" id="locStatus" aria-live="polite"></div>
+    </div>
+    <div class="foot">
+      <button class="btn btn-primary" id="locNext" onclick="go('farm')" disabled><span data-t="continue"></span><svg class="i" width="22" height="22"><use href="#i-fwd"/></svg></button>
+    </div>
+  </section>
+
+  <!-- STEP 2: FARM CHOICES -->
+  <section class="view" id="v-farm" aria-label="Farm details">
+    <div class="scroll">
+      <div class="hdr">
+        <button class="icb" onclick="back()" aria-label="Back"><svg class="i" width="24" height="24"><use href="#i-back"/></svg></button>
+        <h1 data-t="farmTitle"></h1><span class="stepper-txt">2 / 3</span>
+      </div>
+      <div class="progress"><i style="width:66%"></i></div>
+      <span class="chip ok"><svg class="i" width="14" height="14"><use href="#i-seed"/></svg><span data-t="cropMaize"></span></span>
+
+      <div class="label"><svg class="i" width="20" height="20"><use href="#i-ruler"/></svg><span data-t="fieldSize"></span></div>
+            <div class="num">
+        <button class="icb" onclick="stepArea(-1)" aria-label="Decrease field size"><svg class="i" width="22" height="22"><use href="#i-minus"/></svg></button>
+        <div class="box"><input id="areaInp" type="number" inputmode="decimal" step="0.05" min="0.05" aria-label="Field size" onchange="typeArea(this.value)"><small id="areaUnit"></small></div>
+        <button class="icb" onclick="stepArea(1)" aria-label="Increase field size"><svg class="i" width="22" height="22"><use href="#i-plus"/></svg></button>
+      </div>
+      <div class="seg" id="unitInline" role="radiogroup" aria-label="Unit" style="margin-top:10px"></div>
+
+      <div class="label"><svg class="i" width="20" height="20"><use href="#i-cal"/></svg><span data-t="plantDate"></span></div>
+      <div class="seg" role="radiogroup" id="monthSeg"></div>
+
+      <div class="label"><svg class="i" width="20" height="20"><use href="#i-seed"/></svg><span data-t="seedType"></span></div>
+      <div class="seg" role="radiogroup" id="seedSeg"></div>
+
+      <div class="label"><svg class="i" width="20" height="20"><use href="#i-fert"/></svg><span data-t="fertilizer"></span></div>
+      <p class="help" data-t="fertHelp"></p>
+      <div class="num">
+        <button class="icb" onclick="stepFert(-1)" aria-label="Fewer fertilizer bags"><svg class="i" width="22" height="22"><use href="#i-minus"/></svg></button>
+        <div class="box"><input id="fertInp" type="number" inputmode="numeric" min="0" aria-label="Fertilizer bags" onchange="typeFert(this.value)"><small data-t="bags"></small></div>
+        <button class="icb" onclick="stepFert(1)" aria-label="More fertilizer bags"><svg class="i" width="22" height="22"><use href="#i-plus"/></svg></button>
+      </div>
+
+      <div class="label"><svg class="i" width="20" height="20"><use href="#i-zone"/></svg><span data-t="intercrop"></span></div>
+      <p class="help" data-t="intercropHelp"></p>
+      <div class="seg" role="radiogroup" id="mixSeg"></div>
+    </div>
+    <div class="foot">
+      <button class="btn btn-primary" onclick="go('goal')"><span data-t="continue"></span><svg class="i" width="22" height="22"><use href="#i-fwd"/></svg></button>
+    </div>
+  </section>
+
+  <!-- STEP 3: GOAL -->
+  <section class="view" id="v-goal" aria-label="Your goal">
+    <div class="scroll">
+      <div class="hdr">
+        <button class="icb" onclick="back()" aria-label="Back"><svg class="i" width="24" height="24"><use href="#i-back"/></svg></button>
+        <h1 data-t="goalTitle"></h1><span class="stepper-txt">3 / 3</span>
+      </div>
+      <div class="progress"><i style="width:100%"></i></div>
+      <p class="sub" data-t="goalHelp"></p>
+
+      <div class="label"><svg class="i" width="20" height="20"><use href="#i-bag"/></svg><span>Your bag size</span></div>
+      <p class="help">Bags of shelled maize grain</p>
+      <div class="seg" id="bagSeg" role="radiogroup"></div>
+      <div class="label"><svg class="i" width="20" height="20"><use href="#i-target"/></svg><span data-t="goalBags"></span></div>
+      <div class="num">
+        <button class="icb" onclick="stepBags(-1)" aria-label="Fewer bags"><svg class="i" width="22" height="22"><use href="#i-minus"/></svg></button>
+        <div class="box"><input id="bagsInp" type="number" inputmode="numeric" min="1" aria-label="Target bags" onchange="typeBags(this.value)"><small data-t="bags"></small></div>
+        <button class="icb" onclick="stepBags(1)" aria-label="More bags"><svg class="i" width="22" height="22"><use href="#i-plus"/></svg></button>
+      </div>
+      <p class="help" id="bagsHelp" style="margin-top:8px"></p>
+
+      <div class="label"><svg class="i" width="20" height="20"><use href="#i-coin"/></svg><label for="priceInp" data-t="price"></label></div>
+            <div class="num"><div class="box"><small>MWK</small><input id="priceInp" type="number" inputmode="numeric" min="1" onchange="typePrice(this.value)" style="width:120px"><small>/ kg</small></div></div>
+
+      <div class="card" id="goalIncome"></div>
+    </div>
+    <div class="foot">
+      <button class="btn btn-primary" onclick="calculate()"><span data-t="calculate"></span><svg class="i" width="22" height="22"><use href="#i-fwd"/></svg></button>
+    </div>
+  </section>
+
+  <!-- RESULT -->
+  <section class="view" id="v-result" aria-label="Prediction result">
+    <div class="scroll">
+      <div class="hdr">
+        <button class="icb" onclick="back()" aria-label="Back"><svg class="i" width="24" height="24"><use href="#i-back"/></svg></button>
+        <h1 data-t="resultTitle"></h1>
+        <button class="icb" onclick="goHome()" aria-label="Home"><svg class="i" width="22" height="22"><use href="#i-home"/></svg></button>
+      </div>
+      <div id="resBody"></div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="view" id="v-why" aria-label="Why this result">
+    <div class="scroll">
+      <div class="hdr">
+        <button class="icb" onclick="back()" aria-label="Back"><svg class="i" width="24" height="24"><use href="#i-back"/></svg></button>
+        <h1 data-t="whyTitle"></h1>
+        <button class="icb" onclick="goHome()" aria-label="Home"><svg class="i" width="22" height="22"><use href="#i-home"/></svg></button>
+      </div>
+      <div id="whyBody"></div>
+    </div>
+    <div class="summary">
+      <small data-t="nextStep"></small>
+      <p id="whySummary"></p>
+      <button class="btn" onclick="openChat(S.current)"><svg class="i" width="20" height="20"><use href="#i-chat"/></svg><span data-t="askAdvisor"></span></button>
+    </div>
+  </section>
+
+  <!-- CHAT -->
+  <section class="view" id="v-chat" aria-label="Farming advisor">
+    <div class="chathead">
+      <button class="icb" onclick="back()" aria-label="Back"><svg class="i" width="24" height="24"><use href="#i-back"/></svg></button>
+      <div class="bot"><svg class="i" width="22" height="22"><use href="#i-leaf"/></svg></div>
+      <div><b data-t="advisor"></b><small data-t="advisorSub"></small></div>
+    </div>
+    <div class="ctx" id="ctx"></div>
+    <div class="msgs" id="msgs" aria-live="polite"></div>
+    <div class="chips" id="chips"></div>
+    <div class="composer">
+      <label class="sr" for="inp">Message</label>
+      <input id="inp" autocomplete="off" onkeydown="if(event.key==='Enter')send()">
+      <button class="icb mic" id="micBtn" onclick="voice()" aria-label="Voice input"><svg class="i" width="22" height="22"><use href="#i-mic"/></svg></button>
+      <button class="icb send" onclick="send()" aria-label="Send"><svg class="i" width="20" height="20"><use href="#i-send"/></svg></button>
+    </div>
+  </section>
+
+  <!-- HISTORY -->
+  <section class="view" id="v-history" aria-label="History">
+    <div class="scroll">
+      <div class="hdr" style="margin-left:0"><h1 data-t="history"></h1></div>
+      <div id="histList"></div>
+    </div>
+    <nav class="tabbar" data-tabs="history"></nav>
+  </section>
+
+  <!-- SETTINGS -->
+  <section class="view" id="v-settings" aria-label="Settings">
+    <div class="scroll">
+      <div class="hdr" style="margin-left:0"><h1 data-t="settings"></h1></div>
+      <div class="setting">
+        <div class="label"><svg class="i" width="20" height="20"><use href="#i-globe"/></svg><span data-t="language"></span></div>
+        <div class="seg" id="langSeg"></div>
+        <p class="help" style="margin-top:8px" data-t="langNote"></p>
+      </div>
+      <div class="setting">
+        <div class="label"><svg class="i" width="20" height="20"><use href="#i-ruler"/></svg><span data-t="areaUnit"></span></div>
+        <div class="seg" id="unitSeg"></div>
+      </div>
+      <div class="setting">
+        <button class="btn btn-outline" onclick="clearHistory()"><svg class="i" width="20" height="20"><use href="#i-trash"/></svg><span data-t="clearHistory"></span></button>
+      </div>
+    </div>
+    <nav class="tabbar" data-tabs="settings"></nav>
+  </section>
+
+  <div class="overlay" id="overlay" role="status"><div class="spin"></div><span data-t="calculating"></span></div>
+  <div class="toast" id="toast" role="status"></div>
+</div>
+
+<script>
+/* =====================================================================
+   MOCK DATA: stands in for the Python backend. All numbers are illustrative.
+
+   Feature definitions follow the IHS5 training data (see /api/features):
+   - rainAvg  : long-term average July-June rainfall (IHS5 anntot_avg). We do NOT use the
+                season's actual total, because it is unknown at planting time.
+   - outlook  : seasonal outlook category (above / normal / below), a small adjustment.
+   - elev/slope: NASADEM aggregated to 1 km before computing slope, to match srtm_1k.
+   - soil     : nutrient availability class 1-4 (IHS5 sq1, looked up from the same global
+                soil database at deployment).
+   - plantMonth: month planting finished (IHS5 ag_d35_1a is month-level only).
+   - fertBags : 50 kg bags of inorganic fertilizer on the field (IHS5 ag_d39d + ag_d39j, kg).
+   - intercrop: maize mixed with other crops on the plot.
+   ===================================================================== */
+const AREAS=[
+  {id:"lilongwe",name:"Lilongwe",lat:-13.98,lng:33.78,region:"central",rainAvg:860,outlook:"normal",elev:1080,slope:3,aez:"ws",soil:2},
+  {id:"kasungu", name:"Kasungu", lat:-13.03,lng:33.48,region:"central",rainAvg:810,outlook:"normal",elev:1010,slope:2,aez:"ws",soil:2},
+  {id:"mzimba",  name:"Mzimba",  lat:-11.90,lng:33.60,region:"north",  rainAvg:780,outlook:"above", elev:1350,slope:6,aez:"cs",soil:3},
+  {id:"zomba",   name:"Zomba",   lat:-15.38,lng:35.32,region:"south",  rainAvg:1020,outlook:"normal",elev:900,slope:11,aez:"ws",soil:1},
+  {id:"blantyre",name:"Blantyre",lat:-15.79,lng:35.00,region:"south",  rainAvg:940,outlook:"normal",elev:1040,slope:9,aez:"ws",soil:2},
+  {id:"chikwawa",name:"Chikwawa",lat:-16.03,lng:34.80,region:"south",  rainAvg:620,outlook:"below", elev:110,slope:2,aez:"wsa",soil:3},
+];
+const ZONES={ws:{label:"Tropic-warm / subhumid",base:1180},cs:{label:"Tropic-cool / subhumid",base:1300},wsa:{label:"Tropic-warm / semiarid",base:900}};
+const SOIL={1:{label:"Good",chip:"ok",eff:80},2:{label:"Some limits",chip:"gray",eff:0},3:{label:"Poor",chip:"warn",eff:-150},4:{label:"Very poor",chip:"bad",eff:-300}};
+const OUTLOOK={above:{label:"Above normal",chip:"ok",eff:60},normal:{label:"Normal",chip:"gray",eff:0},below:{label:"Below normal",chip:"warn",eff:-150}};
+const ONSET={central:11,south:11,north:12};             // usual month of first rains (sample)
+const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"].map((n,i)=>[i+1,n.slice(0,3),n]);
+const monthName=m=>MONTHS[m-1][2];
+// position in the farming year, which starts in July, so Dec -> Jan counts as one month later
+const seasonIdx=m=>(m-7+12)%12;
+// mock effect of finishing planting "off" months after the usual first rains
+function plantEff(off){if(off===0)return 0;if(off<0)return Math.max(-900,150*off);return [0,-250,-550,-800][Math.min(off,3)]-(off>3?100*(off-3):0)}
+const AVG_RAIN=800, BAG_KG_FERT=50, ACRE=0.404686, REC_FERT_KGHA=200;
+
+/* Observational data mixes the effect of a choice with who makes it (e.g. richer farms or
+   subsidy recipients use more fertilizer). In the real model we (1) force fertilizer and
+   hybrid seed to never lower yield (monotonic constraints) and (2) shrink their effects
+   toward on-farm trial results. CALIBRATION stands in for step (2). */
+const CALIBRATION=0.8;
+
+function fertKgHa(x){return x.fertBags*BAG_KG_FERT/x.area}
+function recFertBags(x){return Math.max(1,Math.ceil(REC_FERT_KGHA*x.area/BAG_KG_FERT))}
+function effects(x){
+  const e=x.env, off=seasonIdx(x.plantMonth)-seasonIdx(ONSET[e.region]);
+  return {
+    zone: ZONES[e.aez].base,
+    rain: clamp((e.rainAvg-AVG_RAIN)*0.8,-450,250)+OUTLOOK[e.outlook].eff,
+    soil: SOIL[e.soil].eff,
+    terrain: -Math.max(0,e.slope-8)*12 + (e.elev<300?-150:0),
+    plant: plantEff(off),
+    seed: x.seed==="hybrid"?Math.round(430*CALIBRATION):0,
+    fert: Math.round(950*CALIBRATION*(1-Math.exp(-fertKgHa(x)/150))),   // diminishing returns
+  };
+}
+// Not additive on purpose: intercropping scales the whole maize yield, and fertilizer has
+// diminishing returns. The UI only ever shows full model re-runs, never summed effects.
+function predictY(x){const s=Object.values(effects(x)).reduce((a,b)=>a+b,0);return Math.max(200,s)*(x.intercrop?0.85:1)}
+function predict(x){
+  const y=predictY(x), ef=effects(x);
+  const typical=ef.zone+ef.rain+ef.soil+ef.terrain-60+Math.round(430*CALIBRATION*0.4)+300;
+  const whatIf=[];
+  if(fertKgHa(x)<REC_FERT_KGHA) whatIf.push({k:"fert",gain:predictY({...x,fertBags:recFertBags(x)})-y});
+  if(x.seed!=="hybrid") whatIf.push({k:"seed",gain:predictY({...x,seed:"hybrid"})-y});
+  if(x.plantMonth!==ONSET[x.env.region]) whatIf.push({k:"plant",gain:predictY({...x,plantMonth:ONSET[x.env.region]})-y});
+  whatIf.forEach(w=>w.gain=Math.max(0,w.gain)); whatIf.sort((a,b)=>b.gain-a.gain);
+  const spread=x.env.outlook==="normal"?0.18:0.22;
+  return {y:r10(y),lo:r10(y*(1-spread)),hi:r10(y*(1+spread)),typical:r10(typical),whatIf};
+}
+
+/* =====================================================================
+   I18N: Chichewa strings are a DRAFT and need native-speaker review.
+   ===================================================================== */
+const T={
+  greet:["Moni, Esther","Moni, Esther"],
+  tagline:["Early-season maize harvest estimates for your farm","Kuyerekeza zokolola za chimanga pa munda wanu"],
+  seasonLabel:["Maize · 2026/27 season","Chimanga · nyengo ya 2026/27"],
+  ctaEstimate:["Estimate my maize harvest","Yerekezani zokolola zanga"],
+  ctaEstimateSub:["3 short steps · about 1 minute","Masitepe atatu"],
+  ctaAsk:["Ask the farming advisor","Funsani mlangizi"],
+  ctaAskSub:["Questions about your farm","Mafunso okhudza munda wanu"],
+  locTitle:["Where is your farm?","Munda wanu uli kuti?"],
+  locHelp:["We use your location to look up rainfall, soil, land shape and growing zone. You don't need to type anything.","Tigwiritsa ntchito malo anu kuti tipeze mvula, nthaka ndi dera."],
+  useGps:["Use my location","Gwiritsani ntchito malo anga"],
+  orChoose:["or choose your area","kapena sankhani dera lanu"],
+  continue:["Continue","Pitirizani"],
+  farmTitle:["Your farm","Munda wanu"],
+  cropMaize:["Maize","Chimanga"],
+  fieldSize:["Field size","Kukula kwa munda"],
+  plantDate:["When do you finish planting?","Mumamaliza kubzala liti?"],
+  seedType:["Seed type","Mtundu wa mbewu"],
+  hybrid:["Hybrid","Hybrid"], local:["Local","Chimanga cha makolo"],
+  fertilizer:["Fertilizer on this field","Feteleza pa munda uno"],
+  fertHelp:["Number of 50 kg bags, planting and top-dressing together. 0 if none.","Matumba a 50 kg. 0 ngati palibe."],
+  intercrop:["Other crops in this field?","Mbewu zina mu munda uno?"],
+  intercropHelp:["For example beans, pigeon peas or groundnuts growing between the maize.","Mwachitsanzo nyemba, nandolo kapena mtedza."],
+  maizeOnly:["Maize only","Chimanga chokha"], mixed:["Mixed","Zosakaniza"],
+  yes:["Yes","Inde"], no:["No","Ayi"],
+  goalTitle:["Your goal","Cholinga chanu"],
+  goalHelp:["How much maize do you hope to harvest from this field? We'll compare it with the estimate.","Mukufuna kukolola chimanga chochuluka bwanji?"],
+  goalBags:["Harvest goal","Cholinga cha zokolola"],
+  bags:["bags","matumba"],
+  price:["Expected selling price","Mtengo wogulitsira"],
+  calculate:["Calculate","Werengani"],
+  calculating:["Fetching data and calculating…","Tikuwerengera…"],
+  resultTitle:["Your estimate","Zotsatira"],
+  whyTitle:["Why this result?","Chifukwa chiyani?"],
+  nextStep:["WHAT TO DO NEXT","CHOCHITA"],
+  askAdvisor:["Ask the advisor","Funsani mlangizi"],
+  advisor:["Farming advisor","Mlangizi"],
+  advisorSub:["Answers based on your estimate","Mayankho ochokera ku zotsatira zanu"],
+  history:["History","Mbiri"], home:["Home","Kunyumba"], settings:["Settings","Zokonda"],
+  language:["Language","Chilankhulo"],
+  langNote:["Chichewa is a draft translation for testing.","Chichewa ndi kumasulira koyamba."],
+  areaUnit:["Field size unit","Muyeso wa munda"],
+  clearHistory:["Clear history","Fufutani mbiri"],
+  ask:["Ask a question…","Funsani funso…"],
+};
+const t=(k)=>{const v=T[k];return v?(v[S.lang==="ny"?1:0]||v[0]):k};
+
+/* ===================== helpers ===================== */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt=n=>Math.round(n).toLocaleString("en-US");
+const r10=n=>Math.round(n/10)*10;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const ic=(n,s=22)=>`<svg class="i" width="${s}" height="${s}" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+let toastT; function toast(msg){const el=$("#toast");el.textContent=msg;el.classList.add("on");clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove("on"),2800)}
+
+/* ===================== state + persistence ===================== */
+const STORE="agriai_v5";
+const S={
+  lang:"en", unit:"ha",
+  form:{env:null,area:1.0,plantMonth:null,seed:"local",fertBags:0,intercrop:false,targetBags:null,bagsTouched:false,price:500,bagKg:50},
+  preds:[], current:null, generalChat:[], view:"home",
+};
+function save(){try{localStorage.setItem(STORE,JSON.stringify({lang:S.lang,unit:S.unit,preds:S.preds,generalChat:S.generalChat}))}catch(e){}}
+function load(){try{const d=JSON.parse(localStorage.getItem(STORE)||"{}");Object.assign(S,{lang:d.lang||"en",unit:d.unit||"ha",preds:d.preds||[],generalChat:d.generalChat||[]})}catch(e){}}
+const cur=()=>S.preds.find(p=>p.id===S.current);
+const latest=()=>S.preds[0];
+
+/* ===================== navigation (real browser history, so the phone back button works) ===================== */
+const TABS=["home","history","settings"];
+const FLOW=["loc","farm","goal"];
+function show(id){
+  if((id==="result"||id==="why")&&!cur()) id="home";
+  if(FLOW.includes(id)&&id!=="loc"&&!S.form.env) id="loc";
+  S.view=id;
+  document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id==="v-"+id));
+  ({home:renderHome,loc:renderLoc,farm:renderFarm,goal:renderGoal,result:renderResult,why:renderWhy,chat:renderChat,history:renderHistory,settings:renderSettings}[id]||(()=>{}))();
+  const sc=document.querySelector("#v-"+id+" .scroll"); if(sc) sc.scrollTop=0;
+}
+function go(id,replace){history[replace?"replaceState":"pushState"]({id},"","#"+id);show(id)}
+function back(){history.length>1?history.back():go("home",true)}
+function goHome(){go("home")}
+function tab(k){if(k===S.view)return;go(k,k==="home"||S.view!=="home")}
+window.addEventListener("popstate",e=>show(e.state?.id||"home"));
+function renderTabs(){
+  document.querySelectorAll("[data-tabs]").forEach(n=>{
+    const on=n.dataset.tabs, icons={home:"home",history:"history",settings:"settings"};
+    n.innerHTML=TABS.map(k=>`<button class="${k===on?"on":""}" ${k===on?'aria-current="page"':""} onclick="tab('${k}')">${ic(icons[k],24)}${t(k)}</button>`).join("");
+  });
+}
+function applyLang(){
+  document.documentElement.lang=S.lang==="ny"?"ny":"en";
+  document.querySelectorAll("[data-t]").forEach(el=>el.textContent=t(el.dataset.t));
+  $("#inp").placeholder=t("ask");
+  renderTabs();
+}
+
+/* ===================== HOME ===================== */
+function renderHome(){
+  const e=S.form.env||latest()?.form.env;
+  $("#homeHero").innerHTML=`
+    <svg class="scene" viewBox="0 0 400 160" preserveAspectRatio="none" aria-hidden="true">
+      <circle cx="340" cy="40" r="14" fill="#FFD54F"/>
+      <path d="M0 120 C70 100 130 112 200 102 S330 80 400 92 L400 160 L0 160Z" fill="#558B2F" opacity=".9"/>
+      <path d="M0 140 C90 128 170 138 250 128 S350 118 400 122 L400 160 L0 160Z" fill="#33691E"/>
+    </svg>
+    <div class="in">${e?`
+      <span class="loc">${ic("pin",16)}${esc(e.name)}</span>
+      <div class="facts"><span>${ic("rain",14)} Rain outlook: ${OUTLOOK[e.outlook].label}</span><span>${ic("terrain",14)} ${fmt(e.elev)} m</span><span>${ic("zone",14)} Soil: ${SOIL[e.soil].label}</span></div>`
+      :`<span class="loc">${ic("pin",16)}Location not set</span><p>Start an estimate and we'll look up rainfall and land conditions for your farm.</p>`}
+    </div>`;
+  const l=latest();
+  $("#homeLast").innerHTML=l?`<button class="card tap" style="width:100%;text-align:left;font:inherit" onclick="openPred('${l.id}')">
+      <div style="flex:1"><small style="color:var(--muted);font-size:13px">Last estimate · ${esc(l.form.env.name)}</small>
+      <div style="font-size:20px;font-weight:800;margin-top:2px">About ${bagsOf(l,l.result.y)} bags</div>${gapChip(l)}</div>${ic("chev",22)}</button>`:"";
+}
+
+/* ===================== STEP 1: LOCATION ===================== */
+let locState={s:"idle"};
+const FETCH_ROWS=[["Rainfall (usual + outlook)","CHIRPS"],["Elevation & slope","NASADEM"],["Soil","Soil database"],["Growing zone","AEZ"]];
+function renderLoc(){
+  $("#areaSel").innerHTML=`<option value="">Choose district…</option>`+AREAS.map(a=>`<option value="${a.id}" ${S.form.env?.areaId===a.id&&S.form.env.src==="area"?"selected":""}>${a.name}</option>`).join("");
+  const st=$("#locStatus"), s=locState.s;
+  if(s==="locating") st.innerHTML=`<div class="notice info"><div class="spin"></div>Finding your location…</div>`;
+  else if(s==="error") st.innerHTML=`<div class="notice err">${ic("alert",20)}<div>${esc(locState.msg)}</div></div>`;
+  else if(s==="fetching") st.innerHTML=`<div class="card"><h3>${ic("pin",18)}Looking up your farm conditions</h3><div class="fetch">${FETCH_ROWS.map((r,i)=>`<div class="row">${i<locState.step?`<span class="done">${ic("check",20)}</span>`:i===locState.step?'<div class="spin"></div>':'<div class="wait"></div>'}${r[0]}<small>${r[1]}</small></div>`).join("")}</div></div>`;
+  else if(S.form.env){
+    const e=S.form.env;
+    st.innerHTML=`<div class="card"><h3><span class="done">${ic("check",20)}</span>${esc(e.name)}<span class="chip gray" style="margin-left:auto">${e.src==="gps"?"GPS":"District centre"}</span></h3>
+      <div class="kv">
+        <div><small>Usual season rain</small><b>${fmt(e.rainAvg)} mm</b></div>
+        <div><small>This season's outlook</small><b>${OUTLOOK[e.outlook].label}</b></div>
+        <div><small>Soil nutrients</small><b>${SOIL[e.soil].label}</b></div>
+        <div><small>Elevation · slope</small><b>${fmt(e.elev)} m · ${e.slope}%</b></div>
+        <div style="grid-column:1/-1"><small>Growing zone</small><b>${ZONES[e.aez].label}</b></div>
+      </div>
+      ${e.src==="area"?`<p class="help" style="margin:10px 0 0">Using the district centre. GPS gives a more accurate estimate.</p>`:""}</div>`;
+  } else st.innerHTML="";
+  $("#locNext").disabled=!S.form.env||s==="fetching"||s==="locating";
+  $("#gpsBtn").disabled=s==="fetching"||s==="locating";
+}
+function useGPS(){
+  if(!navigator.geolocation){locState={s:"error",msg:"This phone can't share its location. Please choose your district instead."};return renderLoc()}
+  locState={s:"locating"};renderLoc();
+  navigator.geolocation.getCurrentPosition(p=>{
+    const {latitude:lat,longitude:lng}=p.coords;
+    if(lat<-17.2||lat>-9.3||lng<32.6||lng>36){locState={s:"error",msg:"Your location seems to be outside Malawi. Choose a district below to try the demo."};return renderLoc()}
+    fetchEnv({lat,lng,src:"gps"});
+  },err=>{
+    locState={s:"error",msg:err.code===1?"Location permission was turned off. Allow location in your browser settings, or choose your district below.":"We couldn't get your location (weak signal?). Try again outside, or choose your district below."};
+    renderLoc();
+  },{timeout:12000,enableHighAccuracy:true,maximumAge:60000});
+}
+function chooseArea(id){const a=AREAS.find(x=>x.id===id);if(a) fetchEnv({lat:a.lat,lng:a.lng,src:"area"})}
+function nearest(lat,lng){return AREAS.reduce((b,a)=>Math.hypot(a.lat-lat,a.lng-lng)<Math.hypot(b.lat-lat,b.lng-lng)?a:b)}
+// stands in for GET /api/features
+function fetchEnv({lat,lng,src}){
+  locState={s:"fetching",step:0};renderLoc();
+  const a=nearest(lat,lng);
+  const tick=()=>{locState.step++;if(locState.step<FETCH_ROWS.length){renderLoc();setTimeout(tick,380)}else{
+    S.form.env={areaId:a.id,name:(src==="gps"?"Near ":"")+a.name,src,lat,lng,region:a.region,rainAvg:a.rainAvg,outlook:a.outlook,elev:a.elev,slope:a.slope,aez:a.aez,soil:a.soil,feature_version:"ihs5-v1"};
+    if(!S.form.plantTouched) S.form.plantMonth=ONSET[a.region];
+    if(!S.form.bagsTouched) S.form.targetBags=null;
+    locState={s:"idle"};renderLoc();
+  }};
+  setTimeout(tick,380);
+}
+
+/* ===================== STEP 2: FARM ===================== */
+const toUnit=ha=>S.unit==="ha"?ha:ha/ACRE;
+const fromUnit=v=>S.unit==="ha"?v:v*ACRE;
+function renderFarm(){
+  const f=S.form, e=f.env; if(!e) return;
+  $("#areaInp").value=+toUnit(f.area).toFixed(2);
+  $("#areaUnit").textContent=S.unit==="ha"?"ha":"acres";
+  seg("#unitInline",[["ha","Hectares"],["acre","Acres"]],S.unit,v=>{S.unit=v;save();renderFarm()});
+  seg("#monthSeg",MONTHS.map(m=>[m[0],m[1]]),f.plantMonth,v=>{f.plantMonth=v;f.plantTouched=true;renderFarm()});
+  seg("#seedSeg",[["hybrid",t("hybrid")],["local",t("local")]],f.seed,v=>{f.seed=v;renderFarm()});
+  $("#fertInp").value=f.fertBags;
+  seg("#mixSeg",[[false,t("maizeOnly")],[true,t("mixed")]],f.intercrop,v=>{f.intercrop=v;renderFarm()});
+}
+function seg(sel,opts,val,on){
+  const el=$(sel); el.innerHTML=opts.map(([v,l],i)=>`<button role="radio" aria-checked="${v===val}" class="${v===val?"on":""}" data-i="${i}">${l}</button>`).join("");
+  el.querySelectorAll("button").forEach(b=>b.onclick=()=>on(opts[+b.dataset.i][0]));
+}
+function stepArea(dir){const step=S.unit==="ha"?0.1:0.25;S.form.area=clamp(fromUnit(+(toUnit(S.form.area)+dir*step).toFixed(2)),0.05,50);if(!S.form.bagsTouched)S.form.targetBags=null;renderFarm()}
+function typeArea(v){const n=parseFloat(v);if(n>0){S.form.area=clamp(fromUnit(n),0.05,50);if(!S.form.bagsTouched)S.form.targetBags=null}renderFarm()}
+function stepFert(d){S.form.fertBags=clamp(S.form.fertBags+d,0,99);renderFarm()}
+function typeFert(v){const n=parseInt(v);if(n>=0)S.form.fertBags=clamp(n,0,99);renderFarm()}
+
+/* ===================== STEP 3: GOAL ===================== */
+const formBagKg=()=>S.form.bagKg||50;
+function typicalBags(){const f=S.form;return Math.max(1,Math.round(predict(f).typical*f.area/formBagKg()))}
+function renderGoal(){
+  const f=S.form; if(!f.env) return; if(!f.bagKg) f.bagKg=50;
+  seg("#bagSeg",[[50,"50 kg"],[90,"90 kg"]],f.bagKg,v=>{
+    const old=f.bagKg; f.bagKg=v;
+    if(f.bagsTouched) f.targetBags=Math.max(1,Math.round(f.targetBags*old/v)); else f.targetBags=null;
+    renderGoal();
+  });
+  if(f.targetBags==null) f.targetBags=Math.round(typicalBags()*1.1);
+  $("#bagsInp").value=f.targetBags; $("#priceInp").value=f.price;
+  const kgha=f.targetBags*f.bagKg/f.area;
+  $("#bagsHelp").innerHTML=`= ${fmt(kgha)} kg per hectare<br>A typical farm near you harvests about <b>${typicalBags()} bags</b> on this much land.`;
+  $("#goalIncome").innerHTML=`<h3>${ic("coin",18)}If you reach your goal</h3><div style="font-size:24px;font-weight:800">MWK ${fmt(f.targetBags*f.bagKg*f.price)}</div><p class="help" style="margin:4px 0 0">${f.targetBags} bags × ${f.bagKg} kg × MWK ${fmt(f.price)}</p>`;
+}
+function stepBags(d){S.form.targetBags=Math.max(1,S.form.targetBags+d);S.form.bagsTouched=true;renderGoal()}
+function typeBags(v){const n=parseInt(v);if(n>0){S.form.targetBags=n;S.form.bagsTouched=true}renderGoal()}
+function typePrice(v){const n=parseInt(v);if(n>0)S.form.price=n;renderGoal()}
+
+/* ===================== CALCULATE (stands in for POST /api/predict) ===================== */
+function snapshot(f){return {env:{...f.env},area:+f.area.toFixed(3),plantMonth:f.plantMonth,seed:f.seed,fertBags:f.fertBags,intercrop:f.intercrop,targetBags:f.targetBags,price:f.price,bagKg:f.bagKg||50}}
+function calculate(){
+  const form=snapshot(S.form), key=JSON.stringify(form);
+  $("#overlay").classList.add("on");
+  setTimeout(()=>{
+    $("#overlay").classList.remove("on");
+    let p=S.preds.find(x=>x.key===key);
+    if(p){ S.preds=[p,...S.preds.filter(x=>x!==p)]; p.ts=Date.now(); }   // same inputs: reuse, don't duplicate
+    else { p={id:"p"+Date.now(),key,ts:Date.now(),form,result:predict(form),chat:[],model_version:"mock-1"}; S.preds.unshift(p); }
+    S.preds=S.preds.slice(0,30); S.current=p.id; save(); go("result");
+  },900);
+}
+function openPred(id){S.current=id;go("result")}
+const bagKgOf=p=>p.form.bagKg||50;
+const bagsOf=(p,kg)=>Math.round(kg*p.form.area/bagKgOf(p));
+function targetKgHa(p){return p.form.targetBags*bagKgOf(p)/p.form.area}
+function gapOf(p){return p.result.y-targetKgHa(p)}
+function gapChip(p){const d=bagsOf(p,p.result.y)-p.form.targetBags;return d>=0?`<span class="chip ok">Meets goal</span>`:`<span class="chip warn">${-d} bags short</span>`}
+const scen=(p,ch)=>predictY({...p.form,...ch});
+function bestChoices(p){const f=p.form;return {seed:"hybrid",fertBags:Math.max(f.fertBags,recFertBags(f)),plantMonth:ONSET[f.env.region]}}
+const moneyOf=(p,bags)=>"MWK "+fmt(Math.round(bags*bagKgOf(p)*p.form.price/1000)*1000);
+
+/* ===================== RESULT ===================== */
+function renderResult(){
+  const p=cur(); if(!p) return; const r=p.result, f=p.form;
+  const est=bagsOf(p,r.y), lo=bagsOf(p,r.lo), hi=bagsOf(p,r.hi), goal=f.targetBags, typ=bagsOf(p,r.typical), diff=est-goal, ok=diff>=0;
+  const per=Math.max(est,goal)>40?5:1, nEst=Math.round(est/per), nGoal=Math.round(goal/per), n=Math.max(nEst,nGoal);
+  const grid=Array.from({length:n},(_,i)=>`<svg class="bag ${i<nEst?"f":"miss"}" width="24" height="24" aria-hidden="true"><use href="#i-bag"/></svg>`).join("");
+  const pos=hi>lo?(est-lo)/(hi-lo)*100:50;
+  $("#resBody").innerHTML=`
+    <div class="status ${ok?"ok":"bad"}">${ic(ok?"check":"alert",22)}<span>${ok?"You can reach your goal":`${-diff} bags short of your goal`}</span></div>
+    <div class="res-hero">
+      <div class="k">EXPECTED HARVEST</div>
+      <div class="big">${est}<span> bags</span></div>
+      <div class="range" aria-label="Possible range ${lo} to ${hi} bags">
+        <div class="rt"><i style="left:${pos}%"></i></div>
+        <div class="rl"><span><b>${lo}</b> poor season</span><span><b>${hi}</b> good season</span></div>
+      </div>
+    </div>
+    <div class="tiles">
+      <div class="tile">${ic("coin",22)}<b>${moneyOf(p,est)}</b><small>Value at your price</small></div>
+      <div class="tile">${ic("bag",22)}<b>${bagKgOf(p)} kg bags</b><small>Shelled grain · ${fmtArea(f.area)}${f.intercrop?" · mixed":""}</small></div>
+    </div>
+    <div class="card">
+      <h3>${ic("target",18)}Your goal: ${goal} bags</h3>
+      <div class="baggrid" role="img" aria-label="${est} bags expected out of a goal of ${goal}">${grid}</div>
+      <div class="legend"><span><svg class="bag f" width="16" height="16"><use href="#i-bag"/></svg>Expected harvest</span>${ok?"":`<span><svg class="bag miss" width="16" height="16"><use href="#i-bag"/></svg>Missing to reach goal</span>`}${per>1?`<span>1 icon = ${per} bags</span>`:""}</div>
+      <div class="gapbox ${ok?"ok":"bad"}">${ok
+        ?`Great, that is <b>${diff} bag${diff===1?"":"s"} more</b> than your goal.`
+        :`You may get <b>${est}</b> bags, but your goal is <b>${goal}</b>. The missing <b>${-diff} bags</b> are worth about <b>${moneyOf(p,-diff)}</b>.`}</div>
+    </div>
+    <div class="card" style="display:flex;gap:12px;align-items:center">
+      <span class="ic-soft">${ic("pin",20)}</span>
+      <div><b>Similar farms near you: about ${typ} bags</b><p class="help" style="margin:2px 0 0">Farms of the same size in ${esc(f.env.name.replace("Near ",""))} using the usual seed and fertilizer.</p></div>
+    </div>
+    <div class="early">${ic("info",18)}<span>This is an early guess based on usual rainfall and this season's outlook. It can change during the season.</span></div>
+    <div class="stack">
+      <button class="btn btn-orange" onclick="go('why')">${ok?"Why this result?":"How can I get more bags?"} ${ic("fwd",22)}</button>
+      <button class="btn btn-outline" onclick="editPred()">${ic("edit",20)}Change my answers</button>
+    </div>
+    <details class="details"><summary>Details for extension officers</summary>
+      <div class="kv" style="margin-top:10px">
+        <div><small>Estimated yield</small><b>${fmt(r.y)} kg/ha</b></div>
+        <div><small>Likely range</small><b>${fmt(r.lo)} to ${fmt(r.hi)}</b></div>
+        <div><small>Goal</small><b>${fmt(targetKgHa(p))} kg/ha</b></div>
+        <div><small>Typical nearby</small><b>${fmt(r.typical)} kg/ha</b></div>
+        <div><small>Fertilizer</small><b>${fmt(fertKgHa(f))} kg/ha</b></div>
+        <div><small>Versions</small><b style="font-size:13px">${esc(f.env.feature_version||"")} · ${esc(p.model_version||"")}</b></div>
+      </div></details>`;
+}
+function fmtArea(ha){return S.unit==="ha"?`${+ha.toFixed(2)} ha`:`${+(ha/ACRE).toFixed(2)} acres`}
+function editPred(){const p=cur();S.form={...S.form,...JSON.parse(JSON.stringify(p.form)),plantTouched:true,bagsTouched:true};go("farm")}
+
+/* ===================== WHY: compare options instead of adding up effects =====================
+   Every number here is a fresh model run with one choice changed, so this view stays
+   correct when the real model is non-linear and factors interact.                    */
+const WHATIF_TXT={
+  fert:p=>`Use about ${recFertBags(p.form)} bags of fertilizer (planting + top-dressing)`,
+  seed:p=>"Plant hybrid seed instead of local seed",
+  plant:p=>`Finish planting in ${monthName(ONSET[p.form.env.region])}, with the first rains`,
+};
+function choiceGroups(p){
+  const f=p.form, onset=ONSET[f.env.region], rec=recFertBags(f);
+  let fo=[0,Math.max(1,Math.round(rec/2)),rec]; if(!fo.includes(f.fertBags)) fo.push(f.fertBags); fo=[...new Set(fo)].sort((a,b)=>a-b);
+  return [
+    {icon:"cal",name:"Planting month",chart:true,cur:f.plantMonth,onset,opts:MONTHS.map(m=>m[0]).sort((a,b)=>seasonIdx(a)-seasonIdx(b)).map(m=>({v:m,label:monthName(m),ch:{plantMonth:m}}))},
+    {icon:"seed",name:"Seed type",cur:f.seed,opts:[{v:"local",label:"Local seed",ch:{seed:"local"}},{v:"hybrid",label:"Hybrid seed",ch:{seed:"hybrid"}}]},
+    {icon:"fert",name:"Fertilizer",cur:f.fertBags,opts:fo.map(b=>({v:b,label:b===0?"No fertilizer":`${b} bag${b>1?"s":""}${b===rec?" · recommended":""}`,ch:{fertBags:b}}))},
+  ];
+}
+function renderWhy(){
+  const p=cur(); if(!p) return; const f=p.form, e=f.env, now=bagsOf(p,p.result.y);
+  const groups=choiceGroups(p);
+  groups.forEach(g=>g.opts.forEach(o=>o.bags=bagsOf(p,scen(p,o.ch))));
+  const best=bestChoices(p), bestBags=bagsOf(p,scen(p,best));
+  const max=Math.max(bestBags,...groups.filter(g=>!g.chart).flatMap(g=>g.opts.map(o=>o.bags)),1);
+  const optHTML=(g,o)=>{const isCur=o.v===g.cur, d=o.bags-now;
+    return `<div class="opt ${isCur?"cur":""}"><div class="top"><span>${o.label}</span>${isCur?`<span class="chip ok">Your choice</span>`:""}
+      <b>${o.bags} bags</b>${!isCur&&d!==0?`<span class="delta ${d>0?"up":"down"}">${d>0?"+":"−"}${Math.abs(d)}</span>`:""}</div>
+      <div class="bar"><i style="width:${o.bags/max*100}%"></i></div></div>`};
+  const changes=[];
+  if(f.plantMonth!==best.plantMonth) changes.push(WHATIF_TXT.plant(p));
+  if(f.seed!=="hybrid") changes.push(WHATIF_TXT.seed(p));
+  if(f.fertBags<best.fertBags) changes.push(WHATIF_TXT.fert(p));
+  const pure=bagsOf(p,scen(p,{intercrop:false})), mixedB=bagsOf(p,scen(p,{intercrop:true}));
+  const dry=bagsOf(p,predictY({...f,env:{...e,outlook:"below"}}));
+  const zb=ZONES[e.aez].base, zoneR=zb>=1250?["Good","ok"]:zb>=1100?["Average","gray"]:["Difficult","bad"];
+  const landR=e.elev<300?["Hot lowland","warn"]:e.slope>8?["Steep","warn"]:["Good","ok"];
+  const cond=(icon,name,val,[r,c],txt)=>`<div class="cond"><span class="ic-soft">${ic(icon,20)}</span><div style="flex:1"><div class="top"><b>${name}</b><span class="chip ${c}">${r}</span></div><small>${val}</small>${txt?`<p>${txt}</p>`:""}</div></div>`;
+  $("#whyBody").innerHTML=`
+    <p class="base">You expect <b>${now} bags</b>. Here is how many bags each choice would give, with everything else kept the same.</p>
+    <div class="sect">${ic("edit",16)}YOUR CHOICES</div>
+    <div class="caveat">${ic("info",16)}<span>Estimated from farms like yours that made each choice. Your real result can differ.</span></div>
+    ${groups.map(g=>g.chart?monthChartHTML(g):`<div class="group"><div class="gname">${ic(g.icon,18)}${g.name}</div>${g.opts.map(o=>optHTML(g,o)).join("")}</div>`).join("")}
+    <div class="group"><div class="gname">${ic("zone",18)}Mixed cropping</div>
+      <div class="cond" style="border:0;padding-top:6px"><div style="flex:1"><small>${f.intercrop
+        ?`Your field is mixed. Maize only would give about <b>${pure} bags</b> of maize, but you would lose the beans, peas or groundnuts. This is your choice, so it is not in the plan below.`
+        :`Your field is maize only. Mixing in a legume would give about <b>${mixedB} bags</b> of maize, plus beans, peas or groundnuts, and can help the soil.`}</small></div></div>
+    </div>
+    <div class="sect">${ic("bulb",16)}YOUR BEST PLAN</div>
+    ${changes.length?`<div class="best">
+        <div class="top"><b>All changes together</b><span class="big2">${bestBags} bags</span></div>
+        <ul>${changes.map(c=>`<li>${c}</li>`).join("")}</ul>
+        <p>${bestBags>=f.targetBags?`This reaches your goal of ${f.targetBags} bags.`:`This is still ${f.targetBags-bestBags} bags below your goal of ${f.targetBags}.`} Changes can work together, so this can be more or less than adding them up one by one.</p>
+      </div>`
+      :`<p class="help" style="margin-top:8px">You are already using the best choices the model knows about.</p>`}
+    <div class="sect">${ic("rain",16)}CONDITIONS YOU CAN'T CHANGE</div>
+    ${cond("rain","Rainfall",`Usually ${fmt(e.rainAvg)} mm a season. Outlook this season: ${OUTLOOK[e.outlook].label.toLowerCase()}.`,[OUTLOOK[e.outlook].label,OUTLOOK[e.outlook].chip],e.outlook!=="below"?`If the season turns out below normal, you may get about ${dry} bags.`:"")}
+    ${cond("zone","Soil nutrients",`From the soil map for your area`,[SOIL[e.soil].label,SOIL[e.soil].chip],e.soil>=3?"Compost or manure can help poor soil. Ask the advisor.":"")}
+    ${cond("terrain","Land",`${fmt(e.elev)} m high, ${e.slope}% slope`,landR,e.elev<300?"Hot, low land is harder for maize.":e.slope>8?"Steep land loses water and soil when it rains.":"")}
+    ${cond("zone","Growing zone",ZONES[e.aez].label,zoneR,"")}`;
+  $("#whySummary").textContent=summaryLine(p);
+  const mg=groups.find(g=>g.chart); WHY_MONTHS={g:mg,now};
+  selectMonth(mg.cur===mg.onset?mg.cur:mg.onset);
+}
+/* 12-month chart: ordered by farming year (Jul to Jun) so the curve around the rains stays continuous */
+let WHY_MONTHS=null;
+function monthChartHTML(g){
+  const mx=Math.max(...g.opts.map(o=>o.bags),1);
+  return `<div class="group"><div class="gname">${ic(g.icon,18)}${g.name}</div>
+    <div class="mchart" role="group" aria-label="Bags for each planting month">
+      ${g.opts.map(o=>`<button class="mb ${o.v===g.cur?"cur":""} ${o.v===g.onset?"onset":""}" data-m="${o.v}" onclick="selectMonth(${o.v})" aria-label="${o.label}: ${o.bags} bags">
+        <b class="tr"><em>${o.bags}</em><i style="height:${Math.max(3,o.bags/mx*100)}%"></i></b><span>${o.label.slice(0,1)}</span></button>`).join("")}
+    </div>
+    <div class="mlegend"><span><i style="background:var(--green)"></i>Your month</span><span><i style="background:var(--accent)"></i>First rains</span><span>Tap a bar to compare</span></div>
+    <div class="mdetail" id="mdetail" aria-live="polite"></div></div>`;
+}
+function selectMonth(m){
+  const {g,now}=WHY_MONTHS, o=g.opts.find(x=>x.v===m), d=o.bags-now;
+  document.querySelectorAll(".mb").forEach(b=>b.classList.toggle("sel",+b.dataset.m===m));
+  $("#mdetail").innerHTML=`<b>${o.label}</b>${m===g.onset?" · first rains":""}${m===g.cur?" · your choice":""}
+    <span class="mv">${o.bags} bags${m!==g.cur&&d!==0?` <span class="delta ${d>0?"up":"down"}">${d>0?"+":"−"}${Math.abs(d)}</span>`:""}</span>`;
+}
+function summaryLine(p){
+  const f=p.form, now=bagsOf(p,p.result.y), goal=f.targetBags, bb=bagsOf(p,scen(p,bestChoices(p)));
+  const fixes=p.result.whatIf;
+  if(now>=goal) return bb>now?`You can reach your goal. With the best plan you could get about ${bb} bags.`:"You can reach your goal. Keep up good weeding and field care.";
+  if(bb>=goal){
+    const top=fixes[0], alone=top?bagsOf(p,p.result.y+top.gain):now;
+    return top&&alone>=goal?`${WHATIF_TXT[top.k](p)}. This alone could be enough for your goal.`:`Following your best plan could get you about ${bb} bags, enough for your goal.`;
+  }
+  if(bb>now) return `Even the best plan gives about ${bb} bags, ${goal-bb} short of your goal. A goal near ${bb} bags is more realistic.`;
+  return `Your choices are already the best the model knows. A goal near ${now} bags is more realistic this season.`;
+}
+
+/* ===================== CHAT (stands in for POST /api/advise) ===================== */
+let chatPredId=null;
+function openChat(id){chatPredId=id||latest()?.id||null;go("chat")}
+const thread=()=>{const p=S.preds.find(x=>x.id===chatPredId);return p?p.chat:S.generalChat};
+function renderChat(){
+  const p=S.preds.find(x=>x.id===chatPredId);
+  $("#ctx").innerHTML=p
+    ?`<b>${ic("info",16)}Talking about your estimate · ${new Date(p.ts).toLocaleDateString("en-GB",{day:"numeric",month:"short"})}</b>
+      ${esc(p.form.env.name)} · about ${bagsOf(p,p.result.y)} bags · goal ${p.form.targetBags} bags`
+    :`<b>${ic("info",16)}No estimate yet</b>I can answer general questions. For advice about your own field, make an estimate first.
+      <button class="btn btn-primary" onclick="startFlow()">Estimate my harvest</button>`;
+  const th=thread();
+  if(!th.length){
+    const short=p?p.form.targetBags-bagsOf(p,p.result.y):0;
+    th.push({who:"a",html:p?`Moni! You may harvest about <b>${bagsOf(p,p.result.y)} bags</b>, ${short<=0?"which meets your goal":`about <b>${short} bags</b> short of your goal`}. What would you like to know?`:"Moni! Ask me anything about growing maize.",src:p?"model":null});
+    save();
+  }
+  const box=$("#msgs"); box.innerHTML=th.map(msgHTML).join(""); box.scrollTop=box.scrollHeight;
+  const qs=p?["How can I reach my goal?","What if the rains are poor?","Is there a cheaper option than fertilizer?","When should I plant?"]:["When should I plant maize?","How do I store maize safely?"];
+  $("#chips").innerHTML=qs.map((q,i)=>`<button data-q="${i}">${q}</button>`).join("");
+  $("#chips").querySelectorAll("button").forEach(b=>b.onclick=()=>send(qs[+b.dataset.q]));
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  $("#micBtn").classList.toggle("off",!SR);
+}
+function msgHTML(m){
+  const srcs=[].concat(m.src||[]);
+  const tag=srcs.length?`<div style="display:flex;gap:6px;flex-wrap:wrap">${srcs.includes("model")?`<span class="src model">${ic("check",12)}From your estimate</span>`:""}${srcs.includes("general")?`<span class="src general">${ic("info",12)}General guidance, not from the model</span>`:""}</div>`:"";
+  return `<div class="m ${m.who}">${m.who==="u"?esc(m.text):m.html+tag}</div>`;
+}
+function reply(q){
+  const p=S.preds.find(x=>x.id===chatPredId), s=q.toLowerCase();
+  if(!p){
+    if(/plant|when|date/.test(s)) return {html:"Most farmers in Malawi plant with the first good rains, usually mid November to early December, once the soil is wet to about a hand's depth.",src:"general"};
+    if(/store|storage|weevil/.test(s)) return {html:"Dry maize well (until the grain cracks when bitten), use hermetic (PICS) bags if you can, and keep bags off the floor.",src:"general"};
+    return {html:"For advice about your own field, please make an estimate first. Then I can explain your numbers.",src:null};
+  }
+  const r=p.result,f=p.form,e=f.env,now=bagsOf(p,r.y),goal=f.targetBags,B=kg=>bagsOf(p,kg);
+  const caveat=`<div style="margin-top:8px;font-size:13.5px;color:var(--muted)">These numbers come from farms like yours. Your real result can differ.</div>`;
+  if(/goal|improve|reach|increase|better|more|gap/.test(s)){
+    if(!r.whatIf.length) return {html:`Your planting month, seed and fertilizer are already the best options the model knows about. ${now<goal?`The rest of the gap comes from rainfall, soil and land. A goal of about <b>${now} bags</b> is more realistic this season.`:"You're on track."}`,src:"model"};
+    return {html:`Each change on its own would give you:<ul>${r.whatIf.map(x=>`<li>${WHATIF_TXT[x.k](p)}: <b>${B(r.y+x.gain)} bags</b> (+${B(r.y+x.gain)-now})</li>`).join("")}</ul><div style="margin-top:6px">${summaryLine(p)}</div>${caveat}`,src:"model"};
+  }
+  if(/rain|dry|drought|poor/.test(s)){
+    const dry=B(predictY({...f,env:{...e,outlook:"below"}}));
+    return {html:`${e.outlook==="below"?`The outlook for this season is already below normal, and your estimate of ${now} bags includes that.`:`If the season turns out below normal, you may get about <b>${dry} bags</b> instead of ${now}.`}<div style="margin-top:8px">To protect against dry spells, farmers often use mulching, tied ridges or pit planting to keep water in the soil.</div>`,src:["model","general"]};
+  }
+  if(/cheap|cost|afford|alternative|fertili/.test(s)){
+    const rec=recFertBags(f);
+    const fertPart=f.fertBags>=rec
+      ?`You already use about the recommended amount (${rec} bags). With ${Math.max(1,Math.round(rec/2))} bags you may get about <b>${B(scen(p,{fertBags:Math.max(1,Math.round(rec/2))}))} bags</b> of maize instead of ${now}.`
+      :`With ${rec} bags of fertilizer you may get about <b>${B(scen(p,{fertBags:rec}))} bags</b> of maize instead of ${now}. Even ${Math.max(1,Math.round(rec/2))} bags would give about ${B(scen(p,{fertBags:Math.max(1,Math.round(rec/2))}))}.`;
+    return {html:`${fertPart}<div style="margin-top:8px">Lower cost options include compost, animal manure, and mixing in pigeon pea or groundnuts. The model can't estimate their effect yet.</div>`,src:["model","general"]};
+  }
+  if(/plant|when|date|month|early|late/.test(s)){
+    const on=ONSET[e.region], onB=B(scen(p,{plantMonth:on}));
+    return {html:`First rains near ${esc(e.name.replace("Near ",""))} usually come in <b>${monthName(on)}</b>. You finish planting in ${monthName(f.plantMonth)}${f.plantMonth===on?", which is well timed.":`. Finishing in ${monthName(on)} would give about <b>${onB} bags</b> instead of ${now}.`}`,src:"model"};
+  }
+  return {html:"I can explain your estimate, how to reach your goal, what happens if rains are poor, fertilizer amounts, and planting time. Try one of the suggestions below.",src:null};
+}
+function send(text){
+  const inp=$("#inp"), q=(text||inp.value).trim(); if(!q) return; inp.value="";
+  const th=thread(); th.push({who:"u",text:q});
+  const box=$("#msgs"); box.insertAdjacentHTML("beforeend",msgHTML({who:"u",text:q})+`<div class="m a" id="typing"><span class="typing"><span></span><span></span><span></span></span></div>`); box.scrollTop=box.scrollHeight;
+  setTimeout(()=>{const r=reply(q);th.push({who:"a",html:r.html,src:r.src});save();$("#typing")?.remove();box.insertAdjacentHTML("beforeend",msgHTML(th[th.length-1]));box.scrollTop=box.scrollHeight},700);
+}
+function voice(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition, btn=$("#micBtn");
+  if(!SR) return toast("Voice input isn't supported in this browser yet. Please type your question.");
+  const r=new SR(); r.lang=S.lang==="ny"?"ny-MW":"en-US"; r.interimResults=false;
+  btn.classList.add("rec");
+  r.onresult=e=>send(e.results[0][0].transcript);
+  r.onerror=e=>toast(e.error==="not-allowed"?"Microphone permission is off. Allow it in browser settings.":e.error==="language-not-supported"?"Voice isn't available in this language yet.":"Didn't catch that. Please try again.");
+  r.onend=()=>btn.classList.remove("rec");
+  try{r.start()}catch(e){btn.classList.remove("rec")}
+}
+
+/* ===================== HISTORY / SETTINGS ===================== */
+function renderHistory(){
+  const l=$("#histList");
+  l.innerHTML=S.preds.length?S.preds.map(p=>`<button class="hist" onclick="openPred('${p.id}')">
+      <div class="ic">${ic("seed",22)}</div>
+      <div><b>${esc(p.form.env.name)} · ${fmtArea(p.form.area)}</b><small>${new Date(p.ts).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})} · ${p.form.seed==="hybrid"?"Hybrid":"Local"} · ${p.form.fertBags} bags fertilizer</small></div>
+      <div class="y">${bagsOf(p,p.result.y)} bags<br>${gapChip(p)}</div></button>`).join("")
+    :`<div class="empty">${ic("history",48)}<div>No estimates yet.<br>Your past estimates will appear here.</div></div>`;
+}
+function renderSettings(){
+  seg("#langSeg",[["en","English"],["ny","Chichewa (draft)"]],S.lang,v=>{S.lang=v;save();applyLang();renderSettings()});
+  seg("#unitSeg",[["ha","Hectares"],["acre","Acres"]],S.unit,v=>{S.unit=v;save();renderSettings()});
+}
+function clearHistory(){if(!S.preds.length) return toast("History is already empty.");if(confirm("Delete all saved estimates?")){S.preds=[];S.generalChat=[];S.current=null;save();toast("History cleared.")}}
+
+function startFlow(){locState={s:"idle"};go("loc")}
+
+/* ===================== boot ===================== */
+load(); applyLang();
+history.replaceState({id:"home"},"","#home"); show("home");
+</script>
+</body>
+</html>

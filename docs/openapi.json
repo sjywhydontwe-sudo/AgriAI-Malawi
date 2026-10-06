@@ -1,0 +1,1016 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AgriAI Malawi API",
+    "description": "Early-season maize yield estimates for Malawi smallholders. Feature definitions follow the World Bank IHS5 training data.",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_api_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/areas": {
+      "get": {
+        "summary": "Areas",
+        "description": "Districts for the manual location picker.",
+        "operationId": "areas_api_areas_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Area"
+                  },
+                  "type": "array",
+                  "title": "Response Areas Api Areas Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/features": {
+      "get": {
+        "summary": "Get Features",
+        "description": "Environmental features for a GPS point (rainfall, terrain, soil, zone).",
+        "operationId": "get_features_api_features_get",
+        "parameters": [
+          {
+            "name": "lat",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "maximum": 90,
+              "minimum": -90,
+              "title": "Lat"
+            }
+          },
+          {
+            "name": "lng",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "maximum": 180,
+              "minimum": -180,
+              "title": "Lng"
+            }
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^(gps|area)$",
+              "default": "gps",
+              "title": "Source"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Features"
+                }
+              }
+            }
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          }
+        }
+      }
+    },
+    "/api/baseline": {
+      "post": {
+        "summary": "Baseline",
+        "description": "Typical yield for a farm here with average practices (used to suggest a goal).",
+        "operationId": "baseline_api_baseline_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BaselineRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaselineResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/predict": {
+      "post": {
+        "summary": "Predict",
+        "description": "Yield estimate, range, goal gap, and what-if scenarios (all computed by the model).",
+        "operationId": "predict_api_predict_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PredictRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PredictResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/advise": {
+      "post": {
+        "summary": "Advise",
+        "description": "Advisor answer grounded in the estimate passed as context.",
+        "operationId": "advise_api_advise_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdviseRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdviseResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AdviseRequest": {
+        "properties": {
+          "context": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PredictRequest"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Inputs of the estimate being discussed"
+          },
+          "question": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Question"
+          },
+          "lang": {
+            "type": "string",
+            "enum": [
+              "en",
+              "ny"
+            ],
+            "title": "Lang",
+            "default": "en"
+          }
+        },
+        "type": "object",
+        "required": [
+          "question"
+        ],
+        "title": "AdviseRequest"
+      },
+      "AdviseResponse": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "title": "Text",
+            "description": "Plain text. **bold** and lines starting with '- ' are allowed."
+          },
+          "sources": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "model",
+                "general"
+              ]
+            },
+            "type": "array",
+            "title": "Sources"
+          }
+        },
+        "type": "object",
+        "required": [
+          "text",
+          "sources"
+        ],
+        "title": "AdviseResponse"
+      },
+      "ApiError": {
+        "properties": {
+          "detail": {
+            "type": "string",
+            "title": "Detail"
+          },
+          "code": {
+            "type": "string",
+            "title": "Code"
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail",
+          "code"
+        ],
+        "title": "ApiError"
+      },
+      "Area": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "lat": {
+            "type": "number",
+            "title": "Lat"
+          },
+          "lng": {
+            "type": "number",
+            "title": "Lng"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "lat",
+          "lng"
+        ],
+        "title": "Area"
+      },
+      "Bags": {
+        "properties": {
+          "expected": {
+            "type": "integer",
+            "title": "Expected"
+          },
+          "low": {
+            "type": "integer",
+            "title": "Low"
+          },
+          "high": {
+            "type": "integer",
+            "title": "High"
+          },
+          "goal": {
+            "type": "integer",
+            "title": "Goal"
+          },
+          "typical": {
+            "type": "integer",
+            "title": "Typical"
+          }
+        },
+        "type": "object",
+        "required": [
+          "expected",
+          "low",
+          "high",
+          "goal",
+          "typical"
+        ],
+        "title": "Bags"
+      },
+      "BaselineRequest": {
+        "properties": {
+          "features": {
+            "$ref": "#/components/schemas/Features"
+          },
+          "farm": {
+            "$ref": "#/components/schemas/Farm"
+          }
+        },
+        "type": "object",
+        "required": [
+          "features",
+          "farm"
+        ],
+        "title": "BaselineRequest"
+      },
+      "BaselineResponse": {
+        "properties": {
+          "typical_kg_ha": {
+            "type": "number",
+            "title": "Typical Kg Ha"
+          }
+        },
+        "type": "object",
+        "required": [
+          "typical_kg_ha"
+        ],
+        "title": "BaselineResponse"
+      },
+      "BestPlan": {
+        "properties": {
+          "changes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Changes"
+          },
+          "bags": {
+            "type": "integer",
+            "title": "Bags"
+          },
+          "reaches_goal": {
+            "type": "boolean",
+            "title": "Reaches Goal"
+          }
+        },
+        "type": "object",
+        "required": [
+          "changes",
+          "bags",
+          "reaches_goal"
+        ],
+        "title": "BestPlan"
+      },
+      "Condition": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "enum": [
+              "rain",
+              "soil",
+              "land",
+              "zone"
+            ],
+            "title": "Key"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "rating": {
+            "type": "string",
+            "title": "Rating"
+          },
+          "tone": {
+            "type": "string",
+            "enum": [
+              "ok",
+              "gray",
+              "warn",
+              "bad"
+            ],
+            "title": "Tone"
+          },
+          "detail": {
+            "type": "string",
+            "title": "Detail"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "label",
+          "rating",
+          "tone",
+          "detail"
+        ],
+        "title": "Condition"
+      },
+      "Farm": {
+        "properties": {
+          "area_ha": {
+            "type": "number",
+            "maximum": 50.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Area Ha"
+          },
+          "plant_month": {
+            "type": "integer",
+            "maximum": 12.0,
+            "minimum": 1.0,
+            "title": "Plant Month",
+            "description": "Month planting finished (IHS5 ag_d35_1a)"
+          },
+          "seed": {
+            "type": "string",
+            "enum": [
+              "hybrid",
+              "local"
+            ],
+            "title": "Seed"
+          },
+          "fert_bags": {
+            "type": "integer",
+            "maximum": 99.0,
+            "minimum": 0.0,
+            "title": "Fert Bags",
+            "description": "50 kg bags of inorganic fertilizer on the field"
+          },
+          "intercrop": {
+            "type": "boolean",
+            "title": "Intercrop",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "area_ha",
+          "plant_month",
+          "seed",
+          "fert_bags"
+        ],
+        "title": "Farm",
+        "description": "What the farmer enters. Encodings match IHS5 (see app/services/encoding.py)."
+      },
+      "Features": {
+        "properties": {
+          "area_id": {
+            "type": "string",
+            "title": "Area Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "Display name, e.g. 'Near Kasungu'"
+          },
+          "lat": {
+            "type": "number",
+            "title": "Lat"
+          },
+          "lng": {
+            "type": "number",
+            "title": "Lng"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "gps",
+              "area"
+            ],
+            "title": "Source",
+            "default": "gps"
+          },
+          "region": {
+            "type": "string",
+            "enum": [
+              "north",
+              "central",
+              "south"
+            ],
+            "title": "Region"
+          },
+          "rain_avg_mm": {
+            "type": "number",
+            "title": "Rain Avg Mm",
+            "description": "Long-term average July-June rainfall (IHS5 anntot_avg)"
+          },
+          "outlook": {
+            "type": "string",
+            "enum": [
+              "above",
+              "normal",
+              "below"
+            ],
+            "title": "Outlook",
+            "description": "Seasonal rainfall outlook category"
+          },
+          "elevation_m": {
+            "type": "number",
+            "title": "Elevation M",
+            "description": "Elevation, 1 km resolution (IHS5 srtm_1k)"
+          },
+          "slope_pct": {
+            "type": "number",
+            "title": "Slope Pct",
+            "description": "Slope in %, computed after aggregating DEM to 1 km"
+          },
+          "aez": {
+            "type": "string",
+            "title": "Aez",
+            "description": "Agro-ecological zone code (IHS5 ssa_aez09)"
+          },
+          "aez_label": {
+            "type": "string",
+            "title": "Aez Label"
+          },
+          "soil_class": {
+            "type": "integer",
+            "maximum": 4.0,
+            "minimum": 1.0,
+            "title": "Soil Class",
+            "description": "Nutrient availability class (IHS5 sq1)"
+          },
+          "soil_label": {
+            "type": "string",
+            "title": "Soil Label"
+          },
+          "onset_month": {
+            "type": "integer",
+            "maximum": 12.0,
+            "minimum": 1.0,
+            "title": "Onset Month",
+            "description": "Usual month of first rains"
+          },
+          "feature_version": {
+            "type": "string",
+            "title": "Feature Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "area_id",
+          "name",
+          "lat",
+          "lng",
+          "region",
+          "rain_avg_mm",
+          "outlook",
+          "elevation_m",
+          "slope_pct",
+          "aez",
+          "aez_label",
+          "soil_class",
+          "soil_label",
+          "onset_month",
+          "feature_version"
+        ],
+        "title": "Features",
+        "description": "Environmental features for one location, defined exactly like the IHS5 training data."
+      },
+      "Goal": {
+        "properties": {
+          "target_bags": {
+            "type": "integer",
+            "maximum": 10000.0,
+            "minimum": 1.0,
+            "title": "Target Bags"
+          },
+          "bag_kg": {
+            "type": "integer",
+            "enum": [
+              50,
+              90
+            ],
+            "title": "Bag Kg",
+            "default": 50
+          },
+          "price_mwk_per_kg": {
+            "type": "number",
+            "maximum": 100000.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Price Mwk Per Kg"
+          }
+        },
+        "type": "object",
+        "required": [
+          "target_bags",
+          "price_mwk_per_kg"
+        ],
+        "title": "Goal"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "IntercropInfo": {
+        "properties": {
+          "current": {
+            "type": "boolean",
+            "title": "Current"
+          },
+          "alternative_bags": {
+            "type": "integer",
+            "title": "Alternative Bags",
+            "description": "Maize bags if the intercrop choice were flipped"
+          }
+        },
+        "type": "object",
+        "required": [
+          "current",
+          "alternative_bags"
+        ],
+        "title": "IntercropInfo"
+      },
+      "Option": {
+        "properties": {
+          "value": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "boolean"
+              }
+            ],
+            "title": "Value"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "bags": {
+            "type": "integer",
+            "title": "Bags"
+          },
+          "kg_ha": {
+            "type": "number",
+            "title": "Kg Ha"
+          },
+          "is_current": {
+            "type": "boolean",
+            "title": "Is Current"
+          },
+          "tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tag"
+          }
+        },
+        "type": "object",
+        "required": [
+          "value",
+          "label",
+          "bags",
+          "kg_ha",
+          "is_current"
+        ],
+        "title": "Option"
+      },
+      "OptionGroup": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "enum": [
+              "plant_month",
+              "seed",
+              "fert"
+            ],
+            "title": "Key"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "display": {
+            "type": "string",
+            "enum": [
+              "chart",
+              "list"
+            ],
+            "title": "Display"
+          },
+          "options": {
+            "items": {
+              "$ref": "#/components/schemas/Option"
+            },
+            "type": "array",
+            "title": "Options"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "label",
+          "display",
+          "options"
+        ],
+        "title": "OptionGroup"
+      },
+      "PredictRequest": {
+        "properties": {
+          "features": {
+            "$ref": "#/components/schemas/Features"
+          },
+          "farm": {
+            "$ref": "#/components/schemas/Farm"
+          },
+          "goal": {
+            "$ref": "#/components/schemas/Goal"
+          }
+        },
+        "type": "object",
+        "required": [
+          "features",
+          "farm",
+          "goal"
+        ],
+        "title": "PredictRequest"
+      },
+      "PredictResponse": {
+        "properties": {
+          "yield_kg_ha": {
+            "type": "number",
+            "title": "Yield Kg Ha"
+          },
+          "low_kg_ha": {
+            "type": "number",
+            "title": "Low Kg Ha"
+          },
+          "high_kg_ha": {
+            "type": "number",
+            "title": "High Kg Ha"
+          },
+          "typical_kg_ha": {
+            "type": "number",
+            "title": "Typical Kg Ha"
+          },
+          "fert_kg_ha": {
+            "type": "number",
+            "title": "Fert Kg Ha"
+          },
+          "bags": {
+            "$ref": "#/components/schemas/Bags"
+          },
+          "value_mwk": {
+            "type": "integer",
+            "title": "Value Mwk"
+          },
+          "gap_bags": {
+            "type": "integer",
+            "title": "Gap Bags",
+            "description": "expected - goal (negative means short)"
+          },
+          "missing_value_mwk": {
+            "type": "integer",
+            "title": "Missing Value Mwk"
+          },
+          "choices": {
+            "items": {
+              "$ref": "#/components/schemas/OptionGroup"
+            },
+            "type": "array",
+            "title": "Choices",
+            "description": "Every number is a full model re-run with one choice changed"
+          },
+          "intercrop": {
+            "$ref": "#/components/schemas/IntercropInfo"
+          },
+          "best_plan": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BestPlan"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "what_if": {
+            "items": {
+              "$ref": "#/components/schemas/WhatIf"
+            },
+            "type": "array",
+            "title": "What If"
+          },
+          "conditions": {
+            "items": {
+              "$ref": "#/components/schemas/Condition"
+            },
+            "type": "array",
+            "title": "Conditions"
+          },
+          "below_normal_bags": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Below Normal Bags"
+          },
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "model_version": {
+            "type": "string",
+            "title": "Model Version"
+          },
+          "feature_version": {
+            "type": "string",
+            "title": "Feature Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "yield_kg_ha",
+          "low_kg_ha",
+          "high_kg_ha",
+          "typical_kg_ha",
+          "fert_kg_ha",
+          "bags",
+          "value_mwk",
+          "gap_bags",
+          "missing_value_mwk",
+          "choices",
+          "intercrop",
+          "best_plan",
+          "what_if",
+          "conditions",
+          "below_normal_bags",
+          "summary",
+          "model_version",
+          "feature_version"
+        ],
+        "title": "PredictResponse"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "WhatIf": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "enum": [
+              "fert",
+              "seed",
+              "plant"
+            ],
+            "title": "Key"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "bags": {
+            "type": "integer",
+            "title": "Bags"
+          },
+          "gain_bags": {
+            "type": "integer",
+            "title": "Gain Bags"
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "text",
+          "bags",
+          "gain_bags"
+        ],
+        "title": "WhatIf"
+      }
+    }
+  }
+}
