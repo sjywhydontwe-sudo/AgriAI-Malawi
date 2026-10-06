@@ -6,7 +6,7 @@ Mobile-first **Next.js** frontend + **FastAPI** (Python) backend.
 ```
 agriai/
 ├── frontend/          Next.js 15 (App Router, TypeScript). Pure UI, no model logic.
-├── backend/           FastAPI. Features, model, scenarios, advisor.
+├── mock-backend/           FastAPI. Features, model, scenarios, advisor.
 ├── docs/openapi.json  API contract (also live at http://localhost:8000/docs)
 └── docker-compose.yml
 ```
