@@ -6,20 +6,24 @@ Mobile-first **Next.js** frontend + **FastAPI** (Python) backend.
 ```
 agriai/
 ├── frontend/           Next.js 15 (App Router, TypeScript). Pure UI, no model logic.
+│   └── public/prototype.html   The current app (served at / ). Also opens on its own in any browser.
 ├── backend/            FastAPI. Features, model, scenarios, advisor.
 ├── knowledge/          Knowledge base: spreadsheet + one CSV per tab (see knowledge/README.md)
-├── docs/prototype.html Latest clickable prototype (single file, open in any browser)
 ├── docs/openapi.json   API contract (also live at http://localhost:8000/docs)
 └── docker-compose.yml
 ```
 
 ## Status
 
-**The prototype (`docs/prototype.html`) is ahead of the Next.js app.** It is the design
-reference for the next round of frontend work. Open it in a browser; it runs on sample data
-with no backend.
+**What you see at http://localhost:3000 is `frontend/public/prototype.html`.** It is the latest
+version, with the desktop layout and all features below. Next.js serves it at `/` (see the
+rewrite in `next.config.mjs`). It runs on sample data in the page and does not call the
+backend yet; the advisor uses built-in rules when opened outside claude.ai.
 
-| Feature | Prototype | Next.js app |
+The React screens in `frontend/app/` are the earlier phone-only version. They are being rebuilt
+from the prototype screen by screen; when a screen is ported, it replaces that part of the prototype.
+
+| Feature | Prototype (served at `/`) | React screens in `app/` |
 |---|---|---|
 | Estimate flow (location, farm, goal, result, why) | ✅ | ✅ |
 | Phone and desktop layouts, 4 section navigation (Home, My farm, Advisor, Learn) | ✅ | Phone only, old tabs |
@@ -30,7 +34,7 @@ with no backend.
 | My season: dated plan, mark done or skip, real planting day, actual harvest | ✅ | ❌ |
 | Knowledge base read from `knowledge/` | Sample copy built in | ❌ |
 
-Next steps: port the prototype screens to `frontend/`, add backend endpoints for season
+Next steps: rebuild the prototype screens as React components wired to the API, add backend endpoints for season
 progress and actual harvest, and write the knowledge base import script.
 
 > All numbers are **sample data from a mock model** until the trained IHS5 model and real
@@ -95,7 +99,7 @@ Schemas live in `backend/app/schemas.py` (source of truth) and are mirrored in
 | Data + ML | `backend/app/services/model.py` | Train on IHS5, save a joblib bundle `{median, low, high, version}`, set `MODEL_PATH`. Add monotonic constraints for fertilizer/seed and spatial CV by enumeration area. |
 | Geospatial + Backend | `backend/app/services/features.py` | Real lookups: CHIRPS climatology + outlook, NASADEM aggregated to 1 km then slope, AEZ raster, soil class (same source as IHS5 `sq1`), onset month. Read clipped rasters locally with rasterio. |
 | GenAI + Agronomy | `backend/app/services/advisor.py` | `LLMAdvisor` with the same signature. Prompt gets the `PredictResponse` as the only source of numbers; answer in `lang`. Calibrate fertilizer/seed effects with trial data. |
-| Product + Frontend | `frontend/`, `docs/prototype.html` | Screens and copy. Port the prototype to Next.js. |
+| Product + Frontend | `frontend/` (incl. `public/prototype.html`) | Screens and copy. Rebuild the prototype as React components. |
 | Research + Knowledge | `knowledge/` | Facts, sources, season timing. Edit the spreadsheet, re-export the CSVs. |
 
 ## Open data questions (from IHS5 review)
