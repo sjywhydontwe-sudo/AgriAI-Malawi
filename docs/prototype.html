@@ -6,15 +6,17 @@
 <meta name="theme-color" content="#1B5E20">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>AgriAI Malawi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --green:#1B5E20; --green2:#2E7D32; --accent:#43A047; --orange:#D4501C; --bg:#F5F7F2;
-  --ink:#1f2420; --muted:#525a50; --line:#dfe3da; --soft:#E8F5E9;
+  --ink:#161a15; --muted:#454c43; --line:#d3d9cd; --soft:#E8F5E9;
   --amber:#9A4A06; --amber-soft:#FFF3E0; --red:#B3261E; --red-soft:#FDECEA;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
-body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-tap-highlight-color:transparent;overscroll-behavior:none;font-size:16px}
+body{font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);-webkit-tap-highlight-color:transparent;overscroll-behavior:none;font-size:16px}
 button{font:inherit;color:inherit}
 .i{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;vertical-align:middle}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
@@ -118,7 +120,7 @@ h2.greet{font-size:25px;font-weight:800;margin:18px 0 4px}
 /* result */
 .res-hero{background:var(--green);color:#fff;border-radius:24px;padding:22px;text-align:center;position:relative;overflow:hidden}
 .res-hero::before{content:"";position:absolute;width:190px;height:190px;right:-60px;top:-60px;border:1px solid rgba(255,255,255,.14);border-radius:50%}
-.res-hero .k{letter-spacing:.06em;font-size:13px;font-weight:700;opacity:.9}
+.res-hero .k{letter-spacing:.02em;font-size:16px;font-weight:700;opacity:.9}
 .res-hero .big{font-size:60px;font-weight:800;line-height:1.05;margin:6px 0 0;font-variant-numeric:tabular-nums}
 .res-hero .u{font-size:16px;opacity:.92}
 .res-hero .rng{margin-top:10px;font-size:14px;background:rgba(255,255,255,.14);display:inline-block;padding:6px 12px;border-radius:999px}
@@ -168,6 +170,12 @@ h2.greet{font-size:25px;font-weight:800;margin:18px 0 4px}
 .m.a{align-self:flex-start;background:#f2f4ef;border-bottom-left-radius:6px}
 .m.a b{color:var(--green)}
 .m.a ul{margin:6px 0 0 18px}
+.m-ctx{display:flex;gap:8px;align-items:flex-start;background:rgba(255,255,255,.14);border-radius:12px;padding:9px 11px;margin:-2px -4px 8px;font-size:14px;line-height:1.45}
+.m-ctx>div{display:flex;flex-direction:column;gap:3px;min-width:0}
+.m-ctx small{font-size:12.5px;opacity:.85;font-weight:700;display:flex;align-items:center;gap:4px}
+.m-ctx-tip{font-weight:700}
+.m-ctx-note{border-left:3px solid rgba(255,255,255,.5);padding-left:8px;font-style:italic}
+.ai-p{margin:0 0 8px}.ai-p:last-of-type{margin-bottom:0}.m.a ul+.ai-p{margin-top:8px}
 .m.a li{margin:3px 0}
 .src{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;margin-top:8px;padding:3px 8px;border-radius:999px}
 .src.model{background:#dcefdc;color:var(--green)}
@@ -268,6 +276,666 @@ h2.greet{font-size:25px;font-weight:800;margin:18px 0 4px}
 .mlegend i{display:inline-block;width:10px;height:10px;border-radius:3px}
 .mdetail{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:10px;background:#f4faf3;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;font-size:15px}
 .mdetail .mv{margin-left:auto;font-weight:800;display:flex;gap:8px;align-items:center}
+
+/* ===== top nav, learn, side panel (all sizes) ===== */
+.topnav{display:none}
+.side-sum{display:none}
+.how{display:none}
+.why-sum{display:none}
+.home-grid{display:flex;flex-direction:column}
+.home-main,.home-side{display:contents}
+.home-main>*{order:1}
+#homeHero{order:3} #homeLast{order:4} .home-cta{order:5}
+.res-grid{display:flex;flex-direction:column}
+.res-a,.res-b{display:contents}
+.o1{order:1}.o2{order:2}.o3{order:3}.o4{order:4}.o5{order:5}.o6{order:6}.o7{order:7}.o8{order:8}
+.learn-intro{margin-bottom:12px}
+.learn-filter{padding:0 0 12px;flex-wrap:wrap}
+.learn-filter button.on{background:var(--green);color:#fff}
+.learn-list{display:grid;gap:12px}
+.kb{border:1px solid var(--line);border-radius:18px;padding:16px;background:#fff;display:flex;flex-direction:column;gap:8px}
+.kb.focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(212,80,28,.15)}
+.kb-top{display:flex;gap:6px;flex-wrap:wrap}
+.kb h3{font-size:17px}
+.kb p{font-size:15px;line-height:1.5;color:#3d443b}
+.kb-need{background:var(--amber-soft);color:var(--amber);border-radius:12px;padding:10px 12px;font-size:14px;line-height:1.45}
+.kb-key{background:var(--soft);color:var(--green);border-radius:12px;padding:10px 12px;font-weight:700}
+.kb-foot{display:flex;flex-direction:column;gap:2px;font-size:13px;color:var(--muted);margin-top:auto}
+.kb-links{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.kb-links button{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:700;color:var(--green);text-decoration:underline;text-underline-offset:2px}
+.tabbar button{font-size:12.5px}
+
+/* ===== desktop ===== */
+@media (min-width:900px){
+  body{background:#eef1ea}
+  .app{max-width:none;box-shadow:none;background:var(--bg)}
+  .topnav{display:block;position:absolute;top:0;left:0;right:0;height:64px;background:#fff;border-bottom:1px solid var(--line);z-index:10}
+  .tn-in{height:100%;max-width:1180px;margin:0 auto;padding:0 32px;display:flex;align-items:center;gap:28px}
+  .tn-brand{all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;color:var(--green)}
+  .tn-brand .logo{width:34px;height:34px;border-radius:10px}
+  .tn-brand small{font-weight:600;color:var(--muted);font-size:14px}
+  .tn-links{display:flex;gap:4px;flex:1}
+  .tn-links button{all:unset;cursor:pointer;padding:9px 14px;border-radius:10px;font-weight:600;color:var(--muted);font-size:15px}
+  .tn-links button:hover{background:#f2f4ef;color:var(--ink)}
+  .tn-links button.on{background:var(--soft);color:var(--green)}
+  .tn-links button:focus-visible{outline:3px solid var(--accent)}
+  .tn-lang{width:112px}
+  .tn-new{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;background:var(--green);color:#fff;font-weight:700;font-size:15px;padding:9px 16px;border-radius:12px}
+  .tn-new:hover{background:var(--green2)}
+  .tn-new.on{box-shadow:0 0 0 3px var(--soft),0 0 0 5px var(--accent)}
+  .tn-new:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+  .tn-gear{display:grid;color:var(--muted);margin-left:-12px}
+  .tn-gear.on{color:var(--green);background:var(--soft)}
+  .lib-sw{margin-top:-6px}
+  .tn-lang button{padding:7px 4px;font-size:14px}
+  .tabbar,.brand{display:none}
+  .view{top:64px;background:var(--bg)}
+  .view.active{animation:none}
+  :root{--gut:max(32px,calc((100vw - 1116px)/2))}
+  .scroll{padding:32px var(--gut) 48px}
+  .hdr{margin:0 0 18px -8px}
+  .hdr h1{font-size:26px}
+
+  /* home */
+  .home-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:40px 56px;align-items:start}
+  .home-main,.home-side{display:flex;flex-direction:column}
+  h2.greet{font-size:44px;margin-top:24px;letter-spacing:-.01em}
+  .home-main .sub{font-size:18px;max-width:30em}
+  .home-cta{max-width:460px;margin-top:28px}
+  .hero-home{margin-top:0;min-height:260px;padding:24px}
+  .hero-home p{max-width:320px}
+  .how{display:block;grid-column:1/-1;border-top:1px solid var(--line);padding-top:28px}
+  .how h3{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .how ol{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;counter-reset:s}
+  .how li{counter-increment:s;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:6px;font-size:15px;line-height:1.45;color:var(--muted)}
+  .how li::before{content:counter(s);width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-weight:800;margin-bottom:4px}
+  .how li b{color:var(--ink);font-size:16px}
+
+  /* estimate steps: form on the left, summary on the right */
+  #v-loc .scroll,#v-farm .scroll,#v-goal .scroll{padding-right:calc(var(--gut) + 420px)}
+  #v-loc .foot,#v-farm .foot,#v-goal .foot{padding:16px calc(var(--gut) + 420px) 20px var(--gut);background:var(--bg)}
+  #v-loc .foot .btn,#v-farm .foot .btn,#v-goal .foot .btn{max-width:320px}
+  .side-sum{display:block;position:absolute;top:32px;right:var(--gut);width:360px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;max-height:calc(100% - 64px);overflow:auto}
+  .side-sum h3{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  .ss-place{display:flex;align-items:center;gap:8px;font-size:17px;margin-bottom:6px;color:var(--green)}
+  .ss-place b{color:var(--ink)}
+  .ss-row{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:14.5px;color:var(--muted)}
+  .ss-row .i{color:var(--green)}
+  .ss-row b{margin-left:auto;color:var(--ink);text-align:right}
+  .ss-div{height:1px;background:var(--line);margin:8px 0}
+  .ss-note{display:flex;gap:6px;align-items:flex-start;font-size:13px;color:var(--muted);margin-top:12px;line-height:1.4}
+  #monthSeg{grid-template-columns:repeat(6,1fr)}
+
+  /* result */
+  .res-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+  .res-a,.res-b{display:flex;flex-direction:column;gap:14px}
+  .res-b .card{margin-top:0}
+  .res-a .stack{margin-top:4px}
+  .res-hero{padding:28px}
+  .res-hero .big{font-size:72px}
+
+  /* why */
+  .why-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:40px;align-items:start}
+  .why-b{position:sticky;top:0}
+  #whySumBar{display:none}
+  .why-sum{display:block;background:var(--green);color:#fff;border-radius:20px;padding:18px 20px;margin-top:20px}
+  .why-sum small{font-size:12.5px;letter-spacing:.06em;font-weight:700;opacity:.85}
+  .why-sum p{font-weight:600;font-size:15.5px;line-height:1.4;margin:4px 0 12px}
+  .why-sum .btn{background:#fff;color:var(--green);min-height:48px;padding:12px}
+  .mchart{max-width:560px}
+
+  /* advisor: estimate + suggestions on the left, conversation on the right */
+  .m{max-width:72%}
+
+  /* lists */
+  .mf-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .mf-list .hist,.mf-list .mf-season{margin:0}
+  .mf-new{display:none}
+  .learn-list{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .learn-intro{max-width:46em}
+  #v-settings .setting{max-width:520px}
+  .toast{left:auto;right:32px;bottom:32px;width:360px}
+}
+@media (min-width:900px) and (max-width:1180px){
+  .learn-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .how ol{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+
+.cg{display:contents}
+.cg-t{display:none}
+.kb-ask{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--green)}
+.kb-ask:hover{text-decoration:underline}
+.home-main .season{align-self:flex-start}
+@media (min-width:900px){
+  .cg{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+  .cg-t{display:block;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .cg:first-child .cg-t{color:var(--orange)}
+}
+
+/* ===== readability pass ===== */
+.sect{font-size:14px;letter-spacing:.02em;text-transform:none;color:var(--ink);font-weight:800}
+.kb-topic{font-size:13px;font-weight:700;color:var(--green)}
+.kb-st{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:700;margin-left:auto}
+.kb-st.ok{color:var(--green)} .kb-st.warn{color:var(--amber)}
+.kb-top{align-items:center}
+.kb-need{background:none!important;padding:0!important;color:var(--muted)!important;border-left:3px solid #f0c48a;padding-left:10px!important}
+.kb-need b{color:var(--amber)}
+.kb-foot{font-size:13px}
+.base,.sub,.kb p,.help{max-width:62ch}
+@media (min-width:900px){
+  body{font-size:17px}
+  .scroll{font-size:17px}
+  .sub,.home-main .sub{font-size:19px;line-height:1.5}
+  .help{font-size:16px;line-height:1.5}
+  .label{font-size:18px;margin-top:28px}
+  .hdr h1{font-size:30px}
+  .base{font-size:17px;line-height:1.55}
+  .sect{font-size:16px;margin-top:30px}
+  .caveat{font-size:15px}
+  .gname{font-size:18px}
+  .opt{padding:14px 16px}
+  .opt .top{font-size:17px}
+  .opt .bar{height:10px}
+  .cond{padding:16px 0}
+  .cond .top b{font-size:17px}
+  .cond small{font-size:15.5px}
+  .cond p{font-size:16px}
+  .best ul{font-size:17px}
+  .best p{font-size:15.5px}
+  .best .big2{font-size:26px}
+  .mdetail{font-size:17px}
+  .mb span{font-size:13px}
+  .card h3{font-size:18px}
+  .gapbox{font-size:17px}
+  .tile b{font-size:19px}
+  .tile small{font-size:14.5px}
+  .early{font-size:15px}
+  .status{font-size:20px}
+  .legend{font-size:14.5px}
+  .kv small{font-size:14px}.kv b{font-size:17px}
+  .seg button{font-size:16.5px}
+  .btn{font-size:18px}
+  .ss-row{font-size:16px}
+  .side-sum h3,.how h3{font-size:14px}
+  .how li{font-size:16px}
+  .how li b{font-size:18px}
+  /* advisor */
+  .m{font-size:17px;line-height:1.55}
+  .ctx{font-size:15px}
+  .cg-t{font-size:13px}
+  .src{font-size:13px}
+  .kb-links button{font-size:15px}
+  /* learn: two roomy columns instead of three dense ones */
+  .learn-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+  .kb{padding:22px;gap:10px}
+  .kb h3{font-size:21px}
+  .kb p{font-size:17px;line-height:1.55}
+  .kb-ask{font-size:16px}
+  .learn-filter button{font-size:15px}
+  .hist b{font-size:17px}.hist small{font-size:14.5px}
+}
+
+/* ===== Learn: topic list + one readable article ===== */
+#v-learn .hdr{align-items:center}
+.lv-toggle{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);cursor:pointer;margin-right:8px}
+.lv-toggle input{width:18px;height:18px;accent-color:var(--green)}
+.lv-wrap{display:flex;flex-direction:column;gap:16px}
+.lv-nav{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.lv-nav::-webkit-scrollbar{display:none}
+.lv-nav button{all:unset;cursor:pointer;white-space:nowrap;padding:9px 14px;border-radius:999px;border:1.5px solid var(--line);font-weight:700;font-size:15px;color:var(--muted);background:#fff}
+.lv-nav button.on{background:var(--green);border-color:var(--green);color:#fff}
+.lv-nav button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.lv-banner{max-width:720px;display:flex;gap:10px;align-items:flex-start;background:var(--amber-soft);color:var(--amber);border-radius:14px;padding:12px 14px;font-size:15px;line-height:1.45;margin-bottom:8px}
+.lv{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px 20px;max-width:720px}
+.lv h2{font-size:28px;line-height:1.15;color:var(--ink)}
+.lv-intro{font-size:18px;line-height:1.55;color:var(--muted);margin-top:8px;max-width:60ch}
+.lv-entry{border-top:1px solid var(--line);margin-top:22px;padding-top:20px}
+.lv-entry.focus h3{color:var(--orange)}
+.lv-entry h3{font-size:21px;line-height:1.3;margin-bottom:8px}
+.lv-entry p{font-size:18px;line-height:1.6;color:var(--ink);max-width:62ch}
+.lv-key{margin-top:12px;background:var(--soft);color:var(--green)!important;font-weight:700;border-radius:12px;padding:12px 14px}
+.lv-src{font-size:14.5px!important;color:var(--muted)!important;margin-top:10px}
+.lv-notes{margin-top:12px;display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:14.5px;color:var(--muted);background:#f6f8f3;border-radius:12px;padding:12px 14px;line-height:1.45}
+.lv-notes b{color:var(--ink)}
+.lv-ask{margin-top:24px;max-width:380px}
+@media (min-width:900px){
+  .lv-wrap{display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px;align-items:start}
+  .lv-nav{flex-direction:column;position:sticky;top:0;gap:4px;overflow:visible}
+  .lv-nav button{border:0;background:none;border-radius:10px;padding:11px 14px;font-size:17px;white-space:normal}
+  .lv-nav button:hover{background:#eef1ea;color:var(--ink)}
+  .lv-nav button.on{background:var(--soft);color:var(--green)}
+  .lv-main{max-width:760px}
+  .lv{padding:36px 40px}
+  .lv h2{font-size:34px}
+  .lv-intro{font-size:19px}
+  .lv-entry h3{font-size:23px}
+  .lv-entry p{font-size:18.5px}
+}
+
+/* ===== Learn v3: picture + steps + facts ===== */
+.lv-why{font-size:19px;line-height:1.5;color:var(--ink);margin-top:8px;max-width:52ch;font-weight:700}
+.lv-fig{margin:18px 0 6px;background:#fbfcf9;border:1px solid var(--line);border-radius:16px;padding:14px;overflow-x:auto}
+.lv-svg{display:block;width:100%;min-width:520px;height:auto}
+@media (min-width:900px){.lv-svg{min-width:0}}
+.lv-svg text{font-family:inherit}
+.sv-t{font-size:15px;fill:#454c43;font-weight:700}
+.sv-m{font-size:14px;fill:#454c43}
+.sv-m.on{fill:#1B5E20;font-weight:700}
+.sv-b{font-size:15px;fill:#161a15;font-weight:700}
+.sv-b.good{fill:#2E7D32}
+.sv-h{font-size:17px;fill:#161a15;font-weight:700}
+.sv-w{font-size:14px;fill:#D4501C;font-weight:700}
+.lv-h{font-size:15px;font-weight:800;color:var(--muted);margin:24px 0 10px;letter-spacing:.02em}
+.lv-steps{list-style:none;display:grid;gap:10px;counter-reset:st}
+.lv-steps li{display:flex;align-items:center;gap:14px;background:var(--soft);border-radius:14px;padding:12px 14px;font-size:17px;font-weight:700;line-height:1.35;color:var(--ink)}
+.lv-si{width:46px;height:46px;border-radius:12px;background:#fff;color:var(--green);display:grid;place-items:center;flex-shrink:0;position:relative}
+.lv-steps.seq li{counter-increment:st}
+.lv-steps.seq .lv-si::after{content:counter(st);position:absolute;top:-6px;left:-6px;width:20px;height:20px;border-radius:50%;background:var(--green);color:#fff;font-size:12px;display:grid;place-items:center;font-weight:800}
+.lv-facts{display:grid;gap:10px}
+.lv-fact{display:flex;flex-direction:column;gap:4px;border-left:3px solid var(--line);padding:4px 0 4px 14px}
+.lv-fact.focus{border-left-color:var(--orange)}
+.lv-fact b{font-size:16px}
+.lv-fact span{font-size:15.5px;line-height:1.5;color:var(--muted);max-width:62ch}
+.lv-fact em{font-style:normal;font-weight:700;color:var(--green)}
+.lv-fact small{font-size:13.5px;color:var(--muted)}
+@media (min-width:900px){
+  .lv-why{font-size:21px}
+  .lv-steps{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .lv-steps li{flex-direction:column;align-items:flex-start;padding:16px;font-size:17px}
+}
+
+/* ===== sources + saving + notes ===== */
+.lv-ft{display:flex;align-items:flex-start;gap:8px}
+.lv-ft b{flex:1}
+.lv-steps li{position:relative}
+.lv-steps li .sv-btn{position:absolute;top:8px;right:8px}
+.sv-btn{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;color:var(--muted);border-radius:10px;padding:6px;font-size:14px;font-weight:700}
+.sv-btn:hover{background:rgba(27,94,32,.08);color:var(--green)}
+.sv-btn.on{color:var(--green)}
+.sv-btn.on .i{fill:currentColor}
+.sv-btn:focus-visible{outline:3px solid var(--accent)}
+.m-save{margin-top:6px}
+.lv-srcs{margin-top:4px;font-size:14.5px}
+.lv-srcs summary{cursor:pointer;color:var(--green);font-weight:700;padding:4px 0}
+.lv-srcs ul{list-style:none;display:flex;flex-direction:column;gap:10px;margin:8px 0 4px}
+.lv-srcs li{display:flex;flex-direction:column;gap:2px}
+.lv-srcs a{color:var(--ink);font-weight:700;line-height:1.4;text-decoration:underline;text-decoration-color:#b9c0b4;text-underline-offset:3px}
+.lv-srcs a:hover{text-decoration-color:var(--green)}
+.lv-srcs small{font-size:13px;color:var(--muted)}
+#v-notes .hdr{align-items:center}
+.nt-new{width:auto;min-height:44px;padding:10px 16px;font-size:15px}
+.nt-intro{margin-bottom:12px}
+.nt-filter{margin-bottom:12px}
+.nt-list{display:grid;gap:12px}
+.nt{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.nt.tried{border-left:5px solid var(--accent)}
+.nt-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13.5px;color:var(--muted)}
+.nt-tag{background:var(--soft);color:var(--green);font-weight:700;padding:3px 10px;border-radius:999px}
+.nt-topic{font:inherit;font-weight:700;color:var(--green);background:var(--soft);border:0;border-radius:999px;padding:4px 10px}
+.nt-date{margin-left:auto}
+.nt blockquote{margin:0;border-left:3px solid var(--line);padding:2px 0 2px 12px;font-size:16px;line-height:1.5;color:var(--ink);white-space:pre-line}
+.nt textarea{width:100%;font:inherit;font-size:16px;line-height:1.5;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;resize:vertical;background:#fbfcf9;color:var(--ink)}
+.nt textarea:focus{outline:none;border-color:var(--accent);background:#fff}
+.nt-act{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:14.5px}
+.nt-tried{display:flex;align-items:center;gap:8px;font-weight:700;cursor:pointer}
+.nt-tried input{width:20px;height:20px;accent-color:var(--green)}
+.nt-link,.nt-del{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-weight:700;color:var(--green)}
+.nt-del{color:var(--muted);margin-left:auto}
+.nt-del:hover{color:var(--red)}
+.tabbar button{font-size:12px}
+@media (min-width:900px){
+  .nt-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+  .nt{padding:20px}
+  .nt blockquote{font-size:17px}
+  .nt-intro{max-width:52ch}
+}
+@media (min-width:900px){
+  .nt-filter{flex-direction:row;position:static;flex-wrap:wrap;gap:8px}
+  .nt-filter button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 16px;font-size:15px}
+  .nt-filter button.on{background:var(--green);border-color:var(--green);color:#fff}
+}
+
+/* ===== live knowledge base ===== */
+.lv-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.lv-edit,.lv-addsrc{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:5px;font-size:13.5px;font-weight:700;color:var(--green);padding:4px 8px;border-radius:8px;background:var(--soft)}
+.lv-edit:hover,.lv-addsrc:hover{background:#d7ecd8}
+.lv-addsrc{margin-top:6px;align-self:flex-start}
+.lv-ft{flex-wrap:wrap;align-items:center}
+.lv-ft .sv-btn{margin-left:auto}
+.lv-cnt{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:999px;background:var(--soft);color:var(--green);font-size:12.5px;margin-left:4px}
+.new{display:inline-block;font-size:12px;font-weight:800;color:#fff;background:var(--orange);border-radius:999px;padding:1px 8px}
+.ok-t{display:inline-flex;align-items:center;gap:3px;font-size:13px;font-weight:700;color:var(--green)}
+.lv-nav .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--orange);margin-left:6px;vertical-align:middle}
+.lv-nav small{margin-left:auto;padding-left:8px;font-size:13px;color:var(--muted);font-weight:600}
+.lv-nav button{display:flex;align-items:center}
+.lv-add{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;padding:9px 14px;border-radius:999px;border:1.5px dashed var(--green);color:var(--green);font-weight:700;font-size:15px}
+.lv-addfact{margin-top:16px;max-width:380px}
+.lv-loading{display:flex;align-items:center;gap:12px;color:var(--muted);padding:30px 0}
+.lv-steps{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.lv-srcs li .lv-edit{align-self:flex-start;margin-top:4px}
+.sheet{position:absolute;inset:0;background:rgba(22,26,21,.45);z-index:40;display:flex;align-items:flex-end;justify-content:center}
+.sheet[hidden]{display:none}
+.sheet-card{background:#fff;width:100%;max-width:560px;max-height:92%;border-radius:20px 20px 0 0;display:flex;flex-direction:column}
+.sh-top{display:flex;align-items:center;justify-content:space-between;padding:16px 16px 8px 20px}
+.sh-top h3{font-size:20px}
+.sh-body{overflow:auto;padding:4px 20px 12px;display:flex;flex-direction:column;gap:14px}
+.sf{display:flex;flex-direction:column;gap:5px}
+.sf label{font-weight:700;font-size:15px}
+.sf small{font-size:13.5px;color:var(--muted)}
+.sf textarea{font:inherit;font-size:16px;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;resize:vertical}
+.sf textarea:focus,.sf .input:focus{outline:none;border-color:var(--accent)}
+.sf-row{flex-direction:row;align-items:center;gap:10px}
+.sf-row input{width:20px;height:20px;accent-color:var(--green)}
+.sf-step>div{display:flex;gap:8px}
+.sf-step select{font:inherit;font-size:15px;border:1.5px solid var(--line);border-radius:12px;padding:0 8px;background:#fff}
+.sh-err{color:var(--red);font-weight:700;font-size:14.5px}
+.sh-foot{display:flex;gap:10px;padding:12px 20px calc(env(safe-area-inset-bottom) + 16px);border-top:1px solid var(--line)}
+.sh-foot .btn{min-height:48px;padding:10px 16px;font-size:16px}
+.sh-del{color:var(--red);background:none;width:auto;margin-right:auto}
+@media (min-width:900px){
+  .sheet{align-items:center}
+  .sheet-card{border-radius:20px;max-height:86%}
+  .lv-nav small{display:inline}
+}
+[hidden]{display:none!important}
+
+.lv-steps li{flex-wrap:wrap}
+.lv-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;font-weight:600;width:100%}
+.draft{color:var(--amber);font-weight:700}
+.lv-why-link{all:unset;cursor:pointer;color:var(--green);font-weight:700;text-decoration:underline;text-underline-offset:3px;margin-left:auto}
+.lv-why-link:focus-visible{outline:3px solid var(--accent)}
+@media (min-width:900px){.lv-meta{margin-top:auto}.lv-steps li{justify-content:flex-start}}
+
+/* ===== Did you know? cards ===== */
+.lv-h .i{vertical-align:-3px;margin-right:4px;color:var(--orange)}
+.ff-list{display:grid;gap:12px}
+.ff{border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:10px;border:1.5px solid transparent}
+.ff-c0{background:#FFF4E5}.ff-c1{background:#EAF3FB}.ff-c2{background:#EEF6EA}.ff-c3{background:#F6EFE7}
+.ff.focus{border-color:var(--orange)}
+.ff-top{display:flex;align-items:center;gap:8px}
+.ff-eyebrow{font-size:13px;font-weight:800;letter-spacing:.03em;color:var(--muted);text-transform:uppercase}
+.ff-top .sv-btn{margin-left:auto}
+.ff-text{font-size:19px;line-height:1.45;font-weight:700;color:var(--ink);max-width:40ch}
+.ff-key{font-weight:800;color:var(--green);font-size:17px}
+.ff-src{display:flex;gap:8px;align-items:flex-start;border-top:1px dashed rgba(0,0,0,.15);padding-top:10px;color:var(--muted)}
+.ff-src>div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ff-src small{font-size:12.5px;font-weight:700;color:var(--muted)}
+.ff-src a{color:var(--green);font-weight:700;font-size:14.5px;line-height:1.4;text-decoration:underline;text-underline-offset:3px;display:inline}
+.ff-src a .i{margin-left:4px;vertical-align:-2px}
+.ff-src details summary{cursor:pointer;font-size:13.5px;font-weight:700;color:var(--muted);margin-top:4px}
+.ff-more{display:flex;flex-direction:column;gap:1px;margin-top:8px}
+@media (min-width:900px){
+  .ff-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+  .ff{padding:22px}
+  .ff-text{font-size:20px}
+}
+
+/* swipe carousel for Did you know? */
+.ff-list{display:flex!important;grid-template-columns:none!important;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;scrollbar-width:none;padding:2px 2px 4px;margin:0 -2px;overscroll-behavior-x:contain}
+.ff-list::-webkit-scrollbar{display:none}
+.ff-list:focus-visible{outline:3px solid var(--accent);border-radius:20px}
+.ff{flex:0 0 86%;scroll-snap-align:center;min-height:220px}
+.ff:only-child{flex-basis:100%}
+.ff-ctrl{display:flex;align-items:center;gap:8px;margin-top:10px}
+.ff-ctrl .icb{width:40px;height:40px;border:1.5px solid var(--line);border-radius:50%;background:#fff;color:var(--green)}
+.ff-ctrl .icb[disabled]{opacity:.35;cursor:default}
+.ff-dots{display:flex;gap:6px;flex:1;justify-content:center;flex-wrap:wrap}
+.ff-dots button{all:unset;cursor:pointer;width:8px;height:8px;border-radius:999px;background:#cfd6c9;transition:width .2s}
+.ff-dots button.on{width:22px;background:var(--green)}
+.ff-count{font-size:13px;font-weight:700;color:var(--muted);min-width:40px;text-align:center}
+@media (min-width:900px){.ff{flex-basis:72%}}
+@media (prefers-reduced-motion:reduce){.ff-dots button{transition:none}}
+
+/* ===== Did you know? v2: flashcards ===== */
+.ff{position:relative;overflow:hidden;background:#fff!important;border:1.5px solid var(--line)!important;border-radius:22px;padding:20px 20px 18px;gap:12px;box-shadow:0 6px 18px rgba(27,94,32,.07)}
+.ff::before{content:"";position:absolute;inset:0 0 auto 0;height:6px;background:var(--ffc)}
+.ff-c0{--ffc:#E8833A;--fft:#FFF3E8}.ff-c1{--ffc:#3F7FC4;--fft:#EAF2FB}.ff-c2{--ffc:#43A047;--fft:#EAF5EA}.ff-c3{--ffc:#9A6B3F;--fft:#F5EEE6}
+.ff.focus{border-color:var(--orange)!important;box-shadow:0 0 0 3px rgba(212,80,28,.18)}
+.ff-top{display:flex;align-items:center;gap:10px}
+.ff-badge{width:44px;height:44px;border-radius:14px;background:var(--fft);color:var(--ffc);display:grid;place-items:center;flex-shrink:0}
+.ff-n{font-size:13px;font-weight:700;color:var(--muted)}
+.ff-title{font-size:14px;font-weight:800;color:var(--ffc);letter-spacing:.01em;margin-top:2px}
+.ff-text{font-size:21px;line-height:1.38;font-weight:700;color:var(--ink);max-width:34ch;position:relative;z-index:1}
+.ff-key{display:inline-block;align-self:flex-start;background:var(--fft);color:var(--ink);font-weight:800;border-radius:10px;padding:6px 10px}
+.ff-src{border-top:0!important;padding-top:0!important;margin-top:auto;display:flex;flex-direction:column;gap:6px;position:relative;z-index:1}
+.ff-link{display:flex!important;align-items:center;gap:10px;text-decoration:none!important;background:var(--fft);border-radius:14px;padding:10px 12px;color:var(--ink)!important}
+.ff-link:hover{filter:brightness(.97)}
+.ff-link>.i{color:var(--ffc);flex-shrink:0;margin-left:auto}
+.ff-li{width:32px;height:32px;border-radius:10px;background:#fff;color:var(--ffc);display:grid;place-items:center;flex-shrink:0}
+.ff-lt{display:flex;flex-direction:column;min-width:0}
+.ff-lt small{font-size:12px;font-weight:700;color:var(--muted)}
+.ff-lt b{font-size:14px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ff-moredet summary{cursor:pointer;font-size:13.5px;font-weight:700;color:var(--muted);padding:2px 4px}
+.ff-soon{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:700;color:var(--muted);background:#f4f5f1;border-radius:999px;padding:6px 12px;align-self:flex-start}
+.ff-mark{position:absolute;right:-18px;bottom:-14px;fill:none;stroke:var(--ffc);stroke-width:1.2;opacity:.09;pointer-events:none}
+.ff{flex:0 0 84%;min-height:300px}
+.ff-wrap{position:relative}
+.ff-ctrl{justify-content:center}
+.ff-count{display:none}
+@media (min-width:900px){
+  .ff{flex-basis:62%;min-height:300px;padding:24px 26px 22px}
+  .ff-text{font-size:23px}
+  .ff-ctrl{position:absolute;inset:0 -22px 0;pointer-events:none;display:flex;justify-content:space-between;align-items:center;margin:0}
+  .ff-ctrl .icb{pointer-events:auto;width:46px;height:46px;box-shadow:0 4px 12px rgba(0,0,0,.12)}
+  .ff-ctrl .icb[disabled]{opacity:0}
+  .ff-dots{position:absolute;bottom:-30px;left:0;right:0;pointer-events:auto}
+  .ff-wrap{margin-bottom:56px}
+}
+.ff-h{display:flex;align-items:center;gap:6px;font-size:17px;color:var(--ink);margin-top:30px}
+.ff-h small{margin-left:auto;font-size:13px;color:var(--muted);font-weight:600}
+@media (min-width:900px){.ff-h small{display:none}}
+.ff-list{align-items:stretch!important}
+.ff-mark{right:-26px;bottom:-26px}
+
+/* ===== Did you know? stacked flashcards ===== */
+.ff-wrap{max-width:520px;margin:0 auto 8px;position:relative}
+.deck{position:relative;touch-action:pan-y;outline:none;margin-top:6px}
+.deck:focus-visible .ff.top{box-shadow:0 0 0 3px var(--accent)}
+.deck .ff{position:absolute;left:0;right:0;top:0;flex:none;min-height:0;transition:transform .3s ease,opacity .3s ease;transform-origin:50% 100%;user-select:none;cursor:grab;will-change:transform}
+.deck .ff.top{cursor:grab}
+.deck .ff.top:active{cursor:grabbing}
+.deck .ff a,.deck .ff summary{cursor:pointer}
+.ff-h{justify-content:center}
+.ff-h small{margin-left:8px}
+.ff-ctrl{position:static!important;inset:auto!important;display:flex!important;justify-content:center!important;align-items:center;gap:16px;margin-top:14px;pointer-events:auto!important}
+.ff-ctrl .icb{width:44px;height:44px;border:1.5px solid var(--line);border-radius:50%;background:#fff;color:var(--green);box-shadow:none}
+.ff-ctrl .icb[disabled]{opacity:1}
+.ff-dots{position:static!important;flex:0 0 auto}
+.ff-wrap{margin-bottom:12px!important}
+@media (min-width:900px){.ff-h small{display:inline}.ff{padding:24px 26px 22px}}
+@media (prefers-reduced-motion:reduce){.deck .ff{transition:none}}
+
+/* inline fact cards inside advisor answers */
+.kb-links{gap:8px!important;margin-top:10px!important}
+.kb-item{display:flex;flex-direction:column;gap:8px}
+.kb-item>button{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;align-self:flex-start;background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:6px 12px 6px 10px;font-size:14px;font-weight:700;color:var(--green)}
+.kb-item>button:hover{border-color:var(--accent)}
+.kb-item>button:focus-visible{outline:3px solid var(--accent)}
+.kb-item>button .i:first-child{color:var(--orange)}
+.kb-item>button .i:last-child{transition:transform .2s}
+.kb-item>button[aria-expanded="true"] .i:last-child{transform:rotate(90deg)}
+.kb-card .ff{position:relative;min-height:0;cursor:default;user-select:text;box-shadow:0 4px 12px rgba(27,94,32,.08);padding:16px 16px 14px}
+.kb-card .ff-text{font-size:17px}
+.kb-card .ff-badge{width:36px;height:36px;border-radius:11px}
+.ff-open{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:700;color:var(--muted);align-self:flex-start;position:relative;z-index:1}
+.ff-open:hover{color:var(--green)}
+.m.a:has(.kb-card:not([hidden])){max-width:min(92%,560px)}
+
+/* ===== advisor: chats list + estimate picker ===== */
+.chathead .ch-title{flex:1;min-width:0}
+.chathead .ch-title b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chathead .ch-new{background:var(--soft);color:var(--green);border-radius:12px}
+.chat-body{flex:1;min-height:0;display:flex;position:relative}
+.chat-main{flex:1;min-width:0;display:flex;flex-direction:column;min-height:0}
+.chat-side{position:absolute;top:0;bottom:0;left:0;width:86%;max-width:340px;background:#fff;z-index:16;transform:translateX(-104%);transition:transform .25s ease;display:flex;flex-direction:column;border-right:1px solid var(--line);box-shadow:8px 0 24px rgba(0,0,0,.12)}
+.side-open .chat-side{transform:none}
+.cs-backdrop{display:none;position:absolute;inset:0;background:rgba(22,26,21,.35);z-index:15}
+.side-open .cs-backdrop{display:block}
+.cs-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 14px 10px}
+.cs-head b{font-size:16px}
+.cs-new{width:auto;min-height:40px;padding:8px 12px;font-size:14.5px;border-radius:12px;box-shadow:none}
+#convList{overflow:auto;padding:4px 8px;display:flex;flex-direction:column;gap:2px;flex:0 1 auto;max-height:55%}
+.cv{display:flex;align-items:center;border-radius:12px}
+.cv.on{background:var(--soft)}
+.cv:hover{background:#f2f4ef}.cv.on:hover{background:var(--soft)}
+.cv-main{all:unset;cursor:pointer;flex:1;min-width:0;padding:9px 10px;display:flex;flex-direction:column;gap:1px}
+.cv-main:focus-visible{outline:3px solid var(--accent);border-radius:12px}
+.cv-main b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cv-main small{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cv-act{width:34px;height:34px;color:var(--muted);opacity:.65}
+.cv-act:hover{opacity:1}
+.cv-act.armed{color:var(--red);opacity:1;background:var(--red-soft);border-radius:10px}
+.chips.side{display:none}
+.ctx{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:6px 10px}
+.ctx label{display:flex;align-items:center;gap:6px;font-weight:700;font-size:13.5px;white-space:nowrap}
+.ctx .select{padding:8px 34px 8px 12px;font-size:15px;border-radius:10px;background-color:#fff}
+.ctx small,.ctx .btn{grid-column:1/-1}
+.ctx small{color:var(--green);font-size:13.5px}
+.m-div{align-self:center;display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);background:#eef1ea;border-radius:999px;padding:6px 12px;text-align:center;max-width:92%}
+.m-notes{margin-top:10px;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:8px 12px;font-size:14px}
+.m-notes summary{cursor:pointer;font-weight:700;color:var(--green);display:flex;align-items:center;gap:6px}
+.mn{display:flex;flex-direction:column;gap:2px;border-left:3px solid var(--line);padding-left:10px;margin-top:8px}
+.mn-tip{color:var(--muted)}
+.mn small{display:inline-flex;align-items:center;gap:4px;color:var(--green);font-weight:700;font-size:12.5px}
+.m-notes button{all:unset;cursor:pointer;margin-top:8px;font-weight:700;color:var(--green);text-decoration:underline;text-underline-offset:3px;font-size:13.5px}
+@media (min-width:900px){
+  #v-chat .chathead{max-width:1180px;width:100%;margin:0 auto;padding:18px 32px 12px;border-bottom:0}
+  #v-chat .ch-chats,#v-chat .ch-new{display:none}
+  .chat-body{max-width:1180px;width:100%;margin:0 auto;padding:0 32px;gap:28px}
+  .chat-side{position:static;transform:none;width:300px;max-width:none;box-shadow:none;border:0;background:transparent;z-index:auto;transition:none;overflow:auto}
+  .cs-head{padding:4px 0 10px}
+  #convList{padding:0;max-height:none;overflow:visible;flex:none}
+  .cs-backdrop{display:none!important}
+  .chips.side{display:flex;flex-direction:column;align-items:flex-start;gap:14px;overflow:visible;padding:18px 0 24px;border-top:1px solid var(--line);margin-top:12px}
+  .chips.side button{white-space:normal;font-size:15.5px;padding:9px 14px}
+  .chat-main>.chips{display:none}
+  .chat-main{border-left:1px solid var(--line);padding-left:28px}
+  .chat-main .ctx{margin:4px 0 0}
+  .chat-main .msgs{padding:18px 4px}
+  .chat-main .composer{padding:12px 0 24px}
+  .m{max-width:72%}
+}
+@media (prefers-reduced-motion:reduce){.chat-side{transition:none}}
+
+/* ===== What to do: a timeline ===== */
+.tl-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:24px 0 8px}
+.tl-head .lv-h{margin:0}
+.tl-head .sv-btn{background:var(--soft);color:var(--green);padding:7px 12px;border-radius:999px}
+.tl-head .sv-btn.on{background:var(--green);color:#fff}
+.tl{list-style:none;position:relative;display:flex;flex-direction:column;gap:0}
+.tl-step{display:grid;grid-template-columns:40px 1fr;gap:14px;position:relative;padding-bottom:18px}
+.tl-step:last-child{padding-bottom:0}
+.tl.seq .tl-step:not(:last-child)::before{content:"";position:absolute;left:19px;top:40px;bottom:0;width:2px;background:repeating-linear-gradient(var(--accent) 0 6px,transparent 6px 11px)}
+.tl-dot{width:40px;height:40px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-weight:800;font-size:17px;box-shadow:0 0 0 5px var(--soft);position:relative;z-index:1}
+.tl.loose .tl-dot{background:var(--soft);color:var(--green);box-shadow:none}
+.tl-body{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tl-when{font-size:12.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.tl-row{display:flex;align-items:center;gap:10px}
+.tl-row b{font-size:17px;line-height:1.35;color:var(--ink)}
+.tl-ic{width:36px;height:36px;border-radius:10px;background:var(--soft);color:var(--green);display:grid;place-items:center;flex-shrink:0}
+.tl-why{all:unset;cursor:pointer;align-self:flex-start;display:inline-flex;align-items:center;gap:4px;font-size:14px;font-weight:700;color:var(--green);padding:2px 0}
+.tl-why:focus-visible{outline:3px solid var(--accent);border-radius:6px}
+.tl-why .i{transition:transform .2s}
+.tl-why[aria-expanded="true"] .i{transform:rotate(90deg)}
+.tl-src{border-top:1px dashed var(--line);padding-top:10px;display:flex;flex-direction:column;gap:10px}
+.tl-src p{font-size:15.5px;line-height:1.5;color:var(--ink)}
+.tl-src ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.tl-src li{display:flex;gap:8px;align-items:flex-start;color:var(--green)}
+.tl-src li div{display:flex;flex-direction:column;gap:1px;min-width:0}
+.tl-src a,.tl-src li b{color:var(--ink);font-weight:700;font-size:14.5px;line-height:1.4;text-decoration:underline;text-decoration-color:#b9c0b4;text-underline-offset:3px}
+.tl-src small{font-size:12.5px;color:var(--muted)}
+.tl-src li span{font-size:14px;color:var(--ink)}
+.tl-none{font-weight:700;color:var(--muted)}
+@media (min-width:900px){.tl-row b{font-size:18px}.tl-body{padding:14px 18px}}
+.lv-steps{display:none}
+.tl.loose .tl-step{grid-template-columns:1fr;padding-bottom:10px}
+.tl.loose .tl-dot{display:none}
+.tl-kind{display:block;font-size:13.5px;font-weight:600;color:var(--muted);margin-top:2px}
+/* ===== navigation ===== */
+.brand .brand-gear{margin-left:auto;color:var(--muted)}
+.lib-sw{max-width:360px;margin:-4px 0 16px}
+.lib-sw button{gap:8px}
+.lib-n:not(:empty){font-size:12.5px;font-weight:800;min-width:20px;padding:1px 6px;border-radius:999px;background:var(--soft);color:var(--green)}
+.lib-sw button.on .lib-n{background:rgba(255,255,255,.22);color:#fff}
+@media (max-width:899px){.tn-new,.tn-gear{display:none}}
+.mf-h{font-size:18px;font-weight:800;margin:22px 0 10px;display:flex;align-items:center;gap:8px}
+.mf-h:first-of-type{margin-top:4px}
+.mf-season{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:flex;flex-direction:column;gap:10px;border:1.5px solid var(--line);border-radius:18px;background:#fff;padding:14px 16px;margin-bottom:10px}
+.mf-season:hover{border-color:var(--accent)}
+.mf-season:focus-visible{outline:3px solid var(--accent)}
+.mf-season .top{display:flex;align-items:center;gap:10px}
+.mf-season .top b{font-size:16.5px}
+.mf-season .top small{color:var(--muted);font-size:13.5px;font-weight:600}
+.mf-season .top .i:last-child{margin-left:auto;color:var(--muted)}
+.mf-season .nx{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:14.5px}
+.mf-season .nx b{font-weight:700}
+/* ===== My season ===== */
+.se-grid{display:flex;flex-direction:column;gap:16px}
+.se-a,.se-b{display:flex;flex-direction:column;gap:14px;min-width:0}
+.se-top{margin-top:0;display:flex;flex-direction:column;gap:10px}
+.se-place{display:flex;align-items:center;gap:8px;font-weight:800;font-size:17px;color:var(--ink)}
+.se-place small{font-weight:600;color:var(--muted);font-size:14px}
+.se-prog{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:700;color:var(--green)}
+.se-bar{flex:1;height:10px;border-radius:999px;background:#e6ebe2;overflow:hidden}
+.se-bar i{display:block;height:100%;background:var(--accent);border-radius:999px;transition:width .3s}
+.se-now{background:var(--green);color:#fff;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.se-now .k{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+.se-now .t{display:flex;align-items:center;gap:12px}
+.se-now .t span.ic{width:46px;height:46px;border-radius:14px;background:rgba(255,255,255,.16);display:grid;place-items:center;flex-shrink:0}
+.se-now b{font-size:20px;line-height:1.3}
+.se-now p{font-size:15px;line-height:1.45;opacity:.95}
+.se-now .when{font-size:14px;font-weight:700;opacity:.9}
+.se-now .btn{background:#fff;color:var(--green);min-height:50px;padding:12px}
+.se-now.all{background:var(--soft);color:var(--green)}
+.se-tl .tl-dot{font-size:15px}
+.se-tl .st-done .tl-dot{background:var(--accent)}
+.se-tl .st-now .tl-dot{background:var(--orange);box-shadow:0 0 0 5px #fbe3d8}
+.se-tl .st-late .tl-dot{background:var(--amber);box-shadow:0 0 0 5px var(--amber-soft)}
+.se-tl .st-later .tl-dot{background:#fff;color:var(--green);border:2px solid var(--accent);box-shadow:none}
+.se-tl .st-now .tl-body{border-color:var(--orange);box-shadow:0 6px 16px rgba(212,80,28,.12)}
+.se-tl .st-done .tl-body{background:#f7faf5}
+.se-tl .st-done .tl-row b{color:var(--muted);text-decoration:line-through;text-decoration-color:#9aa596}
+.se-tip{font-size:14.5px;color:var(--muted);line-height:1.45}
+.se-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.se-act{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:14.5px;font-weight:700;padding:8px 14px;border-radius:999px;background:var(--green);color:#fff}
+.se-act.undo{background:#eef0ea;color:var(--muted)}
+.pd-quick{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:14px 0 4px}
+.pd-quick button{all:unset;cursor:pointer;box-sizing:border-box;border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;font-weight:700;font-size:15.5px;display:flex;flex-direction:column;gap:2px;background:#fff}
+.pd-quick button small{font-weight:600;font-size:13px;color:var(--muted)}
+.pd-quick button.on{border-color:var(--green);background:var(--soft);color:var(--green)}
+.pd-quick button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.se-act.ghost{background:transparent;color:var(--muted);border:1.5px solid var(--line);padding:6.5px 12.5px}
+.se-skip{all:unset;cursor:pointer;align-self:center;font-size:14.5px;font-weight:700;color:#fff;opacity:.9;text-decoration:underline;text-underline-offset:3px;padding:4px}
+.se-skip:focus-visible{outline:3px solid #fff;border-radius:6px}
+.se-tl .st-skipped .tl-dot{background:#eef0ea;color:var(--muted);box-shadow:none}
+.se-tl .st-skipped .tl-body{background:#fafbf8;border-style:dashed}
+.se-tl .st-skipped .tl-row b,.se-tl .st-skipped .se-tip{color:var(--muted)}
+.se-impact{display:flex;gap:8px;align-items:flex-start;background:var(--amber-soft);color:var(--amber);border-radius:12px;padding:10px 12px;font-size:14px;line-height:1.45}
+.se-impact b{color:var(--amber)}
+.lnk2{all:unset;cursor:pointer;font-weight:700;text-decoration:underline;text-underline-offset:2px;color:var(--green)}
+.se-act:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.chip.now{background:#fbe3d8;color:#9b3510}
+.se-h{font-size:18px;font-weight:800;color:var(--ink);margin:0}
+.se-harv h3{margin-bottom:6px}
+.se-cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.se-cmp div{background:var(--soft);border-radius:14px;padding:12px;text-align:center}
+.se-cmp div:first-child{background:var(--green);color:#fff}
+.se-cmp small{display:block;font-size:13px;font-weight:600;opacity:.9}
+.se-cmp b{font-size:26px;font-weight:800}
+.se-cmp span{display:block;font-size:12.5px;opacity:.85}
+.home-week{margin-top:14px;border:1.5px solid var(--line);border-radius:20px;background:#fff;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.home-week .k{font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--orange)}
+.home-week .t{display:flex;gap:12px;align-items:center}
+.home-week .t b{font-size:17px;line-height:1.35}
+.home-week .t small{display:block;color:var(--muted);font-size:13.5px;font-weight:600;margin-top:2px}
+.home-week .row{display:flex;gap:8px;flex-wrap:wrap}
+.home-week .lnk{all:unset;cursor:pointer;font-size:14.5px;font-weight:700;color:var(--green);padding:8px 4px}
+@media (min-width:900px){
+  .se-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:24px 40px;align-items:start}
+  .se-a{position:sticky;top:0}
+}
 /* overlay + toast */
 .overlay{position:absolute;inset:0;background:rgba(255,255,255,.92);display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:20;font-weight:700;color:var(--green)}
 .overlay.on{display:flex}
@@ -312,21 +980,31 @@ h2.greet{font-size:25px;font-weight:800;margin:18px 0 4px}
   <symbol id="i-ruler" viewBox="0 0 24 24"><path d="M3 17L17 3l4 4L7 21z"/><path d="M7 13l2 2M10 10l2 2M13 7l2 2"/></symbol>
   <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></symbol>
   <symbol id="i-bag" viewBox="0 0 24 24"><path d="M9 3h6l-1.4 3.2C17 7.6 19 10.6 19 14c0 4.2-3.1 7-7 7s-7-2.8-7-7c0-3.4 2-6.4 5.4-7.8z"/><path d="M9.5 6.5h5"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M8 7h7"/></symbol>
+  <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></symbol>
   <symbol id="i-coin" viewBox="0 0 24 24"><ellipse cx="12" cy="7" rx="7" ry="3"/><path d="M5 7v5c0 1.7 3.1 3 7 3s7-1.3 7-3V7M5 12v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5"/></symbol>
 </svg>
 
 <div class="app" id="app">
+  <header class="topnav">
+    <div class="tn-in">
+      <button class="tn-brand" onclick="tab('home')"><span class="logo"><svg class="i" width="20" height="20"><use href="#i-leaf"/></svg></span>AgriAI<small>Malawi</small></button>
+      <nav class="tn-links" id="tnLinks" aria-label="Main"></nav>
+      <button class="tn-new" id="tnNew" onclick="startFlow()"><svg class="i" width="18" height="18"><use href="#i-plus"/></svg>New estimate</button>
+      <div class="seg tn-lang" id="tnLang" role="radiogroup" aria-label="Language"></div>
+      <button class="icb tn-gear" id="tnGear" onclick="tab('settings')" aria-label="Settings"><svg class="i" width="22" height="22"><use href="#i-settings"/></svg></button>
+    </div>
+  </header>
 
   <!-- HOME -->
   <section class="view" id="v-home" aria-label="Home">
-    <div class="scroll">
-      <div class="brand"><div class="logo"><svg class="i" width="22" height="22"><use href="#i-leaf"/></svg></div>AgriAI</div>
+    <div class="scroll"><div class="home-grid">
+      <div class="home-main">
+      <div class="brand"><div class="logo"><svg class="i" width="22" height="22"><use href="#i-leaf"/></svg></div>AgriAI<button class="icb brand-gear" onclick="tab('settings')" aria-label="Settings"><svg class="i" width="24" height="24"><use href="#i-settings"/></svg></button></div>
       <h2 class="greet" data-t="greet"></h2>
       <p class="sub" data-t="tagline"></p>
       <span class="season"><svg class="i" width="16" height="16"><use href="#i-seed"/></svg><span data-t="seasonLabel"></span></span>
-      <div class="hero-home" id="homeHero"></div>
-      <div id="homeLast"></div>
-      <div class="stack">
+      <div class="stack home-cta">
         <button class="btn btn-primary btn-big" onclick="startFlow()">
           <svg class="i" width="24" height="24"><use href="#i-target"/></svg>
           <span data-t="ctaEstimate"></span><span class="s" data-t="ctaEstimateSub"></span>
@@ -336,7 +1014,20 @@ h2.greet{font-size:25px;font-weight:800;margin:18px 0 4px}
           <span data-t="ctaAsk"></span><span class="s" data-t="ctaAskSub"></span>
         </button>
       </div>
-    </div>
+      </div>
+      <div class="home-side">
+        <div class="hero-home" id="homeHero"></div>
+        <div id="homeLast"></div>
+      </div>
+      <div class="how">
+        <h3>How it works</h3>
+        <ol>
+          <li><b>Find your farm</b><span>We look up usual rainfall, this season's outlook, soil, land and growing zone from your location.</span></li>
+          <li><b>Tell us your choices</b><span>Field size, planting month, seed, fertilizer and whether the field is mixed.</span></li>
+          <li><b>Compare with your goal</b><span>See your expected bags, which choices would add the most, and ask the advisor.</span></li>
+        </ol>
+      </div>
+    </div></div>
     <nav class="tabbar" data-tabs="home"></nav>
   </section>
 
@@ -357,6 +1048,7 @@ h2.greet{font-size:25px;font-weight:800;margin:18px 0 4px}
       <select class="select" id="areaSel" onchange="chooseArea(this.value)"></select>
       <div class="status" id="locStatus" aria-live="polite"></div>
     </div>
+    <aside class="side-sum" data-side aria-label="Your farm so far"></aside>
     <div class="foot">
       <button class="btn btn-primary" id="locNext" onclick="go('farm')" disabled><span data-t="continue"></span><svg class="i" width="22" height="22"><use href="#i-fwd"/></svg></button>
     </div>
@@ -398,6 +1090,7 @@ h2.greet{font-size:25px;font-weight:800;margin:18px 0 4px}
       <p class="help" data-t="intercropHelp"></p>
       <div class="seg" role="radiogroup" id="mixSeg"></div>
     </div>
+    <aside class="side-sum" data-side aria-label="Your farm so far"></aside>
     <div class="foot">
       <button class="btn btn-primary" onclick="go('goal')"><span data-t="continue"></span><svg class="i" width="22" height="22"><use href="#i-fwd"/></svg></button>
     </div>
@@ -429,6 +1122,7 @@ h2.greet{font-size:25px;font-weight:800;margin:18px 0 4px}
 
       <div class="card" id="goalIncome"></div>
     </div>
+    <aside class="side-sum" data-side aria-label="Your farm so far"></aside>
     <div class="foot">
       <button class="btn btn-primary" onclick="calculate()"><span data-t="calculate"></span><svg class="i" width="22" height="22"><use href="#i-fwd"/></svg></button>
     </div>
@@ -446,6 +1140,18 @@ h2.greet{font-size:25px;font-weight:800;margin:18px 0 4px}
     </div>
   </section>
 
+  <!-- MY SEASON -->
+  <section class="view" id="v-season" aria-label="My season">
+    <div class="scroll">
+      <div class="hdr">
+        <button class="icb" onclick="back()" aria-label="Back"><svg class="i" width="24" height="24"><use href="#i-back"/></svg></button>
+        <h1>My season</h1>
+        <button class="icb" onclick="goHome()" aria-label="Home"><svg class="i" width="22" height="22"><use href="#i-home"/></svg></button>
+      </div>
+      <div id="seasonBody"></div>
+    </div>
+  </section>
+
   <!-- WHY -->
   <section class="view" id="v-why" aria-label="Why this result">
     <div class="scroll">
@@ -456,7 +1162,7 @@ h2.greet{font-size:25px;font-weight:800;margin:18px 0 4px}
       </div>
       <div id="whyBody"></div>
     </div>
-    <div class="summary">
+    <div class="summary" id="whySumBar">
       <small data-t="nextStep"></small>
       <p id="whySummary"></p>
       <button class="btn" onclick="openChat(S.current)"><svg class="i" width="20" height="20"><use href="#i-chat"/></svg><span data-t="askAdvisor"></span></button>
@@ -467,24 +1173,68 @@ h2.greet{font-size:25px;font-weight:800;margin:18px 0 4px}
   <section class="view" id="v-chat" aria-label="Farming advisor">
     <div class="chathead">
       <button class="icb" onclick="back()" aria-label="Back"><svg class="i" width="24" height="24"><use href="#i-back"/></svg></button>
+      <button class="icb ch-chats" onclick="openChats()" aria-label="Your chats"><svg class="i" width="22" height="22"><use href="#i-history"/></svg></button>
       <div class="bot"><svg class="i" width="22" height="22"><use href="#i-leaf"/></svg></div>
-      <div><b data-t="advisor"></b><small data-t="advisorSub"></small></div>
+      <div class="ch-title"><b id="chatTitle">Farming advisor</b><small data-t="advisorSub"></small></div>
+      <button class="icb ch-new" onclick="newChat()" aria-label="New chat"><svg class="i" width="22" height="22"><use href="#i-plus"/></svg></button>
     </div>
-    <div class="ctx" id="ctx"></div>
-    <div class="msgs" id="msgs" aria-live="polite"></div>
-    <div class="chips" id="chips"></div>
-    <div class="composer">
-      <label class="sr" for="inp">Message</label>
-      <input id="inp" autocomplete="off" onkeydown="if(event.key==='Enter')send()">
-      <button class="icb mic" id="micBtn" onclick="voice()" aria-label="Voice input"><svg class="i" width="22" height="22"><use href="#i-mic"/></svg></button>
-      <button class="icb send" onclick="send()" aria-label="Send"><svg class="i" width="20" height="20"><use href="#i-send"/></svg></button>
+    <div class="chat-body">
+      <aside class="chat-side" aria-label="Your chats">
+        <div class="cs-head"><b>Your chats</b><button class="btn btn-primary cs-new" onclick="newChat()"><svg class="i" width="18" height="18"><use href="#i-plus"/></svg>New chat</button></div>
+        <div id="convList"></div>
+        <div class="chips side" id="chipsSide"></div>
+      </aside>
+      <div class="chat-main">
+        <div class="ctx" id="ctx"></div>
+        <div class="msgs" id="msgs" aria-live="polite"></div>
+        <div class="chips" id="chips"></div>
+        <div class="composer">
+          <label class="sr" for="inp">Message</label>
+          <input id="inp" autocomplete="off" onkeydown="if(event.key==='Enter')send()">
+          <button class="icb mic" id="micBtn" onclick="voice()" aria-label="Voice input"><svg class="i" width="22" height="22"><use href="#i-mic"/></svg></button>
+          <button class="icb send" onclick="send()" aria-label="Send"><svg class="i" width="20" height="20"><use href="#i-send"/></svg></button>
+        </div>
+      </div>
+      <div class="cs-backdrop" onclick="closeChats()"></div>
     </div>
   </section>
 
-  <!-- HISTORY -->
-  <section class="view" id="v-history" aria-label="History">
+  <!-- LEARN -->
+  <section class="view" id="v-learn" aria-label="Learn">
     <div class="scroll">
-      <div class="hdr" style="margin-left:0"><h1 data-t="history"></h1></div>
+      <div class="hdr" style="margin-left:0"><h1 data-t="learn"></h1>
+      </div>
+      <div class="seg lib-sw" role="tablist" aria-label="Learn sections"><button role="tab" class="on" onclick="tab('learn')" aria-selected="true">Guides</button><button role="tab" class="" onclick="tab('notes')" aria-selected="false">My notes<span class="lib-n" id="libN1"></span></button></div>
+      <div class="lv-wrap">
+        <nav class="lv-nav" id="learnNav" aria-label="Topics"></nav>
+        <div class="lv-main">
+          <p class="lv-banner" id="learnBanner"></p>
+          <article class="lv" id="learnArticle"></article>
+        </div>
+      </div>
+    </div>
+    <nav class="tabbar" data-tabs="learn"></nav>
+  </section>
+
+  <!-- MY NOTES -->
+  <section class="view" id="v-notes" aria-label="My notes">
+    <div class="scroll">
+      <div class="hdr" style="margin-left:0"><h1 data-t="learn"></h1>
+        <button class="btn btn-primary nt-new" onclick="newNote()"><svg class="i" width="20" height="20"><use href="#i-plus"/></svg>New note</button>
+      </div>
+      <div class="seg lib-sw" role="tablist" aria-label="Learn sections"><button role="tab" class="" onclick="tab('learn')" aria-selected="false">Guides</button><button role="tab" class="on" onclick="tab('notes')" aria-selected="true">My notes<span class="lib-n" id="libN2"></span></button></div>
+      <p class="sub nt-intro">Tips you saved from Learn and the advisor, with your own notes. Only you can see them.</p>
+      <div class="lv-nav nt-filter" id="notesFilter"></div>
+      <div id="notesList" class="nt-list"></div>
+    </div>
+    <nav class="tabbar" data-tabs="learn"></nav>
+  </section>
+
+  <!-- HISTORY -->
+  <section class="view" id="v-history" aria-label="My farm">
+    <div class="scroll">
+      <div class="hdr" style="margin-left:0"><h1 data-t="myfarm"></h1>
+        <button class="btn btn-primary nt-new mf-new" onclick="startFlow()"><svg class="i" width="20" height="20"><use href="#i-plus"/></svg>New estimate</button></div>
       <div id="histList"></div>
     </div>
     <nav class="tabbar" data-tabs="history"></nav>
@@ -507,11 +1257,12 @@ h2.greet{font-size:25px;font-weight:800;margin:18px 0 4px}
         <button class="btn btn-outline" onclick="clearHistory()"><svg class="i" width="20" height="20"><use href="#i-trash"/></svg><span data-t="clearHistory"></span></button>
       </div>
     </div>
-    <nav class="tabbar" data-tabs="settings"></nav>
+    <nav class="tabbar" data-tabs="none"></nav>
   </section>
 
   <div class="overlay" id="overlay" role="status"><div class="spin"></div><span data-t="calculating"></span></div>
   <div class="toast" id="toast" role="status"></div>
+  <div class="sheet" id="sheet" hidden></div>
 </div>
 
 <script>
@@ -625,7 +1376,10 @@ const T={
   askAdvisor:["Ask the advisor","Funsani mlangizi"],
   advisor:["Farming advisor","Mlangizi"],
   advisorSub:["Answers based on your estimate","Mayankho ochokera ku zotsatira zanu"],
+  learn:["Learn","Phunzirani"],
+  notes:["Notes","Zolemba"],
   history:["History","Mbiri"], home:["Home","Kunyumba"], settings:["Settings","Zokonda"],
+  myfarm:["My farm","Munda wanga"], advisor:["Advisor","Mlangizi"],
   language:["Language","Chilankhulo"],
   langNote:["Chichewa is a draft translation for testing.","Chichewa ndi kumasulira koyamba."],
   areaUnit:["Field size unit","Muyeso wa munda"],
@@ -633,6 +1387,73 @@ const T={
   ask:["Ask a question…","Funsani funso…"],
 };
 const t=(k)=>{const v=T[k];return v?(v[S.lang==="ny"?1:0]||v[0]):k};
+
+/* =====================================================================
+   KNOWLEDGE BASE: mirrors knowledge_base.csv (one row per claim).
+   The Learn page and the advisor's "general guidance" both read from it,
+   so every general answer can point to its source. Rows below are DRAFTS:
+   the research owner fills in the numbers and sources.
+   ===================================================================== */
+const KB=[
+  {id:"plant-01",topic:"Planting",title:"Plant with the first good rains",
+   summary:"Maize planted when the soil is wet after the first good rains uses the whole rainy season. Planting late shortens the season.",
+   need:"Yield lost per week of late planting in Malawi trials.",key:"",source:"",status:"draft",used:["Planting month chart","Advisor"]},
+  {id:"fert-01",topic:"Fertilizer",title:"How much fertilizer for maize",
+   summary:"Most advice is a basal fertilizer at planting and urea top-dressing a few weeks later.",
+   need:"Malawi recommended rates per acre and the yield response at each rate.",key:"",source:"",status:"draft",used:["Fertilizer options","Model calibration","Advisor"]},
+  {id:"seed-01",topic:"Seed",title:"Hybrid seed and local seed",
+   summary:"Hybrid seed usually yields more than local seed, but it must be bought new each season.",
+   need:"Yield difference on farmers' fields, and what happens with recycled hybrid seed.",key:"",source:"",status:"draft",used:["Seed options","Model calibration"]},
+  {id:"soil-01",topic:"Soil",title:"Soil quality and harvest",
+   summary:"Poor or acidic soil limits how much of the fertilizer the crop can use.",
+   need:"How soil organic matter and pH relate to maize yield in Malawi, and the effect of lime.",key:"",source:"",status:"draft",used:["Soil condition","Advisor"]},
+  {id:"soil-02",topic:"Soil",title:"Compost and manure",
+   summary:"Compost and animal manure add nutrients and help the soil hold water.",
+   need:"Yield effect alone and when combined with a smaller amount of fertilizer.",key:"",source:"",status:"draft",used:["Advisor"]},
+  {id:"mix-01",topic:"Mixed cropping",title:"Maize with legumes",
+   summary:"Growing pigeon peas, beans or groundnuts with maize gives a second harvest and can feed the soil.",
+   need:"Effect on maize bags per hectare and on total harvest from the field.",key:"",source:"",status:"draft",used:["Mixed cropping","Advisor"]},
+  {id:"water-01",topic:"Water",title:"Keeping water in the soil",
+   summary:"Mulching, tied ridges and pit planting keep rain in the field during dry spells.",
+   need:"Yield effect in dry seasons and labour needed.",key:"",source:"",status:"draft",used:["Advisor"]},
+  {id:"store-01",topic:"Storage",title:"Storing maize safely",
+   summary:"Dry the grain well and store it in hermetic bags off the floor to reduce weevil losses.",
+   need:"Storage losses with and without hermetic bags.",key:"",source:"",status:"draft",used:["Advisor"]},
+];
+/* SOURCES: many sources per fact (mirrors sources.csv, linked by kb_id).
+   "checked:false" = found by search, not yet read by the team. Nothing here claims
+   what a source says until someone reads it and fills in "finding". */
+const SOURCES=[
+  {kb:"plant-01",title:"The unquantified cost of delay in African maize systems: an evidence gap for policy",pub:"Frontiers in Agronomy",year:2026,url:"https://www.frontiersin.org/journals/agronomy/articles/10.3389/fagro.2026.1861579/full"},
+  {kb:"plant-01",title:"Planting date and yield benefits from conservation agriculture practices across Southern Africa",pub:"Agricultural Systems",url:"https://www.sciencedirect.com/science/article/abs/pii/S0308521X16305613"},
+  {kb:"plant-01",title:"Studies on maize at Bunda, Malawi. I. Yield in relation to rainfall",pub:"Experimental Agriculture",url:"https://resolve.cambridge.org/core/journals/experimental-agriculture/article/studies-on-maize-zea-mays-at-bunda-malawi-i-yield-in-relation-to-rainfall/1CE471FACF040E308942550F72275522"},
+  {kb:"fert-01",title:"Maize Yield Response to Nitrogen in Malawi's Smallholder Production Systems",pub:"IFPRI / CGSpace",url:"https://cgspace.cgiar.org/server/api/core/bitstreams/d32adc22-19f0-4e3a-92ca-61ca0afc67a8/content"},
+  {kb:"fert-01",title:"Optimizing Fertilizer Use within the Context of Integrated Soil Fertility Management in Malawi",pub:"OFRA handbook, Chapter 9",url:"https://agronomy.unl.edu/sites/unl.edu.ianr.agronomy-horticulture/files/media/file/OFRA%20Chapter%209_Malawi_HR.pdf"},
+  {kb:"fert-01",title:"An in-depth examination of maize yield response to fertilizer in Central Malawi reveals low profits and too many weeds",pub:"Research article",url:"https://www.researchgate.net/publication/344047279_An_in-depth_examination_of_maize_yield_response_to_fertilizer_in_Central_Malawi_reveals_low_profits_and_too_many_weeds"},
+  {kb:"fert-01",title:"National Fertiliser Policy",pub:"Government of Malawi, Ministry of Agriculture",url:"https://npc.mw/wp-content/uploads/2023/10/2021.03-National-Fertiliser-Policy-signed.pdf"},
+  {kb:"seed-01",title:"Can Adoption of Improved Maize Varieties Help Smallholder Farmers Adapt to Drought? Evidence from Malawi",pub:"Research article",url:"https://www.researchgate.net/publication/272086269_Can_Adoption_of_Improved_Maize_Varieties_Help_Smallholder_Farmers_Adapt_to_Drought_Evidence_from_Malawi"},
+  {kb:"seed-01",title:"Adoption of fertiliser and hybrid seeds by smallholder maize farmers in Southern Malawi",pub:"Development Southern Africa",url:"https://www.tandfonline.com/doi/full/10.1080/03768350500044065"},
+  {kb:"seed-01",title:"Seed sector functioning and the adoption of improved varieties: Malawi study report",pub:"KIT Royal Tropical Institute",url:"https://www.kit.nl/wp-content/uploads/2019/03/Malawi-Study-Report.pdf"},
+  {kb:"soil-01",title:"Soil nutrient status of smallholder farms in Malawi",pub:"Communications in Soil Science and Plant Analysis",url:"https://www.tandfonline.com/doi/abs/10.1080/00103629809370135"},
+  {kb:"soil-01",title:"Potential of reduced agricultural lime application rates to increase yield and profitability of maize through microdosing in central Malawi",pub:"African Journal of Agricultural Research",url:"https://academicjournals.org/journal/AJAR/article-full-text/A317EA763817"},
+  {kb:"soil-02",title:"Book of Abstracts on ISFM Technologies in Malawi",pub:"African Plant Nutrition Institute",url:"https://www.apni.net/wp-content/uploads/2020/04/ISFM-Book-of-Abstracts-Malawi.pdf"},
+  {kb:"mix-01",title:"Biodiversity can support a greener revolution in Africa",pub:"PNAS",year:2010,url:"https://www.pnas.org/doi/10.1073/pnas.1007199107"},
+  {kb:"mix-01",title:"Productivity and profitability of maize-legume cropping systems under conservation agriculture among smallholder farmers in Malawi",pub:"Acta Agriculturae Scandinavica",url:"https://www.tandfonline.com/doi/full/10.1080/09064710.2020.1712470"},
+  {kb:"mix-01",title:"Opportunities and constraints to legume diversification for sustainable maize production on smallholder farms in Malawi",pub:"Renewable Agriculture and Food Systems",url:"https://www.cambridge.org/core/journals/renewable-agriculture-and-food-systems/article/abs/opportunities-and-constraints-to-legume-diversification-for-sustainable-maize-production-on-smallholder-farms-in-malawi/B4B3E45A545A82C7AEA3640584D0E484"},
+  {kb:"water-01",title:"Can smallholder farmers buffer rainfall variability through conservation agriculture? On-farm practices and maize yields in Kenya and Malawi",pub:"Environmental Research Letters",url:"https://iopscience.iop.org/article/10.1088/1748-9326/ab45ad"},
+  {kb:"water-01",title:"Impacts of conservation agriculture on soil structure and hydraulic properties of Malawian agricultural systems",pub:"Soil and Tillage Research (open access)",url:"https://pmc.ncbi.nlm.nih.gov/articles/PMC7233133"},
+  {kb:"water-01",title:"Conservation agriculture systems for Malawian smallholder farmers: long-term effects on crop productivity, profitability and soil quality",pub:"Renewable Agriculture and Food Systems",url:"https://www.cambridge.org/core/journals/renewable-agriculture-and-food-systems/article/conservation-agriculture-systems-for-malawian-smallholder-farmers-longterm-effects-on-crop-productivity-profitability-and-soil-quality/8D96B9B89D8FA0F2F3ADBFDE5F8FE776"},
+  {kb:"store-01",title:"Grain Hermetic Storage and Post-Harvest Loss Reduction in Sub-Saharan Africa",pub:"Journal of Biosystems Engineering",url:"https://link.springer.com/article/10.1007/s42853-022-00130-4"},
+  {kb:"store-01",title:"Impact of storage environment on the efficacy of hermetic storage bags",pub:"Journal of Stored Products Research (open access)",url:"https://pmc.ncbi.nlm.nih.gov/articles/PMC5476195/"},
+  {kb:"store-01",title:"Field efficacy of hermetic and other maize grain storage options under smallholder farmer management",pub:"Research article",url:"https://www.researchgate.net/publication/316112963_Field_efficacy_of_hermetic_and_other_maize_grain_storage_options_under_smallholder_farmer_management"},
+].map(s=>({checked:false,finding:"",...s}));
+const sourcesFor=id=>KS.sources.filter(s=>s.kb===id);
+/* Each fact can carry an "action": the line shown under "What to do".
+   Steps are built from the facts, so a new fact with an action adds a step. */
+const KB_ACTIONS=[{"id": "plant-02", "topic": "Planting", "title": "Get the field ready early", "summary": "Clearing and ridging before the rains lets you plant as soon as the soil is wet.", "action": "Prepare the field before the rains", "action_icon": "terrain", "step_order": 1, "need": "Evidence that early land preparation helps farmers plant on time in Malawi."}, {"id": "plant-03", "topic": "Planting", "title": "Wait for enough moisture", "summary": "Seed planted in dry soil can fail to come up if the rain stops again.", "action": "Wait until the soil is wet a hand deep", "action_icon": "rain", "step_order": 2, "need": "Local guidance on how much rain or soil moisture is needed before planting."}, {"id": "plant-01", "action": "Plant within a week of the first good rains", "action_icon": "seed", "step_order": 3}, {"id": "fert-01", "action": "Put basal fertilizer in at planting", "action_icon": "fert", "step_order": 1}, {"id": "fert-02", "topic": "Fertilizer", "title": "Top-dress when the crop grows fast", "summary": "Urea given a few weeks after planting feeds the crop when it needs nitrogen most.", "action": "Top-dress with urea a few weeks later", "action_icon": "cal", "step_order": 2, "need": "Recommended timing of top-dressing, in weeks after planting."}, {"id": "fert-03", "topic": "Fertilizer", "title": "Put fertilizer where the roots are", "summary": "Fertilizer placed close to the plant and covered with soil is used better and washes away less.", "action": "Place it near the plant and cover it", "action_icon": "check", "step_order": 3, "need": "Placement method recommended in Malawi and its effect on yield."}, {"id": "seed-01", "action": "Buy certified seed from an agro-dealer", "action_icon": "coin", "step_order": 1}, {"id": "seed-02", "topic": "Seed", "title": "Don't replant hybrid seed", "summary": "Seed saved from a hybrid crop gives a weaker crop the next season.", "action": "Don't replant seed saved from a hybrid crop", "action_icon": "alert", "step_order": 2, "need": "Yield of recycled hybrid seed compared with fresh seed."}, {"id": "seed-03", "topic": "Seed", "title": "Compare cost and benefit", "summary": "Hybrid seed costs more, so it pays when the extra harvest is worth more than the seed.", "action": "Compare the seed price with the extra bags", "action_icon": "bag", "step_order": 3, "need": "Hybrid seed price and typical extra yield, to estimate the payoff."}, {"id": "soil-02", "action": "Add compost or manure before planting", "action_icon": "leaf", "step_order": 1}, {"id": "soil-03", "topic": "Soil", "title": "Keep crop residue on the field", "summary": "Leaving maize stalks and leaves on the field adds organic matter and protects the soil.", "action": "Leave crop residue on the field", "action_icon": "zone", "step_order": 2, "need": "Effect of keeping residue on soil and yield in Malawi."}, {"id": "soil-01", "action": "Ask for a soil test before using lime", "action_icon": "info", "step_order": 3}, {"id": "mix-01", "action": "Plant pigeon peas, beans or groundnuts between maize rows", "action_icon": "seed", "step_order": 1}, {"id": "mix-02", "topic": "Mixed cropping", "title": "What to expect from mixing", "summary": "Mixed fields usually give a little less maize, plus a second crop to eat or sell.", "action": "Expect a little less maize, plus a second crop", "action_icon": "bag", "step_order": 2, "need": "Maize and legume yields in mixed fields compared with maize alone."}, {"id": "mix-03", "topic": "Mixed cropping", "title": "Rotate the legume", "summary": "Moving the legume to a different part of the field each season spreads the soil benefit.", "action": "Rotate where you plant them next season", "action_icon": "zone", "step_order": 3, "need": "Benefit of legume rotation for the next maize crop."}, {"id": "water-01", "action": "Cover the soil with crop residue", "action_icon": "leaf", "step_order": 1}, {"id": "water-02", "topic": "Water", "title": "Tied ridges", "summary": "Small earth ties across the ridges hold rainwater so it soaks in instead of running off.", "action": "Build ridges with ties across the slope", "action_icon": "terrain", "step_order": 2, "need": "Yield effect of tied ridges in dry seasons."}, {"id": "water-03", "topic": "Water", "title": "Planting pits", "summary": "Pits around the planting station collect water and manure where the roots grow.", "action": "Dig planting pits on dry or sandy land", "action_icon": "rain", "step_order": 3, "need": "Yield effect and labour of planting pits in Malawi."}, {"id": "store-02", "topic": "Storage", "title": "Dry the grain well", "summary": "Grain stored wet goes mouldy. Dry it until it cracks when bitten.", "action": "Dry the grain until it cracks when bitten", "action_icon": "check", "step_order": 1, "need": "Safe moisture level for stored maize."}, {"id": "store-01", "action": "Store it in a sealed (hermetic) bag", "action_icon": "bag", "step_order": 2}, {"id": "store-03", "topic": "Storage", "title": "Store off the floor", "summary": "Bags on the floor or against walls take up damp and are easy for pests to reach.", "action": "Keep bags off the floor and away from walls", "action_icon": "home", "step_order": 3, "need": "Storage losses with and without raised storage."}];
+KB_ACTIONS.forEach(a=>{const k=KB.find(x=>x.id===a.id); if(k) Object.assign(k,a); else KB.push({status:"draft",used:["Learn"],key:"",source:"",...a})});
+const kbById=id=>KS.facts.find(k=>k.id===id);
+let learnTopic="All", learnFocus=null;
 
 /* ===================== helpers ===================== */
 const $=s=>document.querySelector(s);
@@ -648,33 +1469,52 @@ const STORE="agriai_v5";
 const S={
   lang:"en", unit:"ha",
   form:{env:null,area:1.0,plantMonth:null,seed:"local",fertBags:0,intercrop:false,targetBags:null,bagsTouched:false,price:500,bagKg:50},
-  preds:[], current:null, generalChat:[], view:"home",
+  preds:[], current:null, generalChat:[], saved:[], convs:[], view:"home",
 };
-function save(){try{localStorage.setItem(STORE,JSON.stringify({lang:S.lang,unit:S.unit,preds:S.preds,generalChat:S.generalChat}))}catch(e){}}
-function load(){try{const d=JSON.parse(localStorage.getItem(STORE)||"{}");Object.assign(S,{lang:d.lang||"en",unit:d.unit||"ha",preds:d.preds||[],generalChat:d.generalChat||[]})}catch(e){}}
+function save(){try{localStorage.setItem(STORE,JSON.stringify({lang:S.lang,unit:S.unit,preds:S.preds,generalChat:S.generalChat,saved:S.saved,convs:S.convs}))}catch(e){}}
+function load(){try{const d=JSON.parse(localStorage.getItem(STORE)||"{}");Object.assign(S,{lang:d.lang||"en",unit:d.unit||"ha",preds:d.preds||[],generalChat:d.generalChat||[],saved:d.saved||[],convs:d.convs||[]});
+  if(!d.convs){ // one-time move of older single-thread chats into conversations
+    S.preds.forEach(p=>{if(p.chat&&p.chat.length) S.convs.push({id:"c"+p.id,title:(p.chat.find(m=>m.who==="u")||{}).text||"Chat about "+p.form.env.name,predId:p.id,msgs:p.chat,ts:p.ts,updatedAt:p.ts})});
+    if(S.generalChat.length) S.convs.push({id:"cgeneral",title:(S.generalChat.find(m=>m.who==="u")||{}).text||"General chat",predId:null,msgs:S.generalChat,ts:Date.now(),updatedAt:Date.now()});
+  }}catch(e){}}
 const cur=()=>S.preds.find(p=>p.id===S.current);
 const latest=()=>S.preds[0];
 
 /* ===================== navigation (real browser history, so the phone back button works) ===================== */
-const TABS=["home","history","settings"];
+/* Four sections, the same on phone and computer:
+   Home (today), My farm (estimates + season tracking), Advisor (chats), Learn (guides + my notes).
+   "New estimate" is an action, not a section; Settings sits behind the gear icon.       */
+const TABS=["home","history","chat","learn"];
+const SECTION={home:"home",history:"history",result:"history",why:"history",season:"history",chat:"chat",learn:"learn",notes:"learn"};
 const FLOW=["loc","farm","goal"];
 function show(id){
-  if((id==="result"||id==="why")&&!cur()) id="home";
+  if((id==="result"||id==="why"||id==="season")&&!cur()) id="home";
   if(FLOW.includes(id)&&id!=="loc"&&!S.form.env) id="loc";
   S.view=id;
   document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id==="v-"+id));
-  ({home:renderHome,loc:renderLoc,farm:renderFarm,goal:renderGoal,result:renderResult,why:renderWhy,chat:renderChat,history:renderHistory,settings:renderSettings}[id]||(()=>{}))();
+  ({home:renderHome,loc:renderLoc,farm:renderFarm,goal:renderGoal,result:renderResult,why:renderWhy,chat:renderChat,history:renderHistory,settings:renderSettings,learn:renderLearn,notes:renderNotes,season:renderSeason}[id]||(()=>{}))();
+  renderTopNav();
   const sc=document.querySelector("#v-"+id+" .scroll"); if(sc) sc.scrollTop=0;
 }
 function go(id,replace){history[replace?"replaceState":"pushState"]({id},"","#"+id);show(id)}
 function back(){history.length>1?history.back():go("home",true)}
 function goHome(){go("home")}
-function tab(k){if(k===S.view)return;go(k,k==="home"||S.view!=="home")}
+function tab(k){if(k===S.view)return;if(k==="chat")return openChat();go(k,k==="home"||S.view!=="home")}
 window.addEventListener("popstate",e=>show(e.state?.id||"home"));
+const TAB_LABEL={home:"home",history:"myfarm",chat:"advisor",learn:"learn"};
+const TAB_ICON={home:"home",history:"seed",chat:"chat",learn:"book"};
+function renderTopNav(){
+  const group=SECTION[S.view]||"";
+  const el=$("#tnLinks"); el.innerHTML=TABS.map(k=>`<button class="${k===group?"on":""}" ${k===group?'aria-current="page"':""} onclick="tab('${k}')">${t(TAB_LABEL[k])}</button>`).join("");
+  $("#tnNew").classList.toggle("on",FLOW.includes(S.view));
+  $("#tnGear").classList.toggle("on",S.view==="settings");
+  document.querySelectorAll('[data-tabs]').forEach(n=>n.querySelectorAll("button").forEach(b=>{const on=b.dataset.k===group;b.classList.toggle("on",on);on?b.setAttribute("aria-current","page"):b.removeAttribute("aria-current")}));
+  const nn=S.saved.length?String(S.saved.length):""; ["#libN1","#libN2"].forEach(x=>{const e=$(x);if(e)e.textContent=nn});
+  seg("#tnLang",[["en","EN"],["ny","NY"]],S.lang,v=>{S.lang=v;save();applyLang();show(S.view)});
+}
 function renderTabs(){
   document.querySelectorAll("[data-tabs]").forEach(n=>{
-    const on=n.dataset.tabs, icons={home:"home",history:"history",settings:"settings"};
-    n.innerHTML=TABS.map(k=>`<button class="${k===on?"on":""}" ${k===on?'aria-current="page"':""} onclick="tab('${k}')">${ic(icons[k],24)}${t(k)}</button>`).join("");
+    n.innerHTML=TABS.map(k=>`<button data-k="${k}" onclick="tab('${k}')">${ic(TAB_ICON[k],24)}${t(TAB_LABEL[k])}</button>`).join("");
   });
 }
 function applyLang(){
@@ -698,10 +1538,10 @@ function renderHome(){
       <div class="facts"><span>${ic("rain",14)} Rain outlook: ${OUTLOOK[e.outlook].label}</span><span>${ic("terrain",14)} ${fmt(e.elev)} m</span><span>${ic("zone",14)} Soil: ${SOIL[e.soil].label}</span></div>`
       :`<span class="loc">${ic("pin",16)}Location not set</span><p>Start an estimate and we'll look up rainfall and land conditions for your farm.</p>`}
     </div>`;
-  const l=latest();
-  $("#homeLast").innerHTML=l?`<button class="card tap" style="width:100%;text-align:left;font:inherit" onclick="openPred('${l.id}')">
+  const l=latest(), tp=trackedPred();
+  $("#homeLast").innerHTML=(tp?homeWeekHTML(tp):"")+(l?`<button class="card tap" style="width:100%;text-align:left;font:inherit" onclick="openPred('${l.id}')">
       <div style="flex:1"><small style="color:var(--muted);font-size:13px">Last estimate · ${esc(l.form.env.name)}</small>
-      <div style="font-size:20px;font-weight:800;margin-top:2px">About ${bagsOf(l,l.result.y)} bags</div>${gapChip(l)}</div>${ic("chev",22)}</button>`:"";
+      <div style="font-size:20px;font-weight:800;margin-top:2px">About ${bagsOf(l,l.result.y)} bags</div>${gapChip(l)}</div>${ic("chev",22)}</button>${l.season?"":`<button class="quick" onclick="startSeason('${l.id}')">${ic("cal",16)}Track this season</button>`}`:"");
 }
 
 /* ===================== STEP 1: LOCATION ===================== */
@@ -726,6 +1566,7 @@ function renderLoc(){
       ${e.src==="area"?`<p class="help" style="margin:10px 0 0">Using the district centre. GPS gives a more accurate estimate.</p>`:""}</div>`;
   } else st.innerHTML="";
   $("#locNext").disabled=!S.form.env||s==="fetching"||s==="locating";
+  renderSides();
   $("#gpsBtn").disabled=s==="fetching"||s==="locating";
 }
 function useGPS(){
@@ -755,6 +1596,22 @@ function fetchEnv({lat,lng,src}){
   setTimeout(tick,380);
 }
 
+/* desktop side panel: what the farmer has entered so far */
+function renderSides(){
+  const f=S.form, e=f.env, step={loc:1,farm:2,goal:3}[S.view]||1;
+  const row=(icon,k,v)=>`<div class="ss-row">${ic(icon,18)}<span>${k}</span><b>${v}</b></div>`;
+  const html=`<h3>Your farm so far</h3>
+    ${e?`<div class="ss-place">${ic("pin",18)}<b>${esc(e.name)}</b></div>
+      ${row("rain","Usual rain",fmt(e.rainAvg)+" mm")}${row("rain","Outlook",OUTLOOK[e.outlook].label)}
+      ${row("zone","Soil",SOIL[e.soil].label)}${row("terrain","Land",fmt(e.elev)+" m · "+e.slope+"%")}`
+      :`<p class="help">Choose a location to see rainfall, soil and land for your farm.</p>`}
+    ${step>=2&&e?`<div class="ss-div"></div>${row("ruler","Field",fmtArea(f.area))}${row("cal","Planting",f.plantMonth?monthName(f.plantMonth):"")}
+      ${row("seed","Seed",f.seed==="hybrid"?"Hybrid":"Local")}${row("fert","Fertilizer",f.fertBags+" bags")}${row("zone","Field type",f.intercrop?"Mixed":"Maize only")}`:""}
+    ${step>=3&&e&&f.targetBags?`<div class="ss-div"></div>${row("target","Goal",f.targetBags+" bags of "+(f.bagKg||50)+" kg")}`:""}
+    <p class="ss-note">${ic("info",16)}Numbers use sample data until the trained model is connected.</p>`;
+  document.querySelectorAll("[data-side]").forEach(a=>a.innerHTML=html);
+}
+
 /* ===================== STEP 2: FARM ===================== */
 const toUnit=ha=>S.unit==="ha"?ha:ha/ACRE;
 const fromUnit=v=>S.unit==="ha"?v:v*ACRE;
@@ -767,6 +1624,7 @@ function renderFarm(){
   seg("#seedSeg",[["hybrid",t("hybrid")],["local",t("local")]],f.seed,v=>{f.seed=v;renderFarm()});
   $("#fertInp").value=f.fertBags;
   seg("#mixSeg",[[false,t("maizeOnly")],[true,t("mixed")]],f.intercrop,v=>{f.intercrop=v;renderFarm()});
+  renderSides();
 }
 function seg(sel,opts,val,on){
   const el=$(sel); el.innerHTML=opts.map(([v,l],i)=>`<button role="radio" aria-checked="${v===val}" class="${v===val?"on":""}" data-i="${i}">${l}</button>`).join("");
@@ -791,6 +1649,7 @@ function renderGoal(){
   $("#bagsInp").value=f.targetBags; $("#priceInp").value=f.price;
   const kgha=f.targetBags*f.bagKg/f.area;
   $("#bagsHelp").innerHTML=`= ${fmt(kgha)} kg per hectare<br>A typical farm near you harvests about <b>${typicalBags()} bags</b> on this much land.`;
+  renderSides();
   $("#goalIncome").innerHTML=`<h3>${ic("coin",18)}If you reach your goal</h3><div style="font-size:24px;font-weight:800">MWK ${fmt(f.targetBags*f.bagKg*f.price)}</div><p class="help" style="margin:4px 0 0">${f.targetBags} bags × ${f.bagKg} kg × MWK ${fmt(f.price)}</p>`;
 }
 function stepBags(d){S.form.targetBags=Math.max(1,S.form.targetBags+d);S.form.bagsTouched=true;renderGoal()}
@@ -828,20 +1687,28 @@ function renderResult(){
   const grid=Array.from({length:n},(_,i)=>`<svg class="bag ${i<nEst?"f":"miss"}" width="24" height="24" aria-hidden="true"><use href="#i-bag"/></svg>`).join("");
   const pos=hi>lo?(est-lo)/(hi-lo)*100:50;
   $("#resBody").innerHTML=`
-    <div class="status ${ok?"ok":"bad"}">${ic(ok?"check":"alert",22)}<span>${ok?"You can reach your goal":`${-diff} bags short of your goal`}</span></div>
-    <div class="res-hero">
-      <div class="k">EXPECTED HARVEST</div>
+    <div class="res-grid"><div class="res-a">
+    <div class="status o1 ${ok?"ok":"bad"}">${ic(ok?"check":"alert",22)}<span>${ok?"You can reach your goal":`${-diff} bags short of your goal`}</span></div>
+    <div class="res-hero o2">
+      <div class="k">Expected harvest</div>
       <div class="big">${est}<span> bags</span></div>
       <div class="range" aria-label="Possible range ${lo} to ${hi} bags">
         <div class="rt"><i style="left:${pos}%"></i></div>
         <div class="rl"><span><b>${lo}</b> poor season</span><span><b>${hi}</b> good season</span></div>
       </div>
     </div>
-    <div class="tiles">
+    <div class="tiles o3">
       <div class="tile">${ic("coin",22)}<b>${moneyOf(p,est)}</b><small>Value at your price</small></div>
       <div class="tile">${ic("bag",22)}<b>${bagKgOf(p)} kg bags</b><small>Shelled grain · ${fmtArea(f.area)}${f.intercrop?" · mixed":""}</small></div>
     </div>
-    <div class="card">
+    <div class="early o6">${ic("info",18)}<span>This is an early guess based on usual rainfall and this season's outlook. It can change during the season.</span></div>
+    <div class="stack o7">
+      <button class="btn btn-orange" onclick="go('why')">${ok?"Why this result?":"How can I get more bags?"} ${ic("fwd",22)}</button>
+      <button class="btn btn-outline" onclick="startSeason('${p.id}')">${ic("cal",20)}${p.season?"Open my season":"Track my season"}</button>
+      <button class="btn btn-outline" onclick="editPred()">${ic("edit",20)}Change my answers</button>
+    </div>
+    </div><div class="res-b">
+    <div class="card o4">
       <h3>${ic("target",18)}Your goal: ${goal} bags</h3>
       <div class="baggrid" role="img" aria-label="${est} bags expected out of a goal of ${goal}">${grid}</div>
       <div class="legend"><span><svg class="bag f" width="16" height="16"><use href="#i-bag"/></svg>Expected harvest</span>${ok?"":`<span><svg class="bag miss" width="16" height="16"><use href="#i-bag"/></svg>Missing to reach goal</span>`}${per>1?`<span>1 icon = ${per} bags</span>`:""}</div>
@@ -849,16 +1716,11 @@ function renderResult(){
         ?`Great, that is <b>${diff} bag${diff===1?"":"s"} more</b> than your goal.`
         :`You may get <b>${est}</b> bags, but your goal is <b>${goal}</b>. The missing <b>${-diff} bags</b> are worth about <b>${moneyOf(p,-diff)}</b>.`}</div>
     </div>
-    <div class="card" style="display:flex;gap:12px;align-items:center">
+    <div class="card o5" style="display:flex;gap:12px;align-items:center">
       <span class="ic-soft">${ic("pin",20)}</span>
       <div><b>Similar farms near you: about ${typ} bags</b><p class="help" style="margin:2px 0 0">Farms of the same size in ${esc(f.env.name.replace("Near ",""))} using the usual seed and fertilizer.</p></div>
     </div>
-    <div class="early">${ic("info",18)}<span>This is an early guess based on usual rainfall and this season's outlook. It can change during the season.</span></div>
-    <div class="stack">
-      <button class="btn btn-orange" onclick="go('why')">${ok?"Why this result?":"How can I get more bags?"} ${ic("fwd",22)}</button>
-      <button class="btn btn-outline" onclick="editPred()">${ic("edit",20)}Change my answers</button>
-    </div>
-    <details class="details"><summary>Details for extension officers</summary>
+    <details class="details o8"><summary>Details for extension officers</summary>
       <div class="kv" style="margin-top:10px">
         <div><small>Estimated yield</small><b>${fmt(r.y)} kg/ha</b></div>
         <div><small>Likely range</small><b>${fmt(r.lo)} to ${fmt(r.hi)}</b></div>
@@ -866,7 +1728,7 @@ function renderResult(){
         <div><small>Typical nearby</small><b>${fmt(r.typical)} kg/ha</b></div>
         <div><small>Fertilizer</small><b>${fmt(fertKgHa(f))} kg/ha</b></div>
         <div><small>Versions</small><b style="font-size:13px">${esc(f.env.feature_version||"")} · ${esc(p.model_version||"")}</b></div>
-      </div></details>`;
+      </div></details></div></div>`;
 }
 function fmtArea(ha){return S.unit==="ha"?`${+ha.toFixed(2)} ha`:`${+(ha/ACRE).toFixed(2)} acres`}
 function editPred(){const p=cur();S.form={...S.form,...JSON.parse(JSON.stringify(p.form)),plantTouched:true,bagsTouched:true};go("farm")}
@@ -908,8 +1770,9 @@ function renderWhy(){
   const landR=e.elev<300?["Hot lowland","warn"]:e.slope>8?["Steep","warn"]:["Good","ok"];
   const cond=(icon,name,val,[r,c],txt)=>`<div class="cond"><span class="ic-soft">${ic(icon,20)}</span><div style="flex:1"><div class="top"><b>${name}</b><span class="chip ${c}">${r}</span></div><small>${val}</small>${txt?`<p>${txt}</p>`:""}</div></div>`;
   $("#whyBody").innerHTML=`
+    <div class="why-grid"><div class="why-a">
     <p class="base">You expect <b>${now} bags</b>. Here is how many bags each choice would give, with everything else kept the same.</p>
-    <div class="sect">${ic("edit",16)}YOUR CHOICES</div>
+    <div class="sect">${ic("edit",16)}Your choices</div>
     <div class="caveat">${ic("info",16)}<span>Estimated from farms like yours that made each choice. Your real result can differ.</span></div>
     ${groups.map(g=>g.chart?monthChartHTML(g):`<div class="group"><div class="gname">${ic(g.icon,18)}${g.name}</div>${g.opts.map(o=>optHTML(g,o)).join("")}</div>`).join("")}
     <div class="group"><div class="gname">${ic("zone",18)}Mixed cropping</div>
@@ -917,18 +1780,22 @@ function renderWhy(){
         ?`Your field is mixed. Maize only would give about <b>${pure} bags</b> of maize, but you would lose the beans, peas or groundnuts. This is your choice, so it is not in the plan below.`
         :`Your field is maize only. Mixing in a legume would give about <b>${mixedB} bags</b> of maize, plus beans, peas or groundnuts, and can help the soil.`}</small></div></div>
     </div>
-    <div class="sect">${ic("bulb",16)}YOUR BEST PLAN</div>
+    </div><div class="why-b">
+    <div class="sect">${ic("bulb",16)}Your best plan</div>
     ${changes.length?`<div class="best">
         <div class="top"><b>All changes together</b><span class="big2">${bestBags} bags</span></div>
         <ul>${changes.map(c=>`<li>${c}</li>`).join("")}</ul>
         <p>${bestBags>=f.targetBags?`This reaches your goal of ${f.targetBags} bags.`:`This is still ${f.targetBags-bestBags} bags below your goal of ${f.targetBags}.`} Changes can work together, so this can be more or less than adding them up one by one.</p>
       </div>`
       :`<p class="help" style="margin-top:8px">You are already using the best choices the model knows about.</p>`}
-    <div class="sect">${ic("rain",16)}CONDITIONS YOU CAN'T CHANGE</div>
+    <div class="sect">${ic("rain",16)}Conditions you can't change</div>
     ${cond("rain","Rainfall",`Usually ${fmt(e.rainAvg)} mm a season. Outlook this season: ${OUTLOOK[e.outlook].label.toLowerCase()}.`,[OUTLOOK[e.outlook].label,OUTLOOK[e.outlook].chip],e.outlook!=="below"?`If the season turns out below normal, you may get about ${dry} bags.`:"")}
     ${cond("zone","Soil nutrients",`From the soil map for your area`,[SOIL[e.soil].label,SOIL[e.soil].chip],e.soil>=3?"Compost or manure can help poor soil. Ask the advisor.":"")}
     ${cond("terrain","Land",`${fmt(e.elev)} m high, ${e.slope}% slope`,landR,e.elev<300?"Hot, low land is harder for maize.":e.slope>8?"Steep land loses water and soil when it rains.":"")}
-    ${cond("zone","Growing zone",ZONES[e.aez].label,zoneR,"")}`;
+    ${cond("zone","Growing zone",ZONES[e.aez].label,zoneR,"")}
+    <div class="why-sum"><small>WHAT TO DO NEXT</small><p>${esc(summaryLine(p))}</p>
+      <button class="btn" onclick="openChat(S.current)">${ic("chat",20)}Ask the advisor</button></div>
+    </div></div>`;
   $("#whySummary").textContent=summaryLine(p);
   const mg=groups.find(g=>g.chart); WHY_MONTHS={g:mg,now};
   selectMonth(mg.cur===mg.onset?mg.cur:mg.onset);
@@ -964,57 +1831,172 @@ function summaryLine(p){
 }
 
 /* ===================== CHAT (stands in for POST /api/advise) ===================== */
-let chatPredId=null;
-function openChat(id){chatPredId=id||latest()?.id||null;go("chat")}
-const thread=()=>{const p=S.preds.find(x=>x.id===chatPredId);return p?p.chat:S.generalChat};
+/* ===================== CHAT: several saved conversations =====================
+   Each chat can be linked to one estimate (or none) and switched at any time.
+   Chats are private to the farmer and sync across devices on the shared page. */
+let chatConvId=null, chatPredId=null;
+const convById=id=>S.convs.find(c=>c.id===id);
+const curConv=()=>convById(chatConvId);
+const predOf=c=>c&&c.predId?S.preds.find(p=>p.id===c.predId):null;
+const byRecent=(a,b)=>(b.updatedAt||0)-(a.updatedAt||0);
+const fmtWhen=t=>{const d=new Date(t),n=new Date();return d.toDateString()===n.toDateString()?d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}):d.toLocaleDateString("en-GB",{day:"numeric",month:"short"})};
+function predLabel(p){return `${p.form.env.name.replace("Near ","")} · ${new Date(p.ts).toLocaleDateString("en-GB",{day:"numeric",month:"short"})} · ${bagsOf(p,p.result.y)} bags`}
+function newConv(predId,title){const c={id:"c"+Date.now()+Math.random().toString(36).slice(2,5),title:title||"New chat",predId:predId||null,msgs:[],ts:Date.now(),updatedAt:Date.now()};S.convs.unshift(c);persistConv(c);return c}
+function openChat(predId){
+  let c;
+  if(predId) c=S.convs.filter(x=>x.predId===predId).sort(byRecent)[0]||newConv(predId);
+  else c=[...S.convs].sort(byRecent)[0]||newConv(latest()?.id||null);
+  chatConvId=c.id; go("chat");
+}
+function newChat(){const c=newConv(curConv()?curConv().predId:(latest()?.id||null));chatConvId=c.id;closeChats();renderChat();setTimeout(()=>$("#inp").focus(),50)}
+const thread=()=>curConv()?.msgs||[];
+const convLive=()=>KS.mode==="live"&&KS.db&&KS.uid&&!notesLocalOnly;
+const convCol=()=>KS.db.collection("data/users/"+KS.uid+"/chats/items");
+const convTimers={};
+function persistConv(c){save(); if(!convLive()) return; clearTimeout(convTimers[c.id]); convTimers[c.id]=setTimeout(async()=>{try{await convCol().doc(c.id).set(JSON.parse(JSON.stringify(c)))}catch(e){}},400)}
+async function removeConv(id){save(); if(!convLive()) return; clearTimeout(convTimers[id]); try{await convCol().doc(id).delete()}catch(e){}}
+
 function renderChat(){
-  const p=S.preds.find(x=>x.id===chatPredId);
-  $("#ctx").innerHTML=p
-    ?`<b>${ic("info",16)}Talking about your estimate · ${new Date(p.ts).toLocaleDateString("en-GB",{day:"numeric",month:"short"})}</b>
-      ${esc(p.form.env.name)} · about ${bagsOf(p,p.result.y)} bags · goal ${p.form.targetBags} bags`
-    :`<b>${ic("info",16)}No estimate yet</b>I can answer general questions. For advice about your own field, make an estimate first.
-      <button class="btn btn-primary" onclick="startFlow()">Estimate my harvest</button>`;
-  const th=thread();
-  if(!th.length){
+  let c=curConv();
+  if(!c){c=[...S.convs].sort(byRecent)[0]||newConv(latest()?.id||null);chatConvId=c.id}
+  if(c.predId&&!predOf(c)) c.predId=null;
+  const p=predOf(c); chatPredId=p?p.id:null;
+  $("#chatTitle").textContent=c.title;
+  const opts=[`<option value="">No estimate · general questions</option>`,...S.preds.map(x=>`<option value="${x.id}" ${x.id===chatPredId?"selected":""}>${esc(predLabel(x))}</option>`)].join("");
+  $("#ctx").innerHTML=`<label for="estSel">${ic("target",16)}This chat is about</label>
+    <select id="estSel" class="select" onchange="setConvEstimate(this.value)">${opts}</select>
+    ${p?`<small>Goal ${p.form.targetBags} bags · ${gapOf(p)>=0?"on track":`${p.form.targetBags-bagsOf(p,p.result.y)} bags short`}</small>`
+      :S.preds.length?`<small>Choose an estimate to get advice for that field.</small>`
+      :`<button class="btn btn-primary" onclick="startFlow()">Make an estimate first</button>`}`;
+  if(!c.msgs.length){
     const short=p?p.form.targetBags-bagsOf(p,p.result.y):0;
-    th.push({who:"a",html:p?`Moni! You may harvest about <b>${bagsOf(p,p.result.y)} bags</b>, ${short<=0?"which meets your goal":`about <b>${short} bags</b> short of your goal`}. What would you like to know?`:"Moni! Ask me anything about growing maize.",src:p?"model":null});
-    save();
+    c.msgs.push({who:"a",html:p?`Moni! You may harvest about <b>${bagsOf(p,p.result.y)} bags</b>, ${short<=0?"which meets your goal":`about <b>${short} bags</b> short of your goal`}. What would you like to know?`:"Moni! Ask me anything about growing maize.",src:p?"model":null});
+    persistConv(c);
   }
-  const box=$("#msgs"); box.innerHTML=th.map(msgHTML).join(""); box.scrollTop=box.scrollHeight;
-  const qs=p?["How can I reach my goal?","What if the rains are poor?","Is there a cheaper option than fertilizer?","When should I plant?"]:["When should I plant maize?","How do I store maize safely?"];
-  $("#chips").innerHTML=qs.map((q,i)=>`<button data-q="${i}">${q}</button>`).join("");
-  $("#chips").querySelectorAll("button").forEach(b=>b.onclick=()=>send(qs[+b.dataset.q]));
+  const box=$("#msgs"); box.innerHTML=c.msgs.map(msgHTML).join(""); box.scrollTop=box.scrollHeight;
+  const groups=suggestionGroups(p), qs=groups.flatMap(g=>g.qs);
+  let n=0; const chipHTML=groups.map(g=>`<div class="cg"><span class="cg-t">${g.title}</span>${g.qs.map(q=>`<button data-q="${n++}">${q}</button>`).join("")}</div>`).join("");
+  ["#chips","#chipsSide"].forEach(s=>{const el=$(s);el.innerHTML=chipHTML;el.querySelectorAll("button").forEach(b=>b.onclick=()=>{closeChats();send(qs[+b.dataset.q])})});
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   $("#micBtn").classList.toggle("off",!SR);
+  renderConvList();
+}
+function setConvEstimate(v){
+  const c=curConv(); if(!c) return; c.predId=v||null; c.updatedAt=Date.now(); const p=predOf(c);
+  c.msgs.push({who:"a",divider:true,html:p?`Now talking about <b>${esc(predLabel(p))}</b>`:"Now answering general questions"});
+  persistConv(c); renderChat();
+}
+function renderConvList(){
+  const list=[...S.convs].sort(byRecent);
+  $("#convList").innerHTML=list.length?list.map(c=>{const p=predOf(c);return `<div class="cv ${c.id===chatConvId?"on":""}">
+      <button class="cv-main" onclick="switchConv('${c.id}')" ${c.id===chatConvId?'aria-current="true"':""}><b>${esc(c.title)}</b><small>${p?esc(predLabel(p)):"General"} · ${fmtWhen(c.updatedAt||c.ts)}</small></button>
+      <button class="icb cv-act" aria-label="Rename chat" onclick="renameConv('${c.id}')">${ic("edit",16)}</button>
+      <button class="icb cv-act ${convDelArmed===c.id?"armed":""}" aria-label="${convDelArmed===c.id?"Tap again to delete":"Delete chat"}" onclick="deleteConv('${c.id}')">${ic("trash",16)}</button></div>`}).join("")
+    :`<p class="help" style="padding:8px 12px">No chats yet.</p>`;
+}
+function switchConv(id){chatConvId=id;closeChats();renderChat()}
+function renameConv(id){const c=convById(id); if(!c) return; openSheet("Rename chat",[{name:"title",label:"Chat name",value:c.title,required:true,max:60}],v=>{c.title=v.title;persistConv(c);renderChat();return true})}
+let convDelArmed=null;
+function deleteConv(id){
+  if(convDelArmed!==id){convDelArmed=id;renderConvList();toast("Tap the bin again to delete this chat.");setTimeout(()=>{if(convDelArmed===id){convDelArmed=null;if(S.view==="chat")renderConvList()}},4000);return}
+  convDelArmed=null; S.convs=S.convs.filter(c=>c.id!==id); removeConv(id);
+  if(chatConvId===id) chatConvId=null; renderChat(); toast("Chat deleted.");
+}
+function openChats(){document.getElementById("v-chat").classList.add("side-open")}
+function closeChats(){document.getElementById("v-chat").classList.remove("side-open")}
+function askAboutNote(id){
+  const n=S.saved.find(x=>x.id===id); if(!n) return;
+  const c=newConv(latest()?.id||null,"Note: "+(n.topic||"General")); chatConvId=c.id; go("chat");
+  const q=n.note?"Can you help me with this note?":"Tell me more about this tip.";
+  const ctx={topic:n.topic||"General",tip:(n.text||"").slice(0,1200),note:(n.note||"").slice(0,1200),tried:!!n.tried,noteId:n.id};
+  setTimeout(()=>send(q,ctx),250);
 }
 function msgHTML(m){
+  if(m.divider) return `<div class="m-div">${ic("target",14)}<span>${m.html}</span></div>`;
   const srcs=[].concat(m.src||[]);
   const tag=srcs.length?`<div style="display:flex;gap:6px;flex-wrap:wrap">${srcs.includes("model")?`<span class="src model">${ic("check",12)}From your estimate</span>`:""}${srcs.includes("general")?`<span class="src general">${ic("info",12)}General guidance, not from the model</span>`:""}</div>`:"";
-  return `<div class="m ${m.who}">${m.who==="u"?esc(m.text):m.html+tag}</div>`;
+  const kb=(m.kb||[]).map(kbById).filter(Boolean);
+  const kbHTML=kb.length?`<div class="kb-links">${kb.map(k=>`<div class="kb-item"><button aria-expanded="false" onclick="toggleChatFact(this,'${k.id}')">${ic("bulb",15)}<span>${esc(k.title)}</span>${ic("chev",14)}</button><div class="kb-card" hidden></div></div>`).join("")}</div>`:"";
+  const sv=m.who==="a"&&m.id?`<div class="m-save">${saveBtn("ans:"+m.id,true)}</div>`:"";
+  const topics=new Set(kb.map(k=>k.topic)), rel=m.who==="a"&&topics.size?S.saved.filter(n=>topics.has(n.topic)&&(n.note||n.text)):[];
+  const notesHTML=rel.length?`<details class="m-notes"><summary>${ic("bookmark",14)}Your related notes (${rel.length})</summary>${rel.slice(0,3).map(n=>`<div class="mn">${n.note?`<span>${esc(n.note)}</span>`:`<span class="mn-tip">${esc(n.text)}</span>`}${n.tried?`<small>${ic("check",12)}Tried</small>`:""}</div>`).join("")}<button onclick="tab('notes')">Open My notes</button></details>`:"";
+  return `<div class="m ${m.who}">${m.who==="u"?(m.ctx?ctxHTML(m.ctx):"")+esc(m.text):m.html+tag+kbHTML+notesHTML+sv}</div>`;
 }
+/* Suggested questions: personalised first (from the farmer's biggest gaps), then by topic.
+   Each topic matches a section of the Learn knowledge base. */
+const TOPIC_QS=[
+  {title:"Fertilizer",qs:["How much fertilizer should I use?","Is there a cheaper option than fertilizer?"]},
+  {title:"Seed",qs:["Is hybrid seed worth it?"]},
+  {title:"Planting",qs:["When should I plant?"]},
+  {title:"Soil",qs:["How can I improve my soil?"]},
+  {title:"Mixed cropping",qs:["Should I grow legumes with my maize?"]},
+  {title:"Weather",qs:["What if the rains are poor?"]},
+  {title:"Storage",qs:["How do I store maize safely?"]},
+];
+function suggestionGroups(p){
+  if(!p) return TOPIC_QS.filter(g=>g.title!=="Weather");
+  const mine=p.season?["What should I do this week?","How can I reach my goal?"]:["How can I reach my goal?"];
+  const top=p.result.whatIf[0];
+  if(top) mine.push({fert:"How much fertilizer should I use?",seed:"Is hybrid seed worth it?",plant:"When should I plant?"}[top.k]);
+  if(p.form.env.soil>=3) mine.push("How can I improve my soil?");
+  const used=new Set(mine);
+  return [{title:"Suggested for you",qs:mine},...TOPIC_QS.map(g=>({title:g.title,qs:g.qs.filter(q=>!used.has(q))})).filter(g=>g.qs.length)];
+}
+
 function reply(q){
   const p=S.preds.find(x=>x.id===chatPredId), s=q.toLowerCase();
   if(!p){
-    if(/plant|when|date/.test(s)) return {html:"Most farmers in Malawi plant with the first good rains, usually mid November to early December, once the soil is wet to about a hand's depth.",src:"general"};
-    if(/store|storage|weevil/.test(s)) return {html:"Dry maize well (until the grain cracks when bitten), use hermetic (PICS) bags if you can, and keep bags off the floor.",src:"general"};
+    if(/plant|when|date/.test(s)) return {html:"Most farmers in Malawi plant with the first good rains, usually mid November to early December, once the soil is wet to about a hand's depth.",src:"general",kb:["plant-01"]};
+    if(/store|storage|weevil/.test(s)) return {html:"Dry maize well (until the grain cracks when bitten), use hermetic (PICS) bags if you can, and keep bags off the floor.",src:"general",kb:["store-01"]};
+    if(/fertili/.test(s)) return {html:"Most advice is a basal fertilizer at planting and urea top-dressing a few weeks later. Make an estimate and I can show how many bags of maize different amounts would give on your field.",src:"general",kb:["fert-01"]};
+    if(/seed|hybrid/.test(s)) return {html:"Hybrid seed usually yields more than local seed, but it must be bought new each season. Make an estimate to see the difference for your field.",src:"general",kb:["seed-01"]};
+    if(/soil|compost|manure|lime/.test(s)) return {html:"Compost and animal manure add nutrients and help the soil hold water. If the soil is acidic, lime can help; a soil test tells you.",src:"general",kb:["soil-01","soil-02"]};
+    if(/legume|mix|intercrop|bean|pigeon|groundnut/.test(s)) return {html:"Growing pigeon peas, beans or groundnuts with maize gives a second harvest and can feed the soil, but usually a little less maize per hectare.",src:"general",kb:["mix-01"]};
     return {html:"For advice about your own field, please make an estimate first. Then I can explain your numbers.",src:null};
   }
   const r=p.result,f=p.form,e=f.env,now=bagsOf(p,r.y),goal=f.targetBags,B=kg=>bagsOf(p,kg);
+  if(/this week|right now|next step|what should i do/.test(s)){
+    if(!p.season) return {html:`You are not tracking this season yet. Open your estimate and tap <b>Track my season</b> to get a dated plan.`,src:null};
+    const n=nextStage(p);
+    if(!n) return {html:"Every step on your season plan is done. Well done.",src:null};
+    return {html:`${n.status==="later"?"Coming up next":"This week"}: <b>${esc(n.s.name)}</b> (${fmtRange(n.start,n.end)}).<div style="margin-top:8px">${esc(n.tip)}</div>`,src:"general",kb:n.s.kb?[n.s.kb]:[]};
+  }
   const caveat=`<div style="margin-top:8px;font-size:13.5px;color:var(--muted)">These numbers come from farms like yours. Your real result can differ.</div>`;
-  if(/goal|improve|reach|increase|better|more|gap/.test(s)){
+  if(/goal|improve|reach|increase|better|more|gap/.test(s)&&!/soil|compost|manure|seed|hybrid|fertili|legume|mix|store|rain/.test(s)){
     if(!r.whatIf.length) return {html:`Your planting month, seed and fertilizer are already the best options the model knows about. ${now<goal?`The rest of the gap comes from rainfall, soil and land. A goal of about <b>${now} bags</b> is more realistic this season.`:"You're on track."}`,src:"model"};
     return {html:`Each change on its own would give you:<ul>${r.whatIf.map(x=>`<li>${WHATIF_TXT[x.k](p)}: <b>${B(r.y+x.gain)} bags</b> (+${B(r.y+x.gain)-now})</li>`).join("")}</ul><div style="margin-top:6px">${summaryLine(p)}</div>${caveat}`,src:"model"};
   }
   if(/rain|dry|drought|poor/.test(s)){
     const dry=B(predictY({...f,env:{...e,outlook:"below"}}));
-    return {html:`${e.outlook==="below"?`The outlook for this season is already below normal, and your estimate of ${now} bags includes that.`:`If the season turns out below normal, you may get about <b>${dry} bags</b> instead of ${now}.`}<div style="margin-top:8px">To protect against dry spells, farmers often use mulching, tied ridges or pit planting to keep water in the soil.</div>`,src:["model","general"]};
+    return {html:`${e.outlook==="below"?`The outlook for this season is already below normal, and your estimate of ${now} bags includes that.`:`If the season turns out below normal, you may get about <b>${dry} bags</b> instead of ${now}.`}<div style="margin-top:8px">To protect against dry spells, farmers often use mulching, tied ridges or pit planting to keep water in the soil.</div>`,src:["model","general"],kb:["water-01"]};
   }
+  if(/how much fert|fertilizer should|amount|rate/.test(s)){
+    const rec=recFertBags(f), half=Math.max(1,Math.round(rec/2));
+    const opts=[...new Set([0,half,rec,f.fertBags])].sort((a,b)=>a-b);
+    return {html:`For your ${fmtArea(f.area)} field, the sample recommendation is about <b>${rec} bags</b> of fertilizer, planting and top-dressing together. Here is what the model expects:<ul>${opts.map(b=>`<li>${b===0?"No fertilizer":b+" bag"+(b>1?"s":"")}${b===f.fertBags?" (your plan)":""}: <b>${B(scen(p,{fertBags:b}))} bags</b> of maize</li>`).join("")}</ul>Each extra bag adds a little less than the one before.${caveat}`,src:["model","general"],kb:["fert-01"]};
+  }
+  if(/seed|hybrid/.test(s)){
+    const other=f.seed==="hybrid"?"local":"hybrid", ob=B(scen(p,{seed:other}));
+    return {html:f.seed==="hybrid"
+      ?`You already plan hybrid seed. With local seed you may get about <b>${ob} bags</b> instead of ${now}.<div style="margin-top:8px">Buy certified seed each season; saved seed from a hybrid crop yields less.</div>`
+      :`With hybrid seed you may get about <b>${ob} bags</b> instead of ${now}.<div style="margin-top:8px">Hybrid seed must be bought new each season, so compare the seed price with the value of the extra bags.</div>${caveat}`,src:["model","general"],kb:["seed-01"]};
+  }
+  if(/soil|compost|manure|lime/.test(s)){
+    return {html:`The soil map for your area says: <b>${SOIL[e.soil].label.toLowerCase()}</b>.<div style="margin-top:8px">Compost and animal manure add nutrients and help the soil hold water. If the soil is acidic, lime can help; a soil test tells you. The model can't estimate these effects yet.</div>`,src:"general",kb:["soil-01","soil-02"]};
+  }
+  if(/legume|mix|intercrop|bean|pigeon|groundnut/.test(s)){
+    const alt=B(scen(p,{intercrop:!f.intercrop}));
+    return {html:f.intercrop
+      ?`Your field is mixed. Maize only would give about <b>${alt} bags</b> of maize instead of ${now}, but you would lose the second crop.`
+      :`Mixing in a legume would give about <b>${alt} bags</b> of maize instead of ${now}, plus beans, peas or groundnuts.<div style="margin-top:8px">Legumes can also feed the soil for next season.</div>`,src:["model","general"],kb:["mix-01"]};
+  }
+  if(/store|storage|weevil/.test(s)) return {html:"Dry maize well (until the grain cracks when bitten), use hermetic (PICS) bags if you can, and keep bags off the floor.",src:"general",kb:["store-01"]};
   if(/cheap|cost|afford|alternative|fertili/.test(s)){
     const rec=recFertBags(f);
     const fertPart=f.fertBags>=rec
       ?`You already use about the recommended amount (${rec} bags). With ${Math.max(1,Math.round(rec/2))} bags you may get about <b>${B(scen(p,{fertBags:Math.max(1,Math.round(rec/2))}))} bags</b> of maize instead of ${now}.`
       :`With ${rec} bags of fertilizer you may get about <b>${B(scen(p,{fertBags:rec}))} bags</b> of maize instead of ${now}. Even ${Math.max(1,Math.round(rec/2))} bags would give about ${B(scen(p,{fertBags:Math.max(1,Math.round(rec/2))}))}.`;
-    return {html:`${fertPart}<div style="margin-top:8px">Lower cost options include compost, animal manure, and mixing in pigeon pea or groundnuts. The model can't estimate their effect yet.</div>`,src:["model","general"]};
+    return {html:`${fertPart}<div style="margin-top:8px">Lower cost options include compost, animal manure, and mixing in pigeon pea or groundnuts. The model can't estimate their effect yet.</div>`,src:["model","general"],kb:["soil-02","mix-01","fert-01"]};
   }
   if(/plant|when|date|month|early|late/.test(s)){
     const on=ONSET[e.region], onB=B(scen(p,{plantMonth:on}));
@@ -1022,11 +2004,107 @@ function reply(q){
   }
   return {html:"I can explain your estimate, how to reach your goal, what happens if rains are poor, fertilizer amounts, and planting time. Try one of the suggestions below.",src:null};
 }
-function send(text){
-  const inp=$("#inp"), q=(text||inp.value).trim(); if(!q) return; inp.value="";
-  const th=thread(); th.push({who:"u",text:q});
-  const box=$("#msgs"); box.insertAdjacentHTML("beforeend",msgHTML({who:"u",text:q})+`<div class="m a" id="typing"><span class="typing"><span></span><span></span><span></span></span></div>`); box.scrollTop=box.scrollHeight;
-  setTimeout(()=>{const r=reply(q);th.push({who:"a",html:r.html,src:r.src});save();$("#typing")?.remove();box.insertAdjacentHTML("beforeend",msgHTML(th[th.length-1]));box.scrollTop=box.scrollHeight},700);
+/* ===================== AI ADVISOR (Claude) =====================
+   Stands in for POST /api/advise until the backend calls a model. Claude only sees what we
+   send: the farmer's estimate (numbers already computed by the yield model) and the
+   knowledge base. It must not make up yield numbers. If Claude is not available, the
+   rule based reply() above answers instead.                                              */
+const AI={fn:null,off:false,busy:false};
+async function initAI(){try{const C=window.claude;if(C&&C.use){AI.fn=await C.use("sample")}}catch(e){AI.fn=null}}
+function estimateFacts(p){
+  if(!p) return "The farmer has not chosen an estimate for this chat. Do not give yield numbers for their field; suggest making an estimate if they ask about their own harvest.";
+  const f=p.form,e=f.env,r=p.result,B=kg=>bagsOf(p,kg),now=B(r.y),rec=recFertBags(f),half=Math.max(1,Math.round(rec/2));
+  const fert=[...new Set([0,half,rec,f.fertBags])].sort((a,b)=>a-b).map(b=>`${b} bags of fertilizer: ${B(scen(p,{fertBags:b}))} bags of maize${b===f.fertBags?" (their plan)":""}`);
+  const on=ONSET[e.region];
+  return [
+    `Area: ${e.name.replace("Near ","")}, ${fmtArea(f.area)}. Bag size used for maize: ${bagKgOf(p)} kg.`,
+    `Their plan: ${f.seed} seed, ${f.fertBags} bags (50 kg) of fertilizer, finish planting in ${monthName(f.plantMonth)}, ${f.intercrop?"maize mixed with a legume":"maize only"}.`,
+    `Soil map for the area: ${SOIL[e.soil].label}. Season rainfall outlook: ${e.outlook}. First rains usually come in ${monthName(on)}.`,
+    `Expected harvest: ${now} bags (poor season ${B(r.lo)}, good season ${B(r.hi)}). Goal: ${f.targetBags} bags. Similar farms nearby: ${B(r.typical)} bags.`,
+    `Model what-ifs (each changes one thing):`,
+    ...fert.map(x=>"  "+x),
+    `  ${f.seed==="hybrid"?"Local":"Hybrid"} seed instead: ${B(scen(p,{seed:f.seed==="hybrid"?"local":"hybrid"}))} bags`,
+    `  ${f.intercrop?"Maize only":"Mixed with a legume"} instead: ${B(scen(p,{intercrop:!f.intercrop}))} bags of maize`,
+    `  Finish planting in ${monthName(on)}: ${B(scen(p,{plantMonth:on}))} bags`,
+    `  Below normal rain season: ${B(predictY({...f,env:{...e,outlook:"below"}}))} bags`,
+    `  Best plan (hybrid, ${Math.max(f.fertBags,rec)} bags fertilizer, plant in ${monthName(on)}): ${B(scen(p,bestChoices(p)))} bags`,
+    seasonFacts(p)||"The farmer is not tracking this season yet. If they ask what to do now, suggest Track my season on the result page.",
+  ].join("\n");
+}
+function kbForPrompt(){
+  return KS.facts.filter(k=>k&&k.id&&k.title).map(k=>`[${k.id}] (${k.topic}) ${k.title}: ${k.summary||""}${k.action?" Action: "+k.action:""}`).join("\n").slice(0,12000);
+}
+function aiRules(p){
+  return `You are AgriAI, a friendly maize farming advisor for smallholder farmers in Malawi. Many readers have little schooling and read on a phone.
+How to answer:
+- Reply in ${S.lang==="ny"?"Chichewa":"plain, simple English"}. Keep it short: 2 to 5 short sentences, or a short list of up to 4 items starting with "- ".
+- Use **bold** only for key numbers. No headings, no tables, no emoji. Never use dash punctuation inside sentences; use commas or full stops instead.
+- Numbers about THIS farmer's harvest must come only from the ESTIMATE section below. Never invent or calculate other yield numbers. If a number is not there, say the estimate cannot tell yet.
+- Prefer the KNOWLEDGE BASE for farming advice. If it does not cover the question, give brief, widely accepted advice for Malawi smallholders and keep it practical.
+- If the question is not about farming, politely say you can help with maize farming questions.
+- Do not give medical, legal or pesticide dose advice; suggest an extension officer instead.
+After the answer, on its own last line, write exactly: META kb=<comma separated knowledge base ids you relied on, or none> est=<yes if you used numbers from the ESTIMATE, else no>
+
+ESTIMATE
+${estimateFacts(p)}
+
+KNOWLEDGE BASE
+${kbForPrompt()}`;
+}
+const META_RE=/\n?\s*META\b[\s\S]*$/;
+function aiHTML(t){
+  const lines=esc(t.replace(META_RE,"").trim()).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").split(/\n+/);
+  let out="",list=false;
+  lines.forEach(l=>{const m=l.match(/^\s*[-*•]\s+(.*)/);
+    if(m){if(!list){out+="<ul>";list=true}out+=`<li>${m[1]}</li>`}
+    else{if(list){out+="</ul>";list=false}if(l.trim())out+=`<p class="ai-p">${l}</p>`}});
+  return out+(list?"</ul>":"");
+}
+function aiTurns(c,p){
+  const hist=c.msgs.filter(m=>!m.divider&&(m.who==="u"?m.text:(m.text||m.html))).slice(-11,-1).map(m=>({role:m.who==="u"?"user":"assistant",content:m.who==="u"?m.text+ctxText(m.ctx):(m.text||m.html.replace(/<[^>]+>/g," ")).slice(0,1500)}));
+  while(hist.length&&hist[0].role!=="user") hist.shift();
+  return [{role:"user",content:aiRules(p)},...hist];
+}
+const AI_OFF=new Set(["not_granted","sampling_disabled","not_declared","capability_disabled","capability_removed"]);
+async function aiReply(c,q,p,onText){
+  const turns=aiTurns(c,p); turns.push({role:"user",content:q});
+  const {text}=await AI.fn(turns,{cache:false,modelTier:"quick",onText:({text})=>onText(text)});
+  const meta=(text.match(/META\s+kb=([^\n]*?)\s+est=(\w+)/)||[]);
+  const ids=(meta[1]||"").split(/[,\s]+/).map(s=>s.trim()).filter(id=>id&&kbById(id)).slice(0,3);
+  const est=/yes/i.test(meta[2]||"")&&!!p;
+  const src=[...(est?["model"]:[]),...(est&&!ids.length?[]:["general"])];
+  return {html:aiHTML(text),text:text.replace(META_RE,"").trim(),src,kb:ids,ai:true};
+}
+/* a question asked from My notes carries the saved note with it */
+function ctxText(x){
+  if(!x) return "";
+  return `\n\n[The farmer is asking about a note they saved in the ${x.topic} topic.]\nSaved tip: ${x.tip||"(none)"}${x.note?`\nTheir own note: ${x.note}`:""}${x.tried?"\nThey marked that they tried this.":""}`;
+}
+function ctxHTML(x){
+  return `<div class="m-ctx">${ic("bookmark",14)}<div><small>From My notes · ${esc(x.topic)}</small>${x.tip?`<span class="m-ctx-tip">${esc(x.tip)}</span>`:""}${x.note?`<span class="m-ctx-note">${esc(x.note)}</span>`:""}${x.tried?`<small>${ic("check",12)}Tried</small>`:""}</div></div>`;
+}
+function send(text,ctx){
+  const inp=$("#inp"), q=(text||inp.value).trim(); if(!q) return; if(!text) inp.value="";
+  const c=curConv(); if(!c) return;
+  const p=predOf(c);
+  c.msgs.push(ctx?{who:"u",text:q,ctx}:{who:"u",text:q}); if(c.title==="New chat"&&!ctx) c.title=q.length>42?q.slice(0,40)+"…":q; c.updatedAt=Date.now();
+  $("#chatTitle").textContent=c.title; persistConv(c);
+  const box=$("#msgs"); box.insertAdjacentHTML("beforeend",msgHTML(ctx?{who:"u",text:q,ctx}:{who:"u",text:q})+`<div class="m a" id="typing"><span class="typing"><span></span><span></span><span></span></span></div>`); box.scrollTop=box.scrollHeight;
+  const finish=r=>{c.msgs.push({who:"a",html:r.html,text:r.text,src:r.src,kb:r.kb,ai:r.ai,id:"m"+Date.now(),q});c.msgs=c.msgs.slice(-200);c.updatedAt=Date.now();persistConv(c);
+    if(chatConvId!==c.id) return; $("#typing")?.remove();box.insertAdjacentHTML("beforeend",msgHTML(c.msgs[c.msgs.length-1]));box.scrollTop=box.scrollHeight;renderConvList()};
+  const rq=ctx?`${q} ${ctx.tip} ${ctx.note}`:q;   // rule-based fallback matches on the note too
+  if(!AI.fn||AI.off){ setTimeout(()=>finish(reply(rq)),700); return; }
+  AI.busy=true;
+  aiReply(c,q+ctxText(ctx),p,t=>{const el=document.getElementById("typing"); if(!el||chatConvId!==c.id) return; el.innerHTML=aiHTML(t)||'<span class="typing"><span></span><span></span><span></span></span>'; box.scrollTop=box.scrollHeight})
+    .then(finish)
+    .catch(e=>{
+      const code=e&&e.code;
+      if(AI_OFF.has(code)) AI.off=true;
+      const r=reply(rq);
+      if(code==="rate_limited") r.html=`<p class="ai-p">The AI advisor is busy right now, so here is a quick answer instead.</p>`+r.html;
+      finish(r);
+    })
+    .finally(()=>{AI.busy=false});
 }
 function voice(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition, btn=$("#micBtn");
@@ -1039,14 +2117,682 @@ function voice(){
   try{r.start()}catch(e){btn.classList.remove("rec")}
 }
 
+/* ===================== LEARN ===================== */
+function askAbout(topic){
+  const g=TOPIC_QS.find(x=>x.title===topic)||TOPIC_QS.find(x=>x.title==="Weather"&&topic==="Water");
+  openChat(); if(g) setTimeout(()=>send(g.qs[0]),350);
+}
+function openLearn(id){learnFocus=id;learnTopic="All";tab("learn")}
+/* ===================== LEARN: visual guides =====================
+   Each topic = a picture that explains the idea + 3 short steps + the sourced facts (KB rows).
+   Pictures are drawn in SVG so they work offline and need no image files. */
+const LSV=(w,h,inner,label)=>`<svg class="lv-svg" viewBox="0 0 ${w} ${h}" role="img" aria-label="${label}">${inner}</svg>`;
+const maize=(x,y,s=1)=>`<g transform="translate(${x} ${y}) scale(${s})"><path d="M0 0V-46" stroke="#2E7D32" stroke-width="3" fill="none"/><path d="M0-14C-12-18-18-26-20-34M0-24C12-28 18-36 20-44M0-34C-9-38-13-44-14-50" stroke="#43A047" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="5" cy="-28" rx="3.5" ry="8" fill="#F2C14E"/></g>`;
+const bush=(x,y)=>`<g transform="translate(${x} ${y})"><circle cx="-7" cy="-8" r="7" fill="#7CB342"/><circle cx="6" cy="-9" r="8" fill="#689F38"/><circle cx="0" cy="-15" r="7" fill="#8BC34A"/></g>`;
+const seedling=(x,y)=>`<g transform="translate(${x} ${y})"><path d="M0 0V-16" stroke="#2E7D32" stroke-width="3"/><path d="M0-10C-8-12-11-17-11-21C-4-20 0-15 0-10ZM0-14C7-16 10-21 10-25C3-24 0-19 0-14Z" fill="#43A047"/></g>`;
+
+function visPlanting(){
+  const onset=S.form.env?ONSET[S.form.env.region]:11;
+  const order=[7,8,9,10,11,12,1,2,3,4,5,6], rain={7:0,8:0,9:.05,10:.25,11:.6,12:.9,1:1,2:.95,3:.7,4:.25,5:.05,6:0};
+  const W=640,H=230,bw=44,gap=8,x0=24,base=150;
+  let g=`<text x="${x0}" y="22" class="sv-t">Rain in a usual year</text>`;
+  order.forEach((m,i)=>{const x=x0+i*(bw+gap),hgt=rain[m]*100;
+    g+=`<rect x="${x}" y="${base-hgt}" width="${bw}" height="${Math.max(hgt,2)}" rx="6" fill="${m===onset?"#1B5E20":hgt>40?"#7FB3E8":"#C9DDF3"}"/>`;
+    g+=`<text x="${x+bw/2}" y="${base+20}" text-anchor="middle" class="sv-m${m===onset?" on":""}">${MONTHS[m-1][1]}</text>`;});
+  const ox=x0+order.indexOf(onset)*(bw+gap)+bw/2, lx=ox+2*(bw+gap);
+  g+=`<path d="M${ox} ${base+30}V${base+46}" stroke="#1B5E20" stroke-width="2"/><text x="${ox}" y="${base+66}" text-anchor="middle" class="sv-b">Plant here</text>`;
+  g+=`<path d="M${ox+30} ${base+40}H${lx+40}" stroke="#D4501C" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arr)"/><text x="${lx+48}" y="${base+44}" class="sv-w">Late = shorter season</text>`;
+  g=`<defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#D4501C"/></marker></defs>`+g;
+  return LSV(W,H,g,"Usual rainfall by month with the best planting month marked");
+}
+function visFertilizer(){
+  const g=`<rect x="20" y="150" width="600" height="10" rx="5" fill="#E8DCCB"/>
+    ${seedling(140,150)}
+    <g transform="translate(110 40)"><rect width="60" height="60" rx="10" fill="#E8F5E9"/><text x="30" y="26" text-anchor="middle" class="sv-b">Basal</text><text x="30" y="46" text-anchor="middle" class="sv-m">NPK</text></g>
+    ${maize(450,150,1.25)}
+    <g transform="translate(400 22)"><rect width="100" height="44" rx="10" fill="#E8F5E9"/><text x="50" y="20" text-anchor="middle" class="sv-b">Top-dress</text><text x="50" y="37" text-anchor="middle" class="sv-m">Urea</text></g>
+    <path d="M190 110H380" stroke="#43A047" stroke-width="2" stroke-dasharray="5 5"/>
+    <text x="140" y="190" text-anchor="middle" class="sv-t">At planting</text><text x="450" y="190" text-anchor="middle" class="sv-t">A few weeks later</text>`;
+  return LSV(640,205,g,"Fertilizer at planting, then top-dressing a few weeks later");
+}
+function visSeed(){
+  const card=(x,title,rows,hi)=>`<g transform="translate(${x} 10)"><rect width="290" height="180" rx="16" fill="${hi?"#E8F5E9":"#F4F5F1"}"/>
+    <text x="20" y="34" class="sv-h">${title}</text>
+    ${rows.map((r,i)=>`<text x="20" y="${74+i*36}" class="sv-m">${r[0]}</text><text x="270" y="${74+i*36}" text-anchor="end" class="sv-b${r[2]?" good":""}">${r[1]}</text>`).join("")}</g>`;
+  return LSV(640,200,card(20,"Local seed",[["Harvest","Lower"],["Buy every season","No",1],["Seed cost","Low",1]],0)+card(330,"Hybrid seed",[["Harvest","Higher",1],["Buy every season","Yes"],["Seed cost","Higher"]],1),"Local seed compared with hybrid seed");
+}
+function visSoil(){
+  const tile=(x,title,sub,draw)=>`<g transform="translate(${x} 10)"><rect width="190" height="170" rx="16" fill="#F6F1EA"/>${draw}<text x="95" y="132" text-anchor="middle" class="sv-h">${title}</text><text x="95" y="154" text-anchor="middle" class="sv-m">${sub}</text></g>`;
+  const heap=`<path d="M45 100Q95 30 145 100Z" fill="#8A6A4B"/><path d="M70 82Q80 70 92 76M100 70Q110 62 120 74" stroke="#6D8F3A" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+  const cart=`<rect x="50" y="60" width="90" height="34" rx="6" fill="#A0785A"/><circle cx="70" cy="100" r="9" fill="#5B4636"/><circle cx="120" cy="100" r="9" fill="#5B4636"/><path d="M58 60Q95 34 132 60Z" fill="#6B4E37"/>`;
+  const bag=`<path d="M62 44h66l8 58H54z" fill="#ECEFF1" stroke="#B0BEC5" stroke-width="2"/><text x="95" y="82" text-anchor="middle" class="sv-b">LIME</text>`;
+  return LSV(640,190,tile(20,"Compost","Crop waste, rotted",heap)+tile(225,"Manure","From animals",cart)+tile(430,"Lime","Only for acid soil",bag),"Three ways to improve soil: compost, manure and lime");
+}
+function visMixed(){
+  let g=`<rect x="20" y="150" width="600" height="10" rx="5" fill="#E8DCCB"/>`;
+  for(let i=0;i<9;i++){const x=55+i*66; g+= i%2===0?maize(x,150,1.1):bush(x,150);}
+  g+=`<text x="55" y="185" text-anchor="middle" class="sv-m">Maize</text><text x="121" y="185" text-anchor="middle" class="sv-m">Legume</text><text x="187" y="185" text-anchor="middle" class="sv-m">Maize</text>`;
+  return LSV(640,125,`<g transform="translate(0 -70)">${g}</g>`,"Rows of maize with rows of legumes between them");
+}
+function visWater(){
+  const panel=(x,title,draw)=>`<g transform="translate(${x} 10)"><rect width="190" height="170" rx="16" fill="#EEF4FB"/>${draw}<text x="95" y="156" text-anchor="middle" class="sv-h">${title}</text></g>`;
+  const mulch=`<rect x="20" y="96" width="150" height="34" fill="#A0785A"/><path d="M24 92l14-8M44 94l16-10M70 92l12-9M92 94l16-9M118 92l14-8M140 94l14-9" stroke="#C9A65A" stroke-width="4" stroke-linecap="round"/>${maize(95,96,.9)}`;
+  const ridges=`<path d="M20 130V100Q40 80 60 100Q80 80 100 100Q120 80 140 100Q160 80 170 95V130Z" fill="#A0785A"/><path d="M44 104Q60 112 76 104M84 104Q100 112 116 104M124 104Q140 112 156 104" stroke="#3F7FC4" stroke-width="5" fill="none" stroke-linecap="round"/>`;
+  const pits=`<rect x="20" y="96" width="150" height="34" fill="#A0785A"/><path d="M38 96q14 24 28 0M80 96q14 24 28 0M122 96q14 24 28 0" fill="#3F7FC4"/>${seedling(52,96)}${seedling(94,96)}${seedling(136,96)}`;
+  return LSV(640,190,panel(20,"Mulch",mulch)+panel(225,"Tied ridges",ridges)+panel(430,"Planting pits",pits),"Mulch, tied ridges and planting pits keep rain in the soil");
+}
+function visStorage(){
+  const step=(x,title,draw)=>`<g transform="translate(${x} 20)"><circle cx="60" cy="56" r="52" fill="#F4F5F1"/>${draw}<text x="60" y="140" text-anchor="middle" class="sv-h">${title}</text></g>`;
+  const sun=`<circle cx="60" cy="56" r="18" fill="#F2C14E"/>${[0,45,90,135,180,225,270,315].map(a=>`<path d="M${60+26*Math.cos(a*Math.PI/180)} ${56+26*Math.sin(a*Math.PI/180)}L${60+34*Math.cos(a*Math.PI/180)} ${56+34*Math.sin(a*Math.PI/180)}" stroke="#F2C14E" stroke-width="4" stroke-linecap="round"/>`).join("")}`;
+  const grain=`<ellipse cx="60" cy="56" rx="14" ry="20" fill="#F2C14E"/><path d="M54 44l12 24" stroke="#9A4A06" stroke-width="3"/>`;
+  const bag=`<path d="M40 30h40l6 54H34z" fill="#1B5E20"/><path d="M40 30q20 -10 40 0" stroke="#1B5E20" stroke-width="4" fill="none"/><text x="60" y="66" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">SEALED</text>`;
+  const pallet=`<path d="M38 30h44l5 40H33z" fill="#A5D6A7"/><rect x="26" y="74" width="68" height="7" fill="#8A6A4B"/><rect x="30" y="84" width="8" height="8" fill="#8A6A4B"/><rect x="82" y="84" width="8" height="8" fill="#8A6A4B"/>`;
+  const arr=x=>`<path d="M${x} 76h22" stroke="#43A047" stroke-width="3" marker-end="url(#arr2)"/>`;
+  const g=`<defs><marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#43A047"/></marker></defs>`+step(8,"Dry well",sun)+arr(136)+step(166,"Bite test",grain)+arr(294)+step(324,"Sealed bag",bag)+arr(452)+step(482,"Off the floor",pallet);
+  return LSV(640,180,g,"Storage steps: dry the grain, test it, seal it in a bag, keep it off the floor");
+}
+
+const GUIDE={
+  Planting:{vis:visPlanting,why:"The first good rains start the season. Every week you wait, the crop has less time to grow.",
+    steps:[["terrain","Prepare the field before the rains"],["rain","Wait until the soil is wet a hand deep"],["seed","Plant within a week of the first good rains"]],seq:true},
+  Fertilizer:{vis:visFertilizer,why:"Fertilizer feeds the crop twice: once to start it, once when it grows fast.",
+    steps:[["fert","Put basal fertilizer in at planting"],["cal","Top-dress with urea a few weeks later"],["check","Place it near the plant and cover it"]],seq:true},
+  Seed:{vis:visSeed,why:"Hybrid seed gives more in a good season, but you must buy new seed each year.",
+    steps:[["coin","Buy certified seed from an agro-dealer"],["alert","Don't replant seed saved from a hybrid crop"],["bag","Compare the seed price with the extra bags"]]},
+  Soil:{vis:visSoil,why:"Healthy soil holds water and helps the crop use fertilizer.",
+    steps:[["leaf","Add compost or manure before planting"],["zone","Leave crop residue on the field"],["info","Ask for a soil test before using lime"]]},
+  "Mixed cropping":{vis:visMixed,why:"A legume row gives a second harvest and can feed the soil for next season.",
+    steps:[["seed","Plant pigeon peas, beans or groundnuts between maize rows"],["bag","Expect a little less maize, plus a second crop"],["zone","Rotate where you plant them next season"]]},
+  Water:{vis:visWater,why:"Dry spells are common. Water kept in the soil can save the harvest.",
+    steps:[["leaf","Cover the soil with crop residue"],["terrain","Build ridges with ties across the slope"],["rain","Dig planting pits on dry or sandy land"]]},
+  Storage:{vis:visStorage,why:"Weevils and damp can destroy a good harvest after it leaves the field.",
+    steps:[["check","Dry the grain until it cracks when bitten"],["bag","Store it in a sealed (hermetic) bag"],["home","Keep bags off the floor and away from walls"]],seq:true},
+};
+
+/* =====================================================================
+   LIVE KNOWLEDGE STORE
+   On the shared page, topics / facts / sources live in the artifact database
+   and update for everyone in real time. The team adds and edits them in
+   "Team view". When the database isn't available (e.g. this file opened
+   locally) the page falls back to the bundled sample, read-only.
+   ===================================================================== */
+const VISUALS={planting:["Planting calendar",visPlanting],fertilizer:["Fertilizer timeline",visFertilizer],seed:["Seed comparison",visSeed],soil:["Soil improvers",visSoil],mixed:["Mixed rows",visMixed],water:["Water saving",visWater],storage:["Storage steps",visStorage]};
+const VKEY={Planting:"planting",Fertilizer:"fertilizer",Seed:"seed",Soil:"soil","Mixed cropping":"mixed",Water:"water",Storage:"storage"};
+const STEP_ICONS=["seed","fert","rain","cal","terrain","zone","bag","coin","check","alert","leaf","home","info","target"];
+const slug=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,60)||("t"+Date.now());
+const SAMPLE_TOPICS=Object.entries(GUIDE).map(([name,g],i)=>({id:slug(name),name,why:g.why,steps:g.steps.map(([icon,text])=>({icon,text})),seq:!!g.seq,visual:VKEY[name]||"",order:i}));
+const KS={mode:"sample",topics:SAMPLE_TOPICS,facts:KB.map(k=>({...k})),sources:SOURCES.map((s,i)=>({id:"s"+i,...s})),canWrite:false,db:null,uid:null,loaded:{}};
+const topicsSorted=()=>[...KS.topics].sort((a,b)=>(a.order??999)-(b.order??999)||String(a.name).localeCompare(b.name));
+const topicByName=n=>KS.topics.find(t=>t.name===n);
+const isNew=x=>!!(x&&x.createdAt&&Date.now()-x.createdAt<7*864e5);
+let notesSynced=false, notesLocalOnly=false;
+
+async function initStore(){
+  const C=window.claude; if(!C||!C.use) return;
+  let db=null,user=null;
+  try{[db,user]=await Promise.all([C.use("db"),C.use("user")])}catch(e){return}
+  if(!db) return;
+  KS.db=db; KS.mode="live"; KS.topics=[]; KS.facts=[]; KS.sources=[];
+  try{KS.uid=user?await user.id():null}catch(e){}
+  try{const cw=user?await user.can("data.write"):null; KS.canWrite=cw!==false}catch(e){KS.canWrite=true}
+  const sub=(col,key)=>db.collection(col).onSnapshot(s=>{
+      KS[key]=s.docs.map(d=>({...d.data(),id:d.id})); KS.loaded[key]=true; onKnowledgeChange();
+    },e=>{if(e&&e.code==="revoked"){KS.canWrite=false}});
+  sub("topics","topics"); sub("facts","facts"); sub("sources","sources");
+  if(KS.uid){
+    db.collection("data/users/"+KS.uid).onSnapshot(s=>{
+      const remote=s.docs.map(d=>({...JSON.parse(JSON.stringify(d.data()||{})),id:d.id}));
+      if(!notesSynced){notesSynced=true; if(!remote.length&&S.saved.length){S.saved.forEach(n=>persistNote(n));return}}
+      S.saved=remote.sort((a,b)=>(b.ts||0)-(a.ts||0)); save();
+      if(S.view==="notes"&&!(document.activeElement&&document.activeElement.closest&&document.activeElement.closest("#notesList"))) renderNotes();
+    },()=>{});
+  }
+  if(KS.uid){
+    let first=true;
+    convCol().onSnapshot(s=>{
+      // snapshot bodies are frozen by the platform: deep-copy before we edit them
+      const remote=s.docs.map(d=>({...JSON.parse(JSON.stringify(d.data()||{})),id:d.id}));
+      if(first){first=false; if(!remote.length&&S.convs.length){S.convs.forEach(c=>persistConv(c));return}}
+      const local=new Map(S.convs.map(c=>[c.id,c]));
+      S.convs=remote.map(r=>{const l=local.get(r.id);return l&&(l.updatedAt||0)>(r.updatedAt||0)?l:r});
+      local.forEach((l,id)=>{if(!S.convs.some(c=>c.id===id)&&convTimers[id]) S.convs.push(l)});
+      save(); if(S.view==="chat") renderConvList();
+    },()=>{});
+  }
+  onKnowledgeChange();
+}
+function onKnowledgeChange(){ if(S.view==="learn") renderLearn(); }
+async function kWrite(fn,okMsg){
+  try{await fn(); if(okMsg) toast(okMsg); return true}
+  catch(e){
+    if(e&&e.code==="invalid_argument"){KS.canWrite=false;toast("You can view the guides but not edit them. Ask the owner for Contributor access.");renderLearn()}
+    else if(e&&e.code==="quota_exceeded") toast("The knowledge base is full. Delete old items first.");
+    else toast("Couldn't save. Check your connection and try again.");
+    return false;
+  }
+}
+
+/* ---------- edit sheet (in-page form; browser dialogs are blocked here) ---------- */
+function openSheet(title,fields,onSave,extra){
+  const f=fields.map(x=>{
+    const id="f_"+x.name, val=x.value??"";
+    const lab=`<label for="${id}">${x.label}${x.required?" *":""}</label>${x.help?`<small>${x.help}</small>`:""}`;
+    if(x.type==="textarea") return `<div class="sf">${lab}<textarea id="${id}" name="${x.name}" rows="${x.rows||3}" ${x.required?"required":""}>${esc(val)}</textarea></div>`;
+    if(x.type==="select") return `<div class="sf">${lab}<select id="${id}" name="${x.name}" class="select">${x.options.map(([v,l])=>`<option value="${esc(v)}" ${String(v)===String(val)?"selected":""}>${esc(l)}</option>`).join("")}</select></div>`;
+    if(x.type==="checkbox") return `<div class="sf sf-row"><input type="checkbox" id="${id}" name="${x.name}" ${val?"checked":""}><label for="${id}">${x.label}</label></div>`;
+    if(x.type==="step") return `<div class="sf sf-step">${lab}<div><select name="${x.name}_icon" aria-label="Icon for ${x.label}">${STEP_ICONS.map(i=>`<option ${i===(x.icon||"check")?"selected":""}>${i}</option>`).join("")}</select><input id="${id}" name="${x.name}" value="${esc(val)}" maxlength="90" class="input"></div></div>`;
+    return `<div class="sf">${lab}<input id="${id}" name="${x.name}" class="input" type="${x.type||"text"}" value="${esc(val)}" ${x.required?"required":""} ${x.max?`maxlength="${x.max}"`:""}></div>`;
+  }).join("");
+  $("#sheet").innerHTML=`<form class="sheet-card" id="sheetForm" novalidate>
+    <div class="sh-top"><h3>${title}</h3><button type="button" class="icb" aria-label="Close" onclick="closeSheet()">${ic("plus",22).replace('class="i"','class="i" style="transform:rotate(45deg)"')}</button></div>
+    <div class="sh-body">${f}<p class="sh-err" id="sheetErr" hidden></p></div>
+    <div class="sh-foot">${extra||""}<button type="button" class="btn btn-outline" onclick="closeSheet()">Cancel</button><button class="btn btn-primary" type="submit">Save</button></div></form>`;
+  $("#sheet").hidden=false;
+  const form=$("#sheetForm");
+  setTimeout(()=>{const first=form.querySelector("input:not([type=checkbox]),textarea"); if(first&&!form.contains(document.activeElement)) first.focus()},30);
+  form.onsubmit=async ev=>{
+    ev.preventDefault();
+    const v={}; fields.forEach(x=>{const el=form.elements[x.name]; v[x.name]=x.type==="checkbox"?el.checked:(el.value||"").trim(); if(x.type==="step") v[x.name+"_icon"]=form.elements[x.name+"_icon"].value});
+    const miss=fields.find(x=>x.required&&!v[x.name]);
+    if(miss){const er=$("#sheetErr");er.textContent=`Please fill in "${miss.label}".`;er.hidden=false;return}
+    const btn=form.querySelector("[type=submit]"); btn.disabled=true;
+    const ok=await onSave(v); btn.disabled=false; if(ok!==false) closeSheet();
+  };
+}
+function closeSheet(){$("#sheet").hidden=true;$("#sheet").innerHTML=""}
+let armedDel=null;
+function confirmTwice(key,btn,fn){
+  if(armedDel!==key){armedDel=key;const s=btn.querySelector("span");if(s)s.textContent="Tap again to delete";setTimeout(()=>{if(armedDel===key){armedDel=null;renderLearn()}},4000);return}
+  armedDel=null;fn();
+}
+
+/* ---------- team edits ---------- */
+function topicFields(t){
+  const st=(t&&t.steps)||[];
+  return [
+    {name:"name",label:"Topic name",value:t?t.name:"",required:true,max:40},
+    {name:"why",label:"Main message",help:"One plain sentence a farmer remembers.",type:"textarea",rows:2,value:t?t.why:"",required:true},
+    {name:"visual",label:"Picture",type:"select",value:t?t.visual||"":"",options:[["","No picture"],...Object.entries(VISUALS).map(([k,[l]])=>[k,l])]},
+    ...[0,1,2,3].map(i=>({name:"s"+i,label:"Step "+(i+1)+(i===3?" (optional)":""),type:"step",icon:st[i]&&st[i].icon,value:st[i]?st[i].text:""})),
+    {name:"seq",label:"Steps happen in this order (show numbers)",type:"checkbox",value:t?t.seq:false},
+  ];
+}
+function topicBody(v,old){return {name:v.name,why:v.why,visual:v.visual,seq:!!v.seq,steps:[0,1,2,3].map(i=>({icon:v["s"+i+"_icon"],text:v["s"+i]})).filter(s=>s.text),order:old?old.order:(Math.max(-1,...KS.topics.map(t=>t.order??0))+1),createdAt:old&&old.createdAt||Date.now(),updatedAt:Date.now()}}
+function addTopic(){openSheet("New topic",topicFields(null),v=>{
+  if(topicByName(v.name)){$("#sheetErr").textContent="A topic with this name already exists.";$("#sheetErr").hidden=false;return false}
+  return kWrite(()=>KS.db.collection("topics").doc(slug(v.name)).set(topicBody(v)),"Topic added. Everyone sees it now.").then(ok=>{if(ok){learnTopic=v.name}return ok});
+})}
+function editTopic(id){const t=KS.topics.find(x=>x.id===id); if(!t) return;
+  openSheet("Edit topic",topicFields(t),v=>{
+    const renamed=v.name!==t.name;
+    return kWrite(async()=>{await KS.db.collection("topics").doc(id).set(topicBody(v,t));
+      if(renamed){for(const f of KS.facts.filter(f=>f.topic===t.name)) await KS.db.collection("facts").doc(f.id).update({topic:v.name})}
+    },"Topic saved.").then(ok=>{if(ok)learnTopic=v.name;return ok});
+  });
+}
+function factFields(f){return [
+  {name:"title",label:"Title",value:f?f.title:"",required:true,max:80},
+  {name:"summary",label:"What the farmer reads",help:"1 to 2 plain sentences.",type:"textarea",value:f?f.summary:"",required:true},
+  {name:"key",label:"Key number (optional)",help:"Only from a checked source, e.g. \"About 2 bags per acre\".",value:f?f.key:""},
+  {name:"need",label:"Still to find (team note)",type:"textarea",rows:2,value:f?f.need:""},
+  {name:"status",label:"Status",type:"select",value:f?f.status:"draft",options:[["draft","Draft"],["verified","Source checked"]]},
+]}
+function addFact(topic){openSheet("New fact · "+topic,factFields(null),v=>{
+  const id=slug(topic).slice(0,12)+"-"+Date.now().toString(36);
+  return kWrite(()=>KS.db.collection("facts").doc(id).set({...v,topic,used:[],createdAt:Date.now(),updatedAt:Date.now()}),"Fact added.");
+})}
+function editFact(id){const f=KS.facts.find(x=>x.id===id); if(!f) return;
+  openSheet("Edit fact",factFields(f),v=>kWrite(()=>KS.db.collection("facts").doc(id).update({...v,updatedAt:Date.now()}),"Fact saved."),
+    `<button type="button" class="btn sh-del" onclick="confirmTwice('f${id}',this,()=>{closeSheet();kWrite(()=>KS.db.collection('facts').doc('${id}').delete(),'Fact deleted.')})">${ic("trash",18)}<span>Delete</span></button>`);
+}
+function sourceFields(s){return [
+  {name:"title",label:"Title",value:s?s.title:"",required:true},
+  {name:"pub",label:"Publisher or journal",value:s?s.pub:""},
+  {name:"year",label:"Year",type:"number",value:s?s.year||"":""},
+  {name:"url",label:"Link",type:"url",value:s?s.url:"",help:"https://..."},
+  {name:"finding",label:"What it says",help:"One sentence with the number and page. Leave empty until someone has read it.",type:"textarea",rows:2,value:s?s.finding:""},
+  {name:"checked",label:"Someone on the team has read this source",type:"checkbox",value:s?s.checked:false},
+]}
+const cleanSource=v=>({title:v.title,pub:v.pub,year:v.year?+v.year:null,url:/^https?:\/\//.test(v.url)?v.url:"",finding:v.finding,checked:!!v.checked&&!!v.finding});
+function addSource(kb){openSheet("Add a source",sourceFields(null),v=>kWrite(()=>KS.db.collection("sources").add({kb,...cleanSource(v),createdAt:Date.now()}),"Source added."))}
+function editSource(id){const s=KS.sources.find(x=>x.id===id); if(!s) return;
+  openSheet("Edit source",sourceFields(s),v=>kWrite(()=>KS.db.collection("sources").doc(id).update({...cleanSource(v),updatedAt:Date.now()}),"Source saved."),
+    `<button type="button" class="btn sh-del" onclick="confirmTwice('s${id}',this,()=>{closeSheet();kWrite(()=>KS.db.collection('sources').doc('${id}').delete(),'Source deleted.')})">${ic("trash",18)}<span>Delete</span></button>`);
+}
+
+/* ---------- render ---------- */
+let showNotes=false;
+function renderLearn(){
+  const tps=topicsSorted(), names=tps.map(t=>t.name);
+  if(learnFocus){const f=kbById(learnFocus); if(f) learnTopic=f.topic}
+  if(names.length&&!names.includes(learnTopic)) learnTopic=names[0];
+  const live=KS.mode==="live";
+  const hasNew=n=>KS.facts.some(f=>f.topic===n&&isNew(f))||KS.sources.some(s=>{const f=kbById(s.kb);return f&&f.topic===n&&isNew(s)});
+  const nav=$("#learnNav");
+  nav.innerHTML=names.map((x,i)=>`<button data-i="${i}" class="${x===learnTopic?"on":""}" ${x===learnTopic?'aria-current="true"':""}>${esc(x)}${hasNew(x)?`<i class="dot" title="Updated this week"></i>`:""}</button>`).join("");
+  nav.querySelectorAll("button[data-i]").forEach(b=>b.onclick=()=>{learnTopic=names[+b.dataset.i];learnFocus=null;renderLearn();$("#v-learn .scroll").scrollTop=0});
+  const ban=$("#learnBanner");
+  ban.innerHTML=!live?`${ic("info",18)}<span>Offline sample. Open the shared page to see the latest guides.</span>`
+    :"";
+  ban.hidden=!ban.innerHTML;
+  const art=$("#learnArticle");
+  if(live&&!(KS.loaded.topics&&KS.loaded.facts)){art.innerHTML=`<div class="lv-loading"><div class="spin"></div>Loading guides…</div>`;return}
+  if(!learnTopic||!names.length){art.innerHTML=`<div class="empty">${ic("book",48)}<div><b>No guides yet.</b><br>New guides will appear here as soon as they are added.</div></div>`;return}
+  const T=topicByName(learnTopic);
+  const facts=KS.facts.filter(f=>f.topic===learnTopic).sort((a,b)=>(a.step_order??99)-(b.step_order??99)||(a.createdAt||0)-(b.createdAt||0));
+  const acts=facts.filter(f=>f.action);
+  const vis=VISUALS[T.visual];
+  art.innerHTML=`
+    <h2>${esc(T.name)}</h2>
+    ${T.why?`<p class="lv-why">${esc(T.why)}</p>`:""}
+    ${vis?`<figure class="lv-fig">${vis[1]()}</figure>`:""}
+    ${acts.length?`<div class="tl-head"><h3 class="lv-h">What to do<small class="tl-kind">${T.seq?"Follow these steps in order":"Each one helps on its own"}</small></h3>${saveBtn("steps:"+T.name,true)}</div>
+    <ol class="tl ${T.seq?"seq":"loose"}" aria-label="${T.seq?"Steps in order":"Things to do"}">${acts.map((f,i)=>{const n=sourcesFor(f.id).length;return `<li class="tl-step">
+        <span class="tl-dot" aria-hidden="true">${T.seq?i+1:ic(f.action_icon||"check",18)}</span>
+        <div class="tl-body">
+          ${T.seq?`<span class="tl-when">${i===0?"First":i===acts.length-1?"Finally":"Then"}</span>`:""}
+          <div class="tl-row"><span class="tl-ic">${ic(f.action_icon||"check",22)}</span><b>${esc(f.action)}</b>${isNew(f)?`<span class="new">New</span>`:""}</div>
+          <button class="tl-why" aria-expanded="false" onclick="toggleWhy(this,'${f.id}')">Why?${n?` · ${n} source${n>1?"s":""}`:""}${ic("chev",14)}</button>
+          <div class="tl-src" hidden></div>
+        </div></li>`}).join("")}</ol>`:""}
+    ${facts.length?`<h3 class="lv-h ff-h">${ic("bulb",20)}Did you know?<small>Swipe the card</small></h3>`:""}
+    <div class="ff-wrap"><div class="deck" id="ffDeck" tabindex="0" role="group" aria-roledescription="card stack" aria-label="Did you know facts. Swipe or use arrow keys for the next card.">${facts.map((k,idx)=>funFactCard(k,{idx,total:facts.length,focus:k.id===learnFocus,deck:true})).join("")}</div>
+      ${facts.length>1?`<div class="ff-ctrl"><button class="icb ff-prev" aria-label="Previous card">${ic("back",22)}</button><div class="ff-dots">${facts.map((_,i)=>`<button aria-label="Card ${i+1}" data-i="${i}"></button>`).join("")}</div><button class="icb ff-next" aria-label="Next card">${ic("fwd",22)}</button></div>`:""}</div>
+    <button class="btn btn-outline lv-ask" onclick="askAbout('${esc(T.name)}')">${ic("chat",20)}Ask the advisor about ${esc(T.name.toLowerCase())}</button>`;
+  initFunFacts();
+  if(learnFocus){const el=$("#kb-"+learnFocus); if(el) setTimeout(()=>{
+    if(window.__deckGo) window.__deckGo(+el.dataset.i,true);
+    el.closest(".ff-wrap").scrollIntoView({block:"center",behavior:"smooth"})},50)}
+}
+
+/* one "Did you know?" card, used by the Learn deck and inline in advisor answers */
+function funFactCard(k,o){
+  const idx=o.idx||0, color=o.idx!=null?idx%4:(Math.abs([...String(k.topic)].reduce((a,c)=>a+c.charCodeAt(0),0))%4);
+      const src=sourcesFor(k.id).sort((a,b)=>(b.checked-a.checked)||((b.createdAt||0)-(a.createdAt||0)));
+      const first=src[0], more=src.slice(1);
+      const link=s=>s.url?`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}<svg class="i" width="14" height="14" aria-hidden="true"><use href="#i-fwd"/></svg></a>`:`<span>${esc(s.title)}</span>`;
+      return `<article class="ff ff-c${color} ${o.focus?"focus":""}" ${o.deck?`id="kb-${k.id}" data-i="${idx}"`:""}>
+        <div class="ff-top"><span class="ff-badge">${ic(k.action_icon||"bulb",22)}</span><span class="ff-n">${o.deck?`Fact ${idx+1} of ${o.total}`:`Did you know? · ${esc(k.topic)}`}</span>${isNew(k)?`<span class="new">New</span>`:""}${saveBtn("fact:"+k.id)}</div>
+        <h4 class="ff-title">${esc(k.title)}</h4>
+        <p class="ff-text">${esc(k.fun_fact||k.summary)}</p>
+        ${k.key?`<p class="ff-key">${esc(k.key)}</p>`:""}
+        <div class="ff-src">${first?`
+            <a class="ff-link" ${first.url?`href="${esc(first.url)}" target="_blank" rel="noopener"`:""}>
+              <span class="ff-li">${ic("book",18)}</span>
+              <span class="ff-lt"><small>${esc(first.pub||"Source")}${first.year?" · "+first.year:""}</small><b>${esc(first.title)}</b></span>
+              ${first.url?`<svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-fwd"/></svg>`:""}</a>
+            ${more.length?`<details class="ff-moredet" ${o.focus?"open":""}><summary>+${more.length} more source${more.length>1?"s":""}</summary>${more.map(s=>`<div class="ff-more">${link(s)}<small>${esc(s.pub||"")}${s.year?", "+s.year:""}</small></div>`).join("")}</details>`:""}`
+          :`<span class="ff-soon">${ic("info",16)}Source coming soon</span>`}</div>
+        ${o.deck?"":`<button class="ff-open" onclick="openLearn('${k.id}')">${ic("book",16)}See all ${esc(k.topic.toLowerCase())} guides in Learn</button>`}
+        <svg class="ff-mark" width="120" height="120" aria-hidden="true"><use href="#i-bulb"/></svg>
+      </article>`
+}
+function toggleChatFact(btn,id){
+  const box=btn.nextElementSibling, k=kbById(id); if(!k||!box) return;
+  const open=btn.getAttribute("aria-expanded")==="true";
+  btn.setAttribute("aria-expanded",open?"false":"true");
+  if(!open){box.innerHTML=funFactCard(k,{}); box.hidden=false; const m=$("#msgs"); setTimeout(()=>box.scrollIntoView({block:"nearest",behavior:"smooth"}),30)}
+  else{box.hidden=true}
+}
+function toggleWhy(btn,id){
+  const box=btn.nextElementSibling, f=kbById(id); if(!box||!f) return;
+  const open=btn.getAttribute("aria-expanded")==="true";
+  btn.setAttribute("aria-expanded",String(!open));
+  if(open){box.hidden=true;return}
+  const src=sourcesFor(id).sort((a,b)=>(b.checked-a.checked)||((b.createdAt||0)-(a.createdAt||0)));
+  box.innerHTML=`<p>${esc(f.summary)}</p>${src.length?`<ul>${src.map(s=>`<li>${ic("book",15)}<div>${s.url?`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a>`:`<b>${esc(s.title)}</b>`}<small>${esc(s.pub||"")}${s.year?", "+s.year:""}</small>${s.finding?`<span>${esc(s.finding)}</span>`:""}</div></li>`).join("")}</ul>`:`<small class="tl-none">Source coming soon</small>`}`;
+  box.hidden=false;
+}
+/* swipeable "Did you know?" cards: native scroll-snap, arrows and dots for mouse users */
+function initFunFacts(){
+  const deck=$("#ffDeck"); window.__deckGo=null; if(!deck) return;
+  const cards=[...deck.children], n=cards.length, dots=[...document.querySelectorAll(".ff-dots button")];
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let cur=0, busy=false;
+  const fit=()=>{cards.forEach(c=>c.style.height="auto");const m=Math.max(...cards.map(c=>c.scrollHeight));cards.forEach(c=>c.style.height=m+"px");deck.style.height=m+34+"px"};
+  const layout=()=>{
+    cards.forEach((c,i)=>{const d=(i-cur+n)%n;
+      c.style.zIndex=String(n-d);
+      c.classList.toggle("top",d===0);
+      c.setAttribute("aria-hidden",d===0?"false":"true");
+      c.style.pointerEvents=d===0?"auto":"none";
+      c.style.opacity=d>2?"0":"1";
+      c.style.transform=d===0?"":`translateY(${d*14}px) scale(${1-d*0.05}) rotate(${d%2?-2.2:2.2}deg)`;
+    });
+    dots.forEach((b,i)=>b.classList.toggle("on",i===cur));
+  };
+  const go=(to,instant)=>{ if(busy||n<2) {cur=((to%n)+n)%n;layout();return}
+    const next=((to%n)+n)%n; if(next===cur) return;
+    if(instant||reduce){cur=next;layout();return}
+    const fwd=(next-cur+n)%n<=n/2, top=cards[cur]; busy=true;
+    top.style.transition="transform .32s ease, opacity .32s ease";
+    top.style.transform=`translateX(${fwd?-120:120}%) rotate(${fwd?-14:14}deg)`; top.style.opacity="0";
+    setTimeout(()=>{top.style.transition="";cur=next;layout();busy=false},300);
+  };
+  window.__deckGo=go;
+  // drag / swipe the top card
+  let sx=0,sy=0,dx=0,dragging=false,pid=null;
+  deck.addEventListener("pointerdown",e=>{
+    if(n<2||busy||e.target.closest("a,button,summary,details,input")) return;
+    const top=cards[cur]; if(!top.contains(e.target)) return;
+    dragging=true;pid=e.pointerId;sx=e.clientX;sy=e.clientY;dx=0;top.style.transition="none";
+  });
+  deck.addEventListener("pointermove",e=>{
+    if(!dragging||e.pointerId!==pid) return;
+    dx=e.clientX-sx; const dy=e.clientY-sy;
+    if(Math.abs(dx)<6&&Math.abs(dy)<6) return;
+    if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dx)<12){dragging=false;cards[cur].style.transform="";return} // let the page scroll
+    try{deck.setPointerCapture(pid)}catch(_){}
+    cards[cur].style.transform=`translateX(${dx}px) rotate(${dx/18}deg)`;
+  });
+  const end=()=>{ if(!dragging) return; dragging=false; const top=cards[cur];
+    if(Math.abs(dx)>90){const fwd=dx<0;top.style.transition="transform .25s ease, opacity .25s ease";top.style.transform=`translateX(${fwd?-140:140}%) rotate(${fwd?-18:18}deg)`;top.style.opacity="0";busy=true;
+      setTimeout(()=>{top.style.transition="";cur=(cur+(fwd?1:-1)+n)%n;layout();busy=false},230)}
+    else{top.style.transition="transform .2s ease";top.style.transform="";setTimeout(()=>top.style.transition="",200)}
+  };
+  deck.addEventListener("pointerup",end); deck.addEventListener("pointercancel",end);
+  deck.addEventListener("keydown",e=>{if(e.key==="ArrowRight"){e.preventDefault();go(cur+1)}if(e.key==="ArrowLeft"){e.preventDefault();go(cur-1)}});
+  const prev=$(".ff-prev"), next=$(".ff-next");
+  if(prev){prev.onclick=()=>go(cur-1);next.onclick=()=>go(cur+1)}
+  dots.forEach(d=>d.onclick=()=>go(+d.dataset.i));
+  fit(); layout();
+  if(!window.__deckResize){window.__deckResize=true;addEventListener("resize",()=>{const d=$("#ffDeck");if(d){const cs=[...d.children];cs.forEach(c=>c.style.height="auto");const m=Math.max(...cs.map(c=>c.scrollHeight));cs.forEach(c=>c.style.height=m+"px");d.style.height=m+34+"px"}})}
+}
+
+/* ===================== MY NOTES =====================
+   A saved item keeps a copy of the tip text, so it still reads correctly if the
+   knowledge base changes later. In the full app this moves to the backend per farmer. */
+const isSaved=id=>S.saved.some(x=>x.ref===id);
+function saveBtn(id,label){
+  const on=isSaved(id);
+  return `<button class="sv-btn ${on?"on":""}" data-ref="${id}" onclick="event.stopPropagation();toggleSave('${id}')" aria-pressed="${on}" aria-label="${on?"Saved to My notes":"Save to My notes"}">${ic("bookmark",18)}${label?`<span>${on?"Saved":"Save"}</span>`:""}</button>`;
+}
+function describeRef(ref){
+  const [kind,a,b]=ref.split(":");
+  if(kind==="steps"){const fs=KS.facts.filter(f=>f.topic===a&&f.action).sort((x,y)=>(x.step_order??99)-(y.step_order??99));return {topic:a,from:"Learn",text:fs.map((f,i)=>`${i+1}. ${f.action}`).join("\n")}}
+  if(kind==="act"){const f=kbById(a);return {topic:f?f.topic:"General",from:"Learn",text:f?f.action:""}}
+  if(kind==="step"){const t=topicByName(a);return {topic:a,from:"Learn",text:t&&t.steps[+b]?t.steps[+b].text:""}}
+  if(kind==="fact"){const k=kbById(a);return {topic:k?k.topic:"General",from:"Learn",text:k?k.title+". "+k.summary:""}}
+  if(kind==="ans"){
+    const all=S.convs.flatMap(c=>c.msgs); const m=all.find(x=>x.id===a);
+    const d=document.createElement("div"); d.innerHTML=m?m.html:""; d.querySelectorAll("button").forEach(x=>x.remove());
+    const kb=(m&&m.kb||[]).map(kbById).filter(Boolean)[0];
+    return {topic:kb?kb.topic:"General",from:"Advisor",q:m&&m.q,text:d.innerText.trim()};
+  }
+  return {topic:"General",from:"My note",text:""};
+}
+const notesLive=()=>KS.mode==="live"&&KS.db&&KS.uid&&!notesLocalOnly;
+async function persistNote(n){
+  save();
+  if(!notesLive()) return;
+  try{await KS.db.collection("data/users/"+KS.uid).doc(n.id).set({...n})}
+  catch(e){if(e&&e.code==="invalid_argument"){notesLocalOnly=true;toast("Your notes are saved on this device only.")}}
+}
+async function removeNote(id){
+  save();
+  if(!notesLive()) return;
+  try{await KS.db.collection("data/users/"+KS.uid).doc(id).delete()}catch(e){}
+}
+function toggleSave(ref){
+  const ex=S.saved.find(x=>x.ref===ref);
+  if(ex){S.saved=S.saved.filter(x=>x!==ex);removeNote(ex.id);toast("Removed from My notes.")}
+  else{const n={id:"n"+Date.now(),ref,...describeRef(ref),note:"",tried:false,ts:Date.now()};S.saved.unshift(n);persistNote(n);toast("Saved to My notes. Add your own note there.")}
+  refreshSaveButtons(ref);
+}
+/* update bookmark buttons in place, so the page doesn't re-render or jump */
+function refreshSaveButtons(ref){
+  const on=isSaved(ref);
+  document.querySelectorAll(".sv-btn").forEach(b=>{ if(b.dataset.ref!==ref) return;
+    b.classList.toggle("on",on); b.setAttribute("aria-pressed",String(on)); b.setAttribute("aria-label",on?"Saved to My notes":"Save to My notes");
+    const s=b.querySelector("span"); if(s) s.textContent=on?"Saved":"Save";
+  });
+  if(S.view==="notes") renderNotes();
+}
+let notesTopic="All", focusNote=null, delArmed=null;
+function newNote(){const n={id:"n"+Date.now(),ref:"note:"+Date.now(),topic:"General",from:"My note",text:"",note:"",tried:false,ts:Date.now()};S.saved.unshift(n);focusNote=n.id;notesTopic="All";persistNote(n);renderNotes()}
+function renderNotes(){
+  const topics=["All",...new Set(S.saved.map(n=>n.topic))];
+  if(!topics.includes(notesTopic)) notesTopic="All";
+  $("#notesFilter").innerHTML=S.saved.length?topics.map((x,i)=>`<button data-i="${i}" class="${x===notesTopic?"on":""}">${x}</button>`).join(""):"";
+  $("#notesFilter").querySelectorAll("button").forEach(b=>b.onclick=()=>{notesTopic=topics[+b.dataset.i];renderNotes()});
+  const list=S.saved.filter(n=>notesTopic==="All"||n.topic===notesTopic);
+  const topicOpts=["General",...topicsSorted().map(t=>t.name)];
+  $("#notesList").innerHTML=!S.saved.length?`<div class="empty">${ic("bookmark",48)}<div><b>No notes yet.</b><br>Tap ${ic("bookmark",16)} on a tip in Learn or on an advisor answer to save it here. You can add what you tried and what happened.</div>
+      <button class="btn btn-outline" style="max-width:260px;margin:18px auto 0" onclick="tab('learn')">${ic("book",20)}Open Learn</button></div>`
+    :list.map(n=>`<article class="nt ${n.tried?"tried":""}" data-id="${n.id}">
+      <div class="nt-top">
+        ${n.from==="My note"?`<select class="nt-topic" aria-label="Topic" onchange="setNote('${n.id}','topic',this.value)">${topicOpts.map(x=>`<option ${x===n.topic?"selected":""}>${x}</option>`).join("")}</select>`:`<span class="nt-tag">${esc(n.topic)}</span>`}
+        <span class="nt-from">${n.from==="My note"?"Your note":"From "+n.from}${n.q?`: "${esc(n.q)}"`:""}</span>
+        <span class="nt-date">${new Date(n.ts).toLocaleDateString("en-GB",{day:"numeric",month:"short"})}</span>
+      </div>
+      ${n.text?`<blockquote>${esc(n.text)}</blockquote>`:""}
+      <label class="sr" for="nt-${n.id}">My note</label>
+      <textarea id="nt-${n.id}" rows="${n.note?3:2}" placeholder="${n.from==="My note"?"Write your note":"What did you try? What happened?"}" oninput="setNote('${n.id}','note',this.value)">${esc(n.note)}</textarea>
+      <div class="nt-act">
+        <label class="nt-tried"><input type="checkbox" ${n.tried?"checked":""} onchange="setNote('${n.id}','tried',this.checked);this.closest('.nt').classList.toggle('tried',this.checked)"><span>I tried this</span></label>
+        ${n.ref.startsWith("step:")||n.ref.startsWith("fact:")?`<button class="nt-link" onclick="openLearnTopic('${esc(n.topic)}','${n.ref.startsWith("fact:")?n.ref.slice(5):""}')">${ic("book",16)}Open in Learn</button>`:""}
+        <button class="nt-link" onclick="askAboutNote('${n.id}')">${ic("chat",16)}Ask the advisor</button>
+        <button class="nt-del" onclick="delNote('${n.id}',this)">${ic("trash",16)}<span>${delArmed===n.id?"Tap again to delete":"Delete"}</span></button>
+      </div></article>`).join("");
+  if(focusNote){const el=$("#nt-"+focusNote); if(el) setTimeout(()=>el.focus(),50); focusNote=null}
+}
+const noteTimers={};
+function setNote(id,key,val){const n=S.saved.find(x=>x.id===id); if(!n) return; n[key]=val; clearTimeout(noteTimers[id]); noteTimers[id]=setTimeout(()=>persistNote(n),600); if(key==="topic") renderNotes()}
+function delNote(id,btn){
+  if(delArmed!==id){delArmed=id;btn.querySelector("span").textContent="Tap again to delete";setTimeout(()=>{if(delArmed===id){delArmed=null;if(S.view==="notes")renderNotes()}},4000);return}
+  delArmed=null;S.saved=S.saved.filter(x=>x.id!==id);removeNote(id);renderNotes();toast("Note deleted.");
+}
+function openLearnTopic(topic,kbId){learnTopic=topic;learnFocus=kbId||null;tab("learn")}
+
+/* ===================== MY SEASON =====================
+   Turns an estimate into a dated plan for this season, from the planting month the farmer chose.
+   Each stage is one tap to mark done; "How?" opens the matching Learn step and its sources.
+   After harvest the farmer enters the real number of bags, which is compared with the estimate.
+   Prototype: kept on this device. In the real app this would be saved by the backend
+   (e.g. POST /api/season and POST /api/outcomes) so real harvests can recalibrate the model.
+   Timing is typical guidance and should be checked by the knowledge team for each area.   */
+const STAGES=[
+  {id:"prep",name:"Prepare the field",tip:"Clear the land, make ridges and add compost or manure.",icon:"terrain",from:-4,to:-1,kb:"plant-02"},
+  {id:"plant",name:"Plant with the first good rains",tip:"Plant when the soil is wet a hand deep.",icon:"seed",from:0,to:1,kb:"plant-01"},
+  {id:"basal",name:"Put in basal fertilizer",tip:p=>p.form.fertBags?`Use part of your ${p.form.fertBags} bags at planting, close to the seed and covered.`:"Your plan has no fertilizer. Even a little at planting helps.",icon:"fert",from:0,to:1,kb:"fert-01"},
+  {id:"legume",when:p=>p.form.intercrop,name:"Plant the legume between rows",tip:"Pigeon peas, beans or groundnuts.",icon:"seed",from:1,to:3,kb:"mix-01"},
+  {id:"weed1",name:"First weeding",tip:"Weeds take water and food from young maize.",icon:"leaf",from:2,to:3},
+  {id:"top",name:"Top-dress with urea",tip:"Put it near each plant when the soil is moist, then cover it.",icon:"cal",from:3,to:5,kb:"fert-02"},
+  {id:"weed2",name:"Second weeding",tip:"Keep the field clean until the maize is tall.",icon:"leaf",from:6,to:7},
+  {id:"harvest",name:"Harvest when the cobs are dry",tip:"The husks turn brown and the cobs hang down.",icon:"bag",from:17,to:21},
+  {id:"store",name:"Dry and store the grain",tip:"Dry until the grain cracks when bitten, then store in a sealed bag.",icon:"home",from:19,to:23,kb:"store-02"},
+];
+const DAY=864e5;
+const stagesFor=p=>STAGES.filter(s=>!s.when||s.when(p));
+function plantAnchor(p){
+  if(p.season?.plantedOn) return new Date(p.season.plantedOn);
+  const d=new Date(p.season?.startedAt||p.ts), y=d.getMonth()+1>=7?d.getFullYear():d.getFullYear()-1, m=p.form.plantMonth;
+  return new Date(m>=7?y:y+1,m-1,5);
+}
+function stageInfo(p,s,today=new Date()){
+  const a=plantAnchor(p).getTime(), start=new Date(a+s.from*7*DAY), end=new Date(a+((s.to+1)*7-1)*DAY);
+  const done=p.season?.done?.[s.id], skipped=p.season?.skipped?.[s.id];
+  const t=new Date(today.getFullYear(),today.getMonth(),today.getDate()).getTime();
+  const status=done?"done":skipped?"skipped":t<start.getTime()?"later":t<=end.getTime()?"now":"late";
+  return {s,start,end,status,done,skipped,tip:typeof s.tip==="function"?s.tip(p):s.tip};
+}
+const fmtDay=(d,mon=true)=>d.getDate()+(mon?" "+MONTHS[d.getMonth()][1]:"");
+function fmtRange(a,b){return a.getMonth()===b.getMonth()?`${fmtDay(a,false)} to ${fmtDay(b)}`:`${fmtDay(a)} to ${fmtDay(b)}`}
+const seasonDone=p=>stagesFor(p).filter(s=>p.season?.done?.[s.id]).length;
+const seasonSkipped=p=>stagesFor(p).filter(s=>p.season?.skipped?.[s.id]&&!p.season?.done?.[s.id]).length;
+const progressTxt=p=>{const k=seasonSkipped(p);return `${seasonDone(p)} of ${stagesFor(p).length} done${k?` · ${k} skipped`:""}`};
+/* Skipping a fertilizer step means less fertilizer than the estimate assumed: re-run the model with what is left. */
+const FERT_STEPS=["basal","top"];
+function fertAfterSkips(p){const f=p.form, left=FERT_STEPS.filter(id=>!p.season?.skipped?.[id]).length;return left===2?f.fertBags:Math.floor(f.fertBags*left/2)}
+function skipImpact(p){
+  if(!p.season||!p.form.fertBags) return null;
+  const nb=fertAfterSkips(p); if(nb===p.form.fertBags) return null;
+  return {fertBags:nb,bags:bagsOf(p,scen(p,{fertBags:nb})),was:bagsOf(p,p.result.y)};
+}
+function nextStage(p){
+  const all=stagesFor(p).map(s=>stageInfo(p,s)), open=all.filter(x=>x.status!=="done"&&x.status!=="skipped");
+  return open.find(x=>x.status==="late"||x.status==="now")||open[0]||null;
+}
+const STATUS_CHIP={done:["ok","Done"],skipped:["gray","Skipped"],now:["now","Do it now"],late:["warn","Running late"],later:["gray","Coming up"]};
+const chipFor=x=>{const [c,l]=STATUS_CHIP[x.status];return `<span class="chip ${c}">${x.status==="done"?ic("check",13):""}${l}</span>`};
+function trackedPred(){return S.preds.filter(p=>p.season).sort((a,b)=>(b.season.updatedAt||0)-(a.season.updatedAt||0))[0]}
+function startSeason(id){
+  const p=S.preds.find(x=>x.id===id); if(!p) return;
+  if(!p.season){p.season={startedAt:Date.now(),updatedAt:Date.now(),done:{},actual:null};save();toast("Your season plan is ready.")}
+  S.current=id; go("season");
+}
+function openSeason(){
+  const p=trackedPred()||latest();
+  if(!p){toast("Make an estimate first, then you can track your season.");return startFlow()}
+  startSeason(p.id);
+}
+function skipStage(pid,sid){
+  const p=S.preds.find(x=>x.id===pid); if(!p||!p.season) return;
+  const k={...(p.season.skipped||{})}, d={...(p.season.done||{})};
+  if(k[sid]) delete k[sid]; else {k[sid]=Date.now(); delete d[sid];}
+  p.season={...p.season,done:d,skipped:k,updatedAt:Date.now()}; save();
+  if(k[sid]){const im=FERT_STEPS.includes(sid)?skipImpact(p):null, n=nextStage(p);
+    toast(im?`Skipped. Without it, expect about ${im.bags} bags instead of ${im.was}.`:n?`Skipped. Next: ${n.s.name.toLowerCase()}.`:"Skipped.")}
+  renderSeason();
+}
+function toggleStage(pid,sid,fromHome){
+  const p=S.preds.find(x=>x.id===pid); if(!p||!p.season) return;
+  if(sid==="plant"&&!p.season.done?.plant) return askPlantDate(pid,fromHome);
+  const d={...(p.season.done||{})}, k={...(p.season.skipped||{})};
+  if(d[sid]) delete d[sid]; else {d[sid]=Date.now(); delete k[sid];}
+  p.season={...p.season,done:d,skipped:k,updatedAt:Date.now(),...(sid==="plant"&&!d.plant?{plantedOn:null}:{})}; save();
+  const n=nextStage(p);
+  if(d[sid]) toast(n?`Well done. Next: ${n.s.name.toLowerCase()}.`:"Well done. Every step is done.");
+  if(fromHome) renderHome(); else renderSeason();
+}
+/* ----- actual planting day ----- */
+const dayStart=t=>{const d=new Date(t);return new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime()};
+const isoDay=t=>{const d=new Date(t);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`};
+function askPlantDate(pid,fromHome){
+  const p=S.preds.find(x=>x.id===pid); if(!p) return;
+  const today=dayStart(Date.now()), cur=p.season?.plantedOn||today, min=today-300*DAY;
+  const quick=[["Today",today],["Yesterday",today-DAY],["3 days ago",today-3*DAY],["1 week ago",today-7*DAY]];
+  $("#sheet").innerHTML=`<form class="sheet-card" id="sheetForm" novalidate>
+    <div class="sh-top"><h3>When did you plant?</h3><button type="button" class="icb" aria-label="Close" onclick="closeSheet()">${ic("plus",22).replace('class="i"','class="i" style="transform:rotate(45deg)"')}</button></div>
+    <div class="sh-body">
+      <p class="help" style="margin:0">Your season plan will follow this day, so weeding and top-dressing come at the right time.</p>
+      <div class="pd-quick" role="radiogroup" aria-label="Planting day">${quick.map(([l,t])=>`<button type="button" role="radio" aria-checked="${t===cur}" class="${t===cur?"on":""}" data-t="${t}">${l}<small>${fmtDay(new Date(t))}</small></button>`).join("")}</div>
+      <div class="sf"><label for="pdDate">Or pick the day</label><input id="pdDate" class="input" type="date" value="${isoDay(cur)}" min="${isoDay(min)}" max="${isoDay(today)}"></div>
+      <p class="sh-err" id="sheetErr" hidden></p></div>
+    <div class="sh-foot"><button type="button" class="btn btn-outline" onclick="closeSheet()">Cancel</button><button class="btn btn-primary" type="submit">${ic("check",20)}Save</button></div></form>`;
+  $("#sheet").hidden=false;
+  const form=$("#sheetForm"), inp=$("#pdDate");
+  form.querySelectorAll(".pd-quick button").forEach(b=>b.onclick=()=>{inp.value=isoDay(+b.dataset.t);syncQuick()});
+  const syncQuick=()=>form.querySelectorAll(".pd-quick button").forEach(b=>{const on=isoDay(+b.dataset.t)===inp.value;b.classList.toggle("on",on);b.setAttribute("aria-checked",on)});
+  inp.oninput=syncQuick;
+  form.onsubmit=ev=>{
+    ev.preventDefault();
+    const [y,m,dd]=(inp.value||"").split("-").map(Number), t=y?new Date(y,m-1,dd).getTime():NaN;
+    const er=$("#sheetErr");
+    if(!(t>=min&&t<=today)){er.textContent=!y?"Please pick a day.":t>today?"That day is in the future. Pick the day you planted.":"That is too long ago for this season.";er.hidden=false;return}
+    const d={...(p.season.done||{}),plant:Date.now()}, k={...(p.season.skipped||{})}; delete k.plant;
+    p.season={...p.season,done:d,skipped:k,plantedOn:t,updatedAt:Date.now()}; save(); closeSheet();
+    const sh=plantShift(p);
+    toast(sh?`Planted on ${fmtDay(new Date(t))}. Your plan now follows this day.`:`Planted on ${fmtDay(new Date(t))}. Well done.`);
+    if(fromHome) renderHome(); else renderSeason();
+  };
+}
+/* how far the real day is from the plan, and what the model says about the month actually used */
+function plantShift(p){
+  const pd=p.season?.plantedOn; if(!pd) return null;
+  const f=p.form, d=new Date(pd), m=d.getMonth()+1, planned=new Date(d.getFullYear(),f.plantMonth-1,5).getTime();
+  let weeks=Math.round((dayStart(pd)-planned)/(7*DAY)); if(Math.abs(weeks)>26) weeks=0;
+  if(m===f.plantMonth) return {weeks,month:m,sameMonth:true};
+  return {weeks,month:m,sameMonth:false,bags:bagsOf(p,scen(p,{plantMonth:m})),was:bagsOf(p,p.result.y)};
+}
+function homeWeekHTML(p){
+  const n=nextStage(p);
+  if(!n) return `<div class="home-week"><span class="k" style="color:var(--green)">My season</span><div class="t"><span class="tl-ic">${ic("check",20)}</span><div><b>Every step is done</b><small>${p.season.actual==null?"Tell us how many bags you harvested.":"Thank you for sharing your harvest."}</small></div></div><div class="row"><button class="lnk" onclick="startSeason('${p.id}')">Open my season ${ic("chev",14)}</button></div></div>`;
+  return `<div class="home-week"><span class="k">${n.status==="later"?"Coming up on your farm":"This week on your farm"}</span>
+    <div class="t"><span class="tl-ic">${ic(n.s.icon,20)}</span><div><b>${esc(n.s.name)}</b><small>${fmtRange(n.start,n.end)} · ${esc(p.form.env.name.replace("Near ",""))}</small></div></div>
+    <div class="se-meta">${chipFor(n)}<span class="se-tip">${progressTxt(p)}</span></div>
+    <div class="row"><button class="se-act" onclick="toggleStage('${p.id}','${n.s.id}',true)">${ic("check",16)}Mark done</button><button class="lnk" onclick="startSeason('${p.id}')">Open my season ${ic("chev",14)}</button></div></div>`;
+}
+function renderSeason(){
+  const p=cur(); if(!p) return;
+  if(!p.season){p.season={startedAt:Date.now(),updatedAt:Date.now(),done:{},actual:null};save()}
+  const f=p.form, list=stagesFor(p).map(s=>stageInfo(p,s)), done=list.filter(x=>x.status==="done"||x.status==="skipped").length, n=nextStage(p), im=skipImpact(p);
+  const sc=document.querySelector("#v-season .scroll"), keep=sc?sc.scrollTop:0;
+  const est=bagsOf(p,p.result.y), lo=bagsOf(p,p.result.lo), hi=bagsOf(p,p.result.hi), act=p.season.actual;
+  const harvestOpen=list.find(x=>x.s.id==="harvest")?.status!=="later"||act!=null;
+  const cmp=act!=null?(act>hi?"More than we expected. Great work.":act<lo?"Less than we expected. The advisor can help you find out why.":"Inside the range we expected."):"";
+  $("#seasonBody").innerHTML=`<div class="se-grid"><div class="se-a">
+    <div class="card se-top">
+      <div class="se-place">${ic("pin",18)}${esc(f.env.name.replace("Near ",""))}<small>· ${fmtArea(f.area)} · ${p.season.plantedOn?`planted on ${fmtDay(new Date(p.season.plantedOn))}`:`planting in ${monthName(f.plantMonth)}`}</small></div>
+      <div class="se-prog"><div class="se-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${list.length}" aria-valuenow="${done}" aria-label="Steps done"><i style="width:${Math.round(done/list.length*100)}%"></i></div>${progressTxt(p)}</div>
+    </div>
+    ${n?`<div class="se-now"><span class="k">${n.status==="later"?"Coming up next":n.status==="late"?"Running late":"This week"}</span>
+      <div class="t"><span class="ic">${ic(n.s.icon,24)}</span><b>${esc(n.s.name)}</b></div>
+      <span class="when">${ic("cal",14)} ${fmtRange(n.start,n.end)}</span>
+      <p>${esc(n.tip)}</p>
+      <button class="btn" onclick="toggleStage('${p.id}','${n.s.id}')">${ic("check",20)}I did this</button>
+      <button class="se-skip" onclick="skipStage('${p.id}','${n.s.id}')">I'm not doing this step</button></div>`
+      :`<div class="se-now all"><span class="k">My season</span><div class="t"><span class="ic" style="background:#fff">${ic("check",24)}</span><b>Every step is done</b></div></div>`}
+    <div class="card se-harv">
+      <h3>${ic("bag",18)}Your harvest</h3>
+      ${act!=null?`<div class="se-cmp"><div><small>You harvested</small><b>${act}</b><span>bags</span></div><div><small>We estimated</small><b>${est}</b><span>${lo} to ${hi} bags</span></div></div>
+        <p class="help" style="margin:0 0 8px">${cmp}</p><button class="quick" onclick="editHarvest()">${ic("edit",14)}Change the number</button>`
+      :harvestOpen?`<p class="help">How many ${bagKgOf(p)} kg bags did you harvest? This helps make estimates better for farms near you.</p>
+        <div class="num"><button class="icb" onclick="stepHarvest(-1)" aria-label="Fewer bags">${ic("minus",22)}</button><div class="box"><input id="harvInp" type="number" inputmode="numeric" min="0" value="${est}" aria-label="Bags harvested"><small>bags</small></div><button class="icb" onclick="stepHarvest(1)" aria-label="More bags">${ic("plus",22)}</button></div>
+        <button class="btn btn-primary" style="margin-top:12px" onclick="saveHarvest()">${ic("check",20)}Save my harvest</button>`
+      :`<p class="help" style="margin:0">After harvest, enter how many bags you got and see how it compares with the estimate of <b>${est} bags</b>.</p>`}
+    </div>
+    <button class="btn btn-outline" onclick="openChat('${p.id}');setTimeout(()=>send('What should I do this week?'),350)">${ic("chat",20)}Ask the advisor about my season</button>
+  </div>
+  <div class="se-b">
+    <div><h2 class="se-h">Your season plan</h2><p class="help" style="margin:4px 0 0">${p.season.plantedOn?`Dates follow your planting day, ${fmtDay(new Date(p.season.plantedOn))}.`:`Typical timing for planting in ${monthName(f.plantMonth)}. When you plant, tell us the day and the dates will follow it.`}</p></div>
+    ${(()=>{const sh=plantShift(p);return sh&&!sh.sameMonth?`<div class="se-impact" style="margin-top:0">${ic("info",16)}<span>You planted in ${monthName(sh.month)}, not ${monthName(f.plantMonth)} as planned. For ${monthName(sh.month)} the estimate is about <b>${sh.bags} bags</b> (was ${sh.was}).</span></div>`:""})()}
+    <ol class="tl seq se-tl">${list.map((x,i)=>`<li class="tl-step st-${x.status}">
+      <span class="tl-dot">${x.status==="done"?ic("check",18):x.status==="skipped"?ic("fwd",16):i+1}</span>
+      <div class="tl-body">
+        <span class="tl-when">${fmtRange(x.start,x.end)}</span>
+        <div class="tl-row"><span class="tl-ic">${ic(x.s.icon,20)}</span><b>${esc(x.s.name)}</b></div>
+        <span class="se-tip">${esc(x.tip)}</span>
+        <div class="se-meta">${chipFor(x)}${x.s.id==="plant"&&p.season.plantedOn?`<small class="se-tip">on ${fmtDay(new Date(p.season.plantedOn))} · <button class="lnk2" onclick="askPlantDate('${p.id}')">Change day</button></small>`:x.done?`<small class="se-tip">on ${fmtDay(new Date(x.done))}</small>`:""}<span style="margin-left:auto;display:flex;gap:6px">${x.done||x.skipped
+          ?`<button class="se-act undo" onclick="${x.done?"toggleStage":"skipStage"}('${p.id}','${x.s.id}')">Undo</button>`
+          :`<button class="se-act ghost" onclick="skipStage('${p.id}','${x.s.id}')">Skip</button><button class="se-act" onclick="toggleStage('${p.id}','${x.s.id}')">${ic("check",15)}Mark done</button>`}</span></div>
+        ${x.skipped&&FERT_STEPS.includes(x.s.id)&&im?`<div class="se-impact">${ic("info",16)}<span>Without this fertilizer, the estimate drops to about <b>${im.bags} bags</b> (from ${im.was}). <button class="lnk2" onclick="openChat('${p.id}');setTimeout(()=>send('I am skipping ${x.s.id==="top"?"urea top-dressing":"basal fertilizer"}. What else can I do?'),350)">Ask about cheaper options</button></span></div>`:""}
+        ${x.s.kb&&kbById(x.s.kb)?`<button class="tl-why" aria-expanded="false" onclick="toggleWhy(this,'${x.s.kb}')">How and why? ${ic("chev",14)}</button><div class="tl-src" hidden></div>`:""}
+      </div></li>`).join("")}</ol>
+  </div></div>`;
+  if(sc) sc.scrollTop=keep;
+}
+function stepHarvest(d){const i=$("#harvInp");i.value=Math.max(0,(+i.value||0)+d)}
+function saveHarvest(){
+  const p=cur(), v=Math.round(+$("#harvInp").value);
+  if(!p||!(v>=0)) return toast("Please enter a number of bags.");
+  p.season={...p.season,actual:v,actualAt:Date.now(),updatedAt:Date.now()}; save(); renderSeason(); toast("Thank you. Your harvest is saved.");
+}
+function editHarvest(){const p=cur(); p.season={...p.season,actual:null}; save(); renderSeason()}
+function seasonFacts(p){
+  if(!p||!p.season) return "";
+  const list=stagesFor(p).map(s=>stageInfo(p,s)), n=nextStage(p);
+  const sh=plantShift(p);
+  return `Season tracking (today is ${fmtDay(new Date())}):\n`
+    +(p.season.plantedOn?`The farmer planted on ${fmtDay(new Date(p.season.plantedOn))}; all dates below follow that day.${sh&&!sh.sameMonth?` That is ${monthName(sh.month)} instead of the planned ${monthName(p.form.plantMonth)}, so the model now expects about ${sh.bags} bags instead of ${sh.was}.`:""}\n`:"The farmer has not recorded the planting day yet; dates follow the planned month.\n")+list.map(x=>`  ${x.s.name}: ${fmtRange(x.start,x.end)}, ${x.status==="done"?"done":x.status==="skipped"?"skipped by the farmer":x.status==="now"?"due now":x.status==="late"?"late, not done yet":"coming up"}`).join("\n")
+    +(n?`\nNext step: ${n.s.name} (${fmtRange(n.start,n.end)}).`:"\nAll steps done.")
+    +(skipImpact(p)?`\nBecause fertilizer steps were skipped, the farmer now plans ${skipImpact(p).fertBags} bags of fertilizer; the model then expects about ${skipImpact(p).bags} bags of maize instead of ${skipImpact(p).was}.`:"")
+    +(p.season.actual!=null?`\nActual harvest entered by the farmer: ${p.season.actual} bags.`:"");
+}
+
 /* ===================== HISTORY / SETTINGS ===================== */
 function renderHistory(){
-  const l=$("#histList");
-  l.innerHTML=S.preds.length?S.preds.map(p=>`<button class="hist" onclick="openPred('${p.id}')">
+  const l=$("#histList"), tracked=S.preds.filter(p=>p.season).sort((a,b)=>(b.season.updatedAt||0)-(a.season.updatedAt||0));
+  const seasons=tracked.map(p=>{const n=nextStage(p),tot=stagesFor(p).length,d=seasonDone(p);return `<button class="mf-season" onclick="startSeason('${p.id}')">
+      <div class="top"><span class="tl-ic">${ic("pin",18)}</span><div><b>${esc(p.form.env.name.replace("Near ",""))}</b><br><small>${fmtArea(p.form.area)} · planting in ${monthName(p.form.plantMonth)} · ${bagsOf(p,p.result.y)} bags expected</small></div>${ic("chev",20)}</div>
+      <div class="se-prog"><div class="se-bar"><i style="width:${Math.round((d+seasonSkipped(p))/tot*100)}%"></i></div>${progressTxt(p)}</div>
+      <div class="nx">${n?`${chipFor(n)}<span>Next: <b>${esc(n.s.name)}</b> · ${fmtRange(n.start,n.end)}</span>`:`<span class="chip ok">${ic("check",13)}All done</span>${p.season.actual!=null?`<span>Harvested <b>${p.season.actual} bags</b></span>`:"<span>Enter your harvest</span>"}`}</div></button>`}).join("");
+  l.innerHTML=!S.preds.length?`<div class="empty">${ic("seed",48)}<div>Nothing here yet.<br>Make an estimate for your field, then track your season here.</div></div>`
+    :(tracked.length?`<h2 class="mf-h">${ic("cal",20)}Seasons you're tracking</h2><div class="mf-list">${seasons}</div>`:`<div class="notice info" style="margin-bottom:6px">${ic("cal",20)}<div>Open an estimate and tap <b>Track my season</b> to get a dated plan for your field.</div></div>`)
+    +`<h2 class="mf-h">${ic("history",20)}Your estimates</h2><div class="mf-list">`+S.preds.map(p=>`<button class="hist" onclick="openPred('${p.id}')">
       <div class="ic">${ic("seed",22)}</div>
       <div><b>${esc(p.form.env.name)} · ${fmtArea(p.form.area)}</b><small>${new Date(p.ts).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})} · ${p.form.seed==="hybrid"?"Hybrid":"Local"} · ${p.form.fertBags} bags fertilizer</small></div>
-      <div class="y">${bagsOf(p,p.result.y)} bags<br>${gapChip(p)}</div></button>`).join("")
-    :`<div class="empty">${ic("history",48)}<div>No estimates yet.<br>Your past estimates will appear here.</div></div>`;
+      <div class="y">${bagsOf(p,p.result.y)} bags<br>${p.season?`<span class="chip gray">${progressTxt(p)}</span>`:gapChip(p)}</div></button>`).join("")+"</div>";
 }
 function renderSettings(){
   seg("#langSeg",[["en","English"],["ny","Chichewa (draft)"]],S.lang,v=>{S.lang=v;save();applyLang();renderSettings()});
@@ -1057,7 +2803,7 @@ function clearHistory(){if(!S.preds.length) return toast("History is already emp
 function startFlow(){locState={s:"idle"};go("loc")}
 
 /* ===================== boot ===================== */
-load(); applyLang();
+load(); applyLang(); initStore(); initAI();
 history.replaceState({id:"home"},"","#home"); show("home");
 </script>
 </body>
