@@ -26,7 +26,7 @@ what the import script reads, and they make changes easy to review in GitHub.
   - Every fact also becomes a **Did you know?** card: `title` as the headline and `fun_fact` as the text (falls back to `farmer_summary`), with its sources linked underneath.
   - Tapping **Why?** on a step shows `farmer_summary` and its sources.
   - The advisor receives every live fact as context and cites them by `id`.
-- **topics.csv**: `ordered_steps = yes` numbers the steps (First, Then, Finally). `no` shows them as independent actions.
+- **topics.csv**: `ordered_steps = yes` numbers the steps (First, Then, Finally, or the fact's `phase` if set). `no` shows them as independent actions. `alert` shows a red warning box at the top of the topic (use only for safety).
 - **season_stages.csv**: `weeks_from` and `weeks_to` count from the planting day. Negative numbers are before planting. Once the farmer records the real planting day, every window moves with it. `fact_id` is what "How and why?" opens.
 - **sources.csv**: `finding` is shown under the link, so write one plain sentence with the number and page.
 
@@ -41,9 +41,15 @@ what the import script reads, and they make changes easy to review in GitHub.
 
 ## Current state
 
-The content is what the prototype shows today. All facts and season stages are still `draft`,
-no source has been checked yet, and 13 facts have no source. Season timing (e.g. top-dressing
-at weeks 3 to 5) is a placeholder to be checked against sources. Weeding has no fact yet.
+The content is what the prototype shows today: 8 topics, 31 facts, 36 sources, 10 season stages.
+All facts and season stages are still `draft` and no source has been checked yet. 13 facts
+(from the first 7 topics) have no source. Season timing (e.g. top-dressing at weeks 3 to 5) is a
+placeholder to be checked against sources. Weeding has no fact yet.
+
+**Aflatoxin** (added 7 Oct) is the first topic with a safety `alert` and step `phase` labels. Every
+fact has at least one source with a `finding`, but they still need a second person to check them.
+Open questions are in `still_to_find`, e.g. the Malawi Bureau of Standards limit for maize and
+where farmers can buy Aflasafe.
 
 ## Still to build (backend)
 

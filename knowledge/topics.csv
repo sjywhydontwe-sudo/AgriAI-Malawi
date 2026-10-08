@@ -1,8 +1,9 @@
-topic,order,why,visual,ordered_steps,notes
-Planting,1,"The first good rains start the season. Every week you wait, the crop has less time to grow.",planting,yes,
-Fertilizer,2,"Fertilizer feeds the crop twice: once to start it, once when it grows fast.",fertilizer,yes,
-Seed,3,"Hybrid seed gives more in a good season, but you must buy new seed each year.",seed,no,
-Soil,4,Healthy soil holds water and helps the crop use fertilizer.,soil,no,
-Mixed cropping,5,A legume row gives a second harvest and can feed the soil for next season.,mixed,no,
-Water,6,Dry spells are common. Water kept in the soil can save the harvest.,water,no,
-Storage,7,Weevils and damp can destroy a good harvest after it leaves the field.,storage,yes,
+topic,order,why,alert,visual,ordered_steps,notes
+Planting,1,"The first good rains start the season. Every week you wait, the crop has less time to grow.",,planting,yes,
+Fertilizer,2,"Fertilizer feeds the crop twice: once to start it, once when it grows fast.",,fertilizer,yes,
+Seed,3,"Hybrid seed gives more in a good season, but you must buy new seed each year.",,seed,no,
+Soil,4,Healthy soil holds water and helps the crop use fertilizer.,,soil,no,
+Mixed cropping,5,A legume row gives a second harvest and can feed the soil for next season.,,mixed,no,
+Water,6,Dry spells are common. Water kept in the soil can save the harvest.,,water,no,
+Storage,7,Weevils and damp can destroy a good harvest after it leaves the field.,,storage,yes,
+Aflatoxin,8,"Mould on maize and groundnuts can make aflatoxin, a poison that harms the liver and children's growth. Good drying, sorting and storage keep it out.","Do not eat, sell or feed animals mouldy grain. Soaking and fermenting do not remove the poison.",aflatoxin,yes,
